@@ -24,7 +24,7 @@ const searchVal = ref('')
 <style scoped lang='less'>
 .headNav {
     background-color: rgba(255, 255, 255, 0);
-    padding: 15px 10px;
+    padding: 10px;
     border-bottom: 1px solid #eaecef;
     .nav-islogin {
         font-size: 20px;
