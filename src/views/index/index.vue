@@ -9,5 +9,5 @@ import { ref, reactive } from 'vue'
 import headNav from '@/components/headNav/headNav.vue';
 </script>
 <style scoped lang="less">
- 
+
 </style>
