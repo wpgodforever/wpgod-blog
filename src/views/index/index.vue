@@ -1,7 +1,12 @@
 <template>
   <div>
     <headNav></headNav>
-    首页
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive" />
+    </keep-alive>
+    <transition>
+      <router-view v-if="!$route.meta.keepAlive" />
+    </transition>
   </div>
 </template>
 <script lang='ts' setup name="index">

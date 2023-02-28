@@ -8,6 +8,10 @@ html,body{
     margin-left: auto;
 }
 
+.noBorder{
+    border: 0!important;
+}
+
 .flex-align{
     display: flex;
     align-items: center;

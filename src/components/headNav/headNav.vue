@@ -1,11 +1,11 @@
 <template>
     <el-affix>
-        <div class="headNav flex-align">
+        <div class="headNav flex-align" :class="[showBorder?'':'noBorder']">
             <div class="nav-islogin">
                 登录可以评论喔~
             </div>
             <el-input v-model="searchVal" style="width: 240px;" class="ml-auto" placeholder="Type something"
-                :prefix-icon="Search" />
+                :prefix-icon="Search"/>
             <div class="nav-list flex-align">
                 <div class="nav-list_item">首页</div>
                 <div class="nav-list_item">归档</div>
@@ -17,15 +17,28 @@
     </el-affix>
 </template>
 <script lang='ts' setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
+import {useRouter} from 'vue-router'
 import { Search } from '@element-plus/icons-vue'
 const searchVal = ref('')
+const router =useRouter()
+const showBorder = computed(() => {
+    console.log(router.currentRoute.value.path)
+    return router.currentRoute.value.path !== '/index'
+})
+console.log(showBorder)
 </script>
 <style scoped lang='less'>
 .headNav {
-    background-color: rgba(255, 255, 255, 0);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: #fff;
+    backdrop-filter: blur(2px);
     padding: 10px;
     border-bottom: 1px solid #eaecef;
+    z-index: 10;
     .nav-islogin {
         font-size: 20px;
         font-weight: 700;
