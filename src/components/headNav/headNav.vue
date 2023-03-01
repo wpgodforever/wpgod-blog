@@ -1,8 +1,5 @@
 <template>
     <div class="headNav flex-align" :class="[showBorder ? '' : 'noBorder']">
-        <div class="nav-islogin">
-            登录可以评论喔~
-        </div>
         <el-input v-model="searchVal" style="width: 240px;" class="ml-auto" placeholder="Type something"
             :prefix-icon="Search" />
         <div class="nav-list flex-align">
