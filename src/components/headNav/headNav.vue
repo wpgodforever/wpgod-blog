@@ -6,22 +6,36 @@
             <div class="nav-list_item">首页</div>
             <div class="nav-list_item">归档</div>
             <div class="nav-list_item">面试</div>
-            <div class="nav-list_item">注册</div>
-            <div class="nav-list_item">登录</div>
+            <div class="nav-list_item" @click="popClick">注册</div>
+            <div class="nav-list_item" @click="popClick">登录</div>
         </div>
     </div>
 </template>
 <script lang='ts' setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 import { Search } from '@element-plus/icons-vue'
+let { proxy }:any = getCurrentInstance();
 const searchVal = ref('')
 const router = useRouter()
 const showBorder = computed(() => {
-    console.log(router.currentRoute.value.path)
     return router.currentRoute.value.path !== '/index'
 })
-console.log(showBorder)
+
+const popClick = () => {
+    proxy.$loginPop({
+    title: "title",
+    width: "550px",
+    option: {
+
+    },
+    cancelClick: () => {},
+    saveClick: async (val) => {
+      console.log(val)
+    },
+  }
+)
+}
 </script>
 <style scoped lang='less'>
 .headNav {

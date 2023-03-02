@@ -40,7 +40,6 @@ const handleFont = (index:0| 1 | 2 | 3) => {
     ElMessage({
       message: textConfig[index],
       type: 'success',
-      icon: '',
     })
 }
 </script>
