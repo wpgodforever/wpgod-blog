@@ -7,7 +7,7 @@
     <div class="main">
       <div class="main-left">
         <div class="list flex-col">
-          <div class="item"></div>
+          <listItem></listItem>
         </div>
       </div>
       <div class="main-right flex-col">
@@ -18,7 +18,7 @@
 </template>
 <script lang='ts' setup>
 import { ref, reactive } from 'vue'
-
+import listItem from './components/listItem.vue'
 </script>
 <style scoped lang='less'>
  .main-container{
@@ -46,8 +46,8 @@ import { ref, reactive } from 'vue'
     &-left{
       flex: 1;
       margin-right: 15px;
-      background-color: pink;
       overflow: hidden;
+      
       .list{
         width: 100%;
         .item{
