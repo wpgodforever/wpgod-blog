@@ -21,12 +21,10 @@ const router = useRouter()
 const showBorder = computed(() => {
     return router.currentRoute.value.path !== '/index'
 })
-const dialogPopVisible = ref(false)
 const popClick = () => {
     proxy.$loginPop({
     title: "title",
     width: "550px",
-    dialogPopVisible: dialogPopVisible.value,
     option: {
 
     },
