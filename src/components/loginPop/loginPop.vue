@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    v-model="dialogPopVisible"
+    :value="dialogPopVisible"
     title="Tips"
     width="30%"
     :before-close="onBeforeClose"
@@ -8,8 +8,8 @@
     <span>This is a message</span>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogPopVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogPopVisible = false">
+        <el-button @click="handleCancel">Cancel</el-button>
+        <el-button type="primary">
           Confirm
         </el-button>
       </span>
@@ -33,6 +33,10 @@ const props = defineProps({
       //可传递其他值
     },
   },
+  dialogPopVisible: {
+    type: Boolean,
+    default: false
+  },
   cancelClick: {
     type: Function,
     default: () => {},
@@ -42,21 +46,23 @@ const props = defineProps({
     default: () => {},
   },
 });
-const dialogPopVisible = ref(false); // 窗体显示控制
+const emits = defineEmits(['update:dialogPopVisible'])
 const popupWidth = computed(() => {
   return props.width || "550px";
 });
 const dialogTitle = computed(() => {
   return props.title || "标题";
 });
-const Cancel = () => {
-  dialogPopVisible.value = false;
-  props.cancelClick();
+const handleCancel = () => {
+//   dialogPopVisible.value = false;
+//   console.log(dialogPopVisible.value)
+//   props.cancelClick();
+emits('update:dialogPopVisible',false)
 };
-const Save = () => {
-  dialogPopVisible.value = false;
-  props.saveClick('传值');
-};
+// const Save = () => {
+//   dialogPopVisible.value = false;
+//   props.saveClick('传值');
+// };
 const onBeforeClose = (done:any) => {
   done();
 };
