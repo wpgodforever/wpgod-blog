@@ -32,10 +32,10 @@ import personCard from './components/personCard.vue'
    background-color: rgba(244, 244, 244);
   .banner{
     height: 600px;
-    background-image: url(../../assets/img/banner-bg.png);
+    background-image: url(../../assets/img/banner-bg12.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: 0 -100px;
+    background-position: center 0px;
     box-sizing: border-box;
     justify-content: center;
     align-items: center;
