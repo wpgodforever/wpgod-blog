@@ -14,7 +14,7 @@
                   v-model="nameVal"
                   placeholder="Please input name"
                   :prefix-icon="User"
-                  maxlength="10"
+                  maxlength="15"
                 />
                 <el-input
                   v-model="passwordVal"
