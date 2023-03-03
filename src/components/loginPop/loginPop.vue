@@ -3,7 +3,7 @@
         <el-dialog :modelValue="modelValue" width="40%" :before-close="onBeforeClose">
             <div class="login-box flex-col">
                 <div class="text-line flex-align">
-                    <transition-group leave-active-class="animate__animated animate__rollOut" enter-active-class="animate__animated animate__rollIn">
+                    <transition-group @after-enter="transitionComplete" @before-leave="transitionleave" leave-active-class="animate__animated animate__rollOut" enter-active-class="animate__animated animate__rollIn">
                         <div v-for="(item, index) in textList" :key="index" >
                             {{ item }}
                         </div>
@@ -56,9 +56,20 @@ const handleCancel = () => {
 const nameVal = ref('')
 const passwordVal = ref('')
 
+
+// 输入动画逻辑
+// 输入动画效果需要将输入的字符串变成数组
 const textList = computed(() => {
     return nameVal.value.length? nameVal.value.split('') : []
 })
+// 在animate进入动画完成后，再添加一个常态的悬浮动画
+const transitionComplete = (el) => {
+    el.classList.add('animateText')
+}
+// 删除输入值时，把常态动画删除，避免影响animate移除动画
+const transitionleave = (el) => {
+    el.classList.remove('animateText')
+}
 
 </script>
 <style scoped lang='less'>
@@ -75,6 +86,26 @@ const textList = computed(() => {
         }
     }
 }
+
+// 输入后字体的漂浮效果
+.animateText{
+    animation: flow 1.6s linear infinite;
+    // animation-delay:1s;
+}
+
+@keyframes flow {
+        25% {
+             transform: translateY(-4px);
+        }
+        50%, 100% {
+             transform: translateY(0);
+        }
+        75% {
+             transform: translateY(4px);
+        }
+}
+
+
 :deep(.el-dialog){
     border-radius: 20px;
     background-image: url(../../assets/img/login-bg.png);
