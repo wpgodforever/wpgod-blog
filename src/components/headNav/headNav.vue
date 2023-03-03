@@ -10,7 +10,7 @@
             <div class="nav-list_item" @click="popClick">登录</div>
         </div>
     </div>
-    <loginPop :dialogVisible="dialogVisible" @update:dialogVisible="newValue => dialogVisible= newValue"></loginPop>
+    <loginPop v-model="dialogVisible"></loginPop>
 </template>
 <script lang='ts' setup>
 import { ref, reactive, computed, getCurrentInstance } from 'vue'
