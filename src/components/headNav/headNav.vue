@@ -10,30 +10,23 @@
             <div class="nav-list_item" @click="popClick">登录</div>
         </div>
     </div>
+    <loginPop :dialogVisible="dialogVisible" @update:dialogVisible="newValue => dialogVisible= newValue"></loginPop>
 </template>
 <script lang='ts' setup>
 import { ref, reactive, computed, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 import { Search } from '@element-plus/icons-vue'
-let { proxy }:any = getCurrentInstance();
+import loginPop from '../loginPop/loginPop.vue'
+
 const searchVal = ref('')
 const router = useRouter()
 const showBorder = computed(() => {
     return router.currentRoute.value.path !== '/index'
 })
+const dialogVisible = ref(false)
 const popClick = () => {
-    proxy.$loginPop({
-    title: "title",
-    width: "550px",
-    option: {
-
-    },
-    cancelClick: () => {},
-    saveClick: async (val) => {
-      console.log(val)
-    },
-  }
-)
+    dialogVisible.value = true
+    console.log(dialogVisible.value)
 }
 </script>
 <style scoped lang='less'>
