@@ -6,11 +6,11 @@
             <div class="nav-list_item">首页</div>
             <div class="nav-list_item">归档</div>
             <div class="nav-list_item">面试</div>
-            <div class="nav-list_item" @click="popClick">注册</div>
-            <div class="nav-list_item" @click="popClick">登录</div>
+            <div class="nav-list_item" @click="popClick(0)">注册</div>
+            <div class="nav-list_item" @click="popClick(1)">登录</div>
         </div>
     </div>
-    <loginPop v-model="dialogVisible"></loginPop>
+    <loginPop v-model="dialogVisible" :tips="tips"></loginPop>
 </template>
 <script lang='ts' setup>
 import { ref, reactive, computed, getCurrentInstance } from 'vue'
@@ -23,10 +23,17 @@ const router = useRouter()
 const showBorder = computed(() => {
     return router.currentRoute.value.path !== '/index'
 })
+
+// 登录注册弹框逻辑
 const dialogVisible = ref(false)
-const popClick = () => {
+const tips = ref('登录')
+const popClick = (index:0|1) => {
+    const textConfig = {
+        0: '注册',
+        1: '登录'
+    }
+    tips.value = textConfig[index]
     dialogVisible.value = true
-    console.log(dialogVisible.value)
 }
 </script>
 <style scoped lang='less'>

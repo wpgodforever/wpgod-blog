@@ -6,6 +6,10 @@ import router from './router/index'
 // 注册element plus图标
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/theme-chalk/index.css'
+import 'animate.css';
+
+
+
 
 const store = createPinia()
 let app = createApp(App)
