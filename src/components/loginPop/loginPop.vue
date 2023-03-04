@@ -9,27 +9,44 @@
                         </div>
                     </transition-group>
                 </div>
+                <el-form :model="ruleForm" ref="ruleFormRef" :rules="rules" label-width="0px">
+                    <el-form-item prop="username">
+                      <el-input
+                        v-model="ruleForm.username"
+                        placeholder="Please input name"
+                        :prefix-icon="User"
+                        maxlength="15"
+                        prop="username"
+                      />
+                    </el-form-item>
+                    <el-form-item prop="password">
+                      <el-input
+                        v-model="ruleForm.password"
+                        type="password"
+                        placeholder="Please input password"
+                        show-password
+                        :prefix-icon="User"
+                        prop="password"
+                      />
+                    </el-form-item>
                 
-                <el-input
-                  v-model="nameVal"
-                  placeholder="Please input name"
-                  :prefix-icon="User"
-                  maxlength="15"
-                />
-                <el-input
-                  v-model="passwordVal"
-                  type="password"
-                  placeholder="Please input password"
-                  show-password
-                  :prefix-icon="User"
-                />
+                </el-form>
+                
+                <div class="btn" :class="[isActive?'active':'']" @click="handleClick(ruleFormRef)">
+                    <span class="btn-icon"><el-icon><RefreshRight /></el-icon></span>
+                    <span class="btn-text">{{ tips }}</span>
+                </div>
             </div>
         </el-dialog>
     </div>
 </template>
 <script lang='ts' setup>
-import { ref, computed, getCurrentInstance } from "vue";
+import { ref, computed, reactive, getCurrentInstance } from "vue";
+import type { FormRules, FormInstance } from 'element-plus'
 import { User } from '@element-plus/icons-vue'
+import { registerFn, test } from '@/api/login/login'
+
+
 let { proxy }: any = getCurrentInstance();
 const props = defineProps({
     modelValue: {
@@ -45,6 +62,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const onBeforeClose = (done: any) => {
+    isActive.value = false 
     emit('update:modelValue',false)
     // done()
 };
@@ -53,15 +71,10 @@ const handleCancel = () => {
     emit('update:modelValue',false)
 }
 
-// 注册逻辑
-const nameVal = ref('')
-const passwordVal = ref('')
-
-
 // 输入动画逻辑
 // 输入动画效果需要将输入的字符串变成数组
 const textList = computed(() => {
-    return nameVal.value.length? nameVal.value.split('') : []
+    return ruleForm.username.length? ruleForm.username.split('') : []
 })
 // 在animate进入动画完成后，再添加一个常态的悬浮动画
 const transitionComplete = (el) => {
@@ -70,6 +83,45 @@ const transitionComplete = (el) => {
 // 删除输入值时，把常态动画删除，避免影响animate移除动画
 const transitionleave = (el) => {
     el.classList.remove('animateText')
+}
+
+
+// 注册逻辑
+// 点击按钮动画触发
+const isActive = ref(false)
+const ruleFormRef = ref<FormInstance>()
+const ruleForm = reactive({
+    username: '',
+    password: '',
+})
+const rules = reactive<FormRules>({
+    username: [
+    { required: true, message: 'Please input name', trigger: 'blur' },
+    { min: 3, max: 15, message: 'Length should be 3 to 15', trigger: 'blur' },
+  ],
+  password: [
+    {
+      required: true,
+      message: 'Please input password',
+      trigger: 'change',
+    },
+  ],
+})
+const handleClick = async (formEl: FormInstance | undefined) => {
+    await formEl.validate((valid, fields) => {
+    if (valid) {
+        isActive.value = true
+        registerFn(ruleForm).then(res => {
+            console.log(res)
+        })
+        .finally(()=>{
+            isActive.value = false
+        })
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
+    
 }
 
 </script>
@@ -84,6 +136,41 @@ const transitionleave = (el) => {
         height: 30px;
         .transitionClass{
             transition: all 1s;
+        }
+    }
+    .btn{
+        position: relative;
+        width: 200px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        color: #fff;
+        background-color: rgba(11, 30, 45);
+        border-radius: 50px;
+        margin-top: 20px;
+        transition: all 1.5s;
+        &-icon{
+            position: absolute;
+            top: 50%;
+            left: 30%;
+            transform: translate(-300%, -45%);
+            transform-origin: 115% 0;
+            transition: all 1.5s;
+        }
+        &-text{
+            transition: all 1.5s;
+        }
+    }
+    .btn.active{
+        width: 40px;
+        .btn-text{
+            opacity: 0;
+        }
+        .btn-icon{
+            transform: translate(0%, -45%);
+        }
+        i{
+            animation: iconRoto 2s linear infinite;
         }
     }
 }
@@ -106,12 +193,28 @@ const transitionleave = (el) => {
         }
 }
 
+@keyframes iconRoto {
+        25% {
+            transform:  rotate(90deg);
+        } 
+        50% {
+            transform: rotate(180deg);
+        }
+        75% {
+            transform: rotate(270deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+}
+
 
 :deep(.el-dialog){
     border-radius: 20px;
     background-image: url(../../assets/img/login-bg.png);
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center 0;
 }
 :deep(el-dialog__header){
     display: none;

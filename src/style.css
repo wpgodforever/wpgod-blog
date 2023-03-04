@@ -16,6 +16,10 @@ html,body{
     border: 0!important;
 }
 
+.flex{
+    display: flex;
+}
+
 .flex-align{
     display: flex;
     align-items: center;
