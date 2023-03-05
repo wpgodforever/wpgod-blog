@@ -45,6 +45,7 @@ import { ref, computed, reactive, getCurrentInstance } from "vue";
 import type { FormRules, FormInstance } from 'element-plus'
 import { User } from '@element-plus/icons-vue'
 import { registerFn, test } from '@/api/login/login'
+import { ElMessage } from 'element-plus'
 
 
 let { proxy }: any = getCurrentInstance();
@@ -63,6 +64,7 @@ const emit = defineEmits(['update:modelValue'])
 
 const onBeforeClose = (done: any) => {
     isActive.value = false 
+    resetForm(ruleFormRef.value)
     emit('update:modelValue',false)
     // done()
 };
@@ -112,7 +114,9 @@ const handleClick = async (formEl: FormInstance | undefined) => {
     if (valid) {
         isActive.value = true
         registerFn(ruleForm).then(res => {
-            console.log(res)
+            ElMessage.success(res.msg)
+            resetForm(ruleFormRef.value)
+            emit('update:modelValue',false)
         })
         .finally(()=>{
             isActive.value = false
@@ -122,6 +126,10 @@ const handleClick = async (formEl: FormInstance | undefined) => {
     }
   })
     
+}
+const resetForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
 }
 
 </script>
