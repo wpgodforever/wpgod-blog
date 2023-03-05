@@ -181,6 +181,18 @@ const resetForm = (formEl: FormInstance | undefined) => {
             animation: iconRoto 2s linear infinite;
         }
     }
+    .btn:hover{
+        width: 40px;
+        .btn-text{
+            opacity: 0;
+        }
+        .btn-icon{
+            transform: translate(0%, -45%);
+        }
+        i{
+            animation: iconRoto 2s linear infinite;
+        }
+    }
 }
 
 // 输入后字体的漂浮效果
