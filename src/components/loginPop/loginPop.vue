@@ -44,7 +44,7 @@
 import { ref, computed, reactive, getCurrentInstance } from "vue";
 import type { FormRules, FormInstance } from 'element-plus'
 import { User } from '@element-plus/icons-vue'
-import { registerFn, test } from '@/api/login/login'
+import { registerFn, loginFn } from '@/api/login/login'
 import { ElMessage } from 'element-plus'
 
 
@@ -113,14 +113,27 @@ const handleClick = async (formEl: FormInstance | undefined) => {
     await formEl.validate((valid, fields) => {
     if (valid) {
         isActive.value = true
-        registerFn(ruleForm).then(res => {
-            ElMessage.success(res.msg)
-            resetForm(ruleFormRef.value)
-            emit('update:modelValue',false)
-        })
-        .finally(()=>{
-            isActive.value = false
-        })
+        if(props.tips === '注册'){
+            registerFn(ruleForm).then(res => {
+                ElMessage.success(res.msg)
+                resetForm(ruleFormRef.value)
+                emit('update:modelValue',false)
+            })
+            .finally(()=>{
+                isActive.value = false
+            })
+        }else{
+            loginFn(ruleForm).then(res => {
+                ElMessage.success(res.msg)
+                localStorage.setItem('wp-blog-token',res.data.token)
+                resetForm(ruleFormRef.value)
+                emit('update:modelValue',false)
+            })
+            .finally(()=>{
+                isActive.value = false
+            })
+        }
+        
     } else {
       console.log('error submit!', fields)
     }

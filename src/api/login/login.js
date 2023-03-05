@@ -18,11 +18,11 @@ export function registerFn(data) {
   })
 }
 
-// 注册用户
-export function test(data) {
+// 登录
+export function loginFn(data) {
   return request({
-    url: '/',
+    url: '/user/login',
     method: 'get',
-    data: data,
+    params: data,
   })
 }
