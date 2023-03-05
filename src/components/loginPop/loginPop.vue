@@ -46,7 +46,9 @@ import type { FormRules, FormInstance } from 'element-plus'
 import { User } from '@element-plus/icons-vue'
 import { registerFn, loginFn } from '@/api/login/login'
 import { ElMessage } from 'element-plus'
-
+import { useUserStore } from '@/store/user'
+// pinia用户信息
+const user = useUserStore()
 
 let { proxy }: any = getCurrentInstance();
 const props = defineProps({
@@ -125,7 +127,7 @@ const handleClick = async (formEl: FormInstance | undefined) => {
         }else{
             loginFn(ruleForm).then(res => {
                 ElMessage.success(res.msg)
-                localStorage.setItem('wp-blog-token',res.data.token)
+                user.userInfo = res.data
                 resetForm(ruleFormRef.value)
                 emit('update:modelValue',false)
             })

@@ -1,13 +1,15 @@
 <template>
     <div class="headNav flex-align" :class="[showBorder ? '' : 'noBorder']">
+        <div>{{ user.userInfo.username }}</div>
         <el-input v-model="searchVal" style="width: 240px;" class="ml-auto" placeholder="Type something"
             :prefix-icon="Search" />
         <div class="nav-list flex-align">
             <div class="nav-list_item">首页</div>
             <div class="nav-list_item">归档</div>
             <div class="nav-list_item">面试</div>
-            <div class="nav-list_item" @click="popClick(0)">注册</div>
-            <div class="nav-list_item" @click="popClick(1)">登录</div>
+            <div class="nav-list_item" v-if="!userInfo.token"
+            @click="popClick(0)">注册</div>
+            <div class="nav-list_item" v-if="!userInfo.token" @click="popClick(1)">登录</div>
         </div>
     </div>
     <loginPop v-model="dialogVisible" :tips="tips"></loginPop>
@@ -17,6 +19,7 @@ import { ref, reactive, computed, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 import { Search } from '@element-plus/icons-vue'
 import loginPop from '../loginPop/loginPop.vue'
+import { useUserStore } from '@/store/user'
 
 const searchVal = ref('')
 const router = useRouter()
@@ -35,6 +38,10 @@ const popClick = (index:0|1) => {
     tips.value = textConfig[index]
     dialogVisible.value = true
 }
+
+// 获取pinia用户数据
+const user = useUserStore()
+const { userInfo } = user
 </script>
 <style scoped lang='less'>
 .headNav {
