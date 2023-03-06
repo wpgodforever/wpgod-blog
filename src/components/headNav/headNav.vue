@@ -13,6 +13,9 @@
             <div class="nav-list_item">
                 <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">面试</div>
             </div>
+            <div class="nav-list_item" v-if="userInfo.token && (userInfo.auth.includes('admin'))">
+                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">发布文章</div>
+            </div>
             <div class="nav-list_item" v-if="!userInfo.token"
             @click="popClick(0)">
                 <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">注册</div>
@@ -31,6 +34,8 @@ import { useRouter } from 'vue-router'
 import { Search } from '@element-plus/icons-vue'
 import loginPop from '../loginPop/loginPop.vue'
 import { useUserStore } from '@/store/user'
+import { storeToRefs } from 'pinia'
+import { includes } from 'lodash'
 
 const searchVal = ref('')
 const router = useRouter()
@@ -52,9 +57,7 @@ const popClick = (index:0|1) => {
 
 // 获取pinia用户数据
 const user = useUserStore()
-const userInfo = computed(() => {
-    return user.userInfo
-})
+const { userInfo } = storeToRefs(user)
 
 
 // 鼠标移入按钮动画
