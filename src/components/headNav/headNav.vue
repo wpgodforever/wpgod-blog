@@ -1,5 +1,5 @@
 <template>
-    <div class="headNav flex-align" :class="[showBorder ? '' : 'noBorder']">
+    <div class="headNav flex-align" :class="[bgChange ? 'bgChange' : 'noBorder']">
         <div>{{ user.userInfo.username }}</div>
         <el-input v-model="searchVal" style="width: 240px;" class="ml-auto" placeholder="Type something"
             :prefix-icon="Search" />
@@ -29,18 +29,27 @@
     <loginPop v-model="dialogVisible" :tips="tips"></loginPop>
 </template>
 <script lang='ts' setup>
-import { ref, reactive, computed, getCurrentInstance } from 'vue'
+import { ref, reactive, computed, onMounted, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 import { Search } from '@element-plus/icons-vue'
 import loginPop from '../loginPop/loginPop.vue'
 import { useUserStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
 import { includes } from 'lodash'
+onMounted(() => {
+    // 导航栏颜色修改
+    if(router.currentRoute.value.path !== '/index'){
+        window.removeEventListener("scroll", scrollTopListener)
+    }else{
+        window.addEventListener("scroll", scrollTopListener, true);
+    }
+    console.log(bgChange.value)
+});
 
 const searchVal = ref('')
 const router = useRouter()
-const showBorder = computed(() => {
-    return router.currentRoute.value.path !== '/index'
+const bgChange = computed(() => {
+    return router.currentRoute.value.path !== '/index' || (scrollTop.value>540)
 })
 
 // 登录注册弹框逻辑
@@ -73,8 +82,21 @@ const toArticleEdit = () => {
     console.log(1)
     router.push('/article/edit')
 }
+
+// 顶部导航栏颜色变化
+
+const scrollTop = ref(0);//侧边栏初始高度
+const scrollTopListener = () => {
+    scrollTop.value = document.documentElement.scrollTop || document.body.scrollTop;
+}
+
 </script>
 <style scoped lang='less'>
+
+.bgChange{
+    background-color: #fff;
+    color: #000!important;
+}
 .headNav {
     position: fixed;
     top: 0;

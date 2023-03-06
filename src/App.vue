@@ -8,5 +8,6 @@
 <style>
  #app {
   font-family: 黑体;
+  background-color: rgba(244, 244, 244);
 }
 </style>

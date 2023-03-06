@@ -1,7 +1,8 @@
 <template>
-  <div class="editor-box">
-    <md-editor v-model="text" />
-
+  <div class="flex-col container">
+    <div class="editor-box">
+      <md-editor v-model="text" />
+    </div>
   </div>
 </template>
 <script lang='ts' setup>
@@ -12,6 +13,9 @@ import 'md-editor-v3/lib/style.css';
 const text = ref('Hello Editor!');
 </script>
 <style scoped lang='less'>
+.container{
+  min-height: 200vh;
+}
  .editor-box{
    position: fixed;
    bottom: 0;

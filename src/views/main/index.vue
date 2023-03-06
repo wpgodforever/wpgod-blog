@@ -28,7 +28,7 @@ import personCard from './components/personCard.vue'
   box-sizing: border-box;
    width: 100%;
    position: relative;
-   min-height: 100vh;
+   min-height: 500vh;
    background-color: rgba(244, 244, 244);
   .banner{
     height: 600px;
