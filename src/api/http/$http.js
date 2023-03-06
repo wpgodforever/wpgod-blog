@@ -58,13 +58,9 @@ service.interceptors.response.use(
           confirmButtonText: '确定',
           callback: () => {
             isAlert = false
-            // 清除用户信息缓存，跳转到登录页面
-            router.push({
-              name: 'login',
-              query: {
-                channelId: isUniversalLink ? '0' : '',
-              },
-            })
+            localStorage.removeItem('my_user')
+            // 清除用户信息缓存，刷新当前页面
+            router.go(0)
           },
         })
       }
