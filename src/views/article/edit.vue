@@ -13,6 +13,8 @@ const text = ref('Hello Editor!');
 </script>
 <style scoped lang='less'>
  .editor-box{
-   margin-top: 30%;
+   position: fixed;
+   bottom: 0;
+   width: 100%;
  }
 </style>
