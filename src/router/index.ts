@@ -1,12 +1,12 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-const Index = () => import('../views/layout/index.vue')
+const Layout = () => import('../views/layout/index.vue')
 const Main = () => import('../views/main/index.vue')
 const ArticleEdit = () => import('../views/article/edit.vue')
 const ArticleDetail = () => import('../views/article/detail.vue')
 const routes: Array<RouteRecordRaw> = [
     { 
         path: '/', 
-        component: Index,
+        component: Layout,
         redirect: '/index',
         children:[
             {

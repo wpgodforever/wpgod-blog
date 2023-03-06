@@ -13,8 +13,8 @@
             <div class="nav-list_item">
                 <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">面试</div>
             </div>
-            <div class="nav-list_item" v-if="userInfo.token && (userInfo.auth.includes('admin'))">
-                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">发布文章</div>
+            <div class="nav-list_item" @click="toArticleEdit" v-if="userInfo.token && (userInfo.auth.includes('admin'))">
+                <div class="hand" @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">发布文章</div>
             </div>
             <div class="nav-list_item" v-if="!userInfo.token"
             @click="popClick(0)">
@@ -66,6 +66,12 @@ const hoverAnimation = ($event) => {
 }
 const hoverAnimationLeave = ($event) => {
     $event.currentTarget.className = 'hand'
+}
+
+// 跳转到发布文章页面
+const toArticleEdit = () => {
+    console.log(1)
+    router.push('/article/edit')
 }
 </script>
 <style scoped lang='less'>
