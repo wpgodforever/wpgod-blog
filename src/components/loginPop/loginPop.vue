@@ -9,7 +9,7 @@
                         </div>
                     </transition-group>
                 </div>
-                <el-form :model="ruleForm" ref="ruleFormRef" :rules="rules" label-width="0px">
+                <el-form style="width: 80%;" :model="ruleForm" ref="ruleFormRef" :rules="rules" label-width="0px">
                     <el-form-item prop="username">
                       <el-input
                         v-model="ruleForm.username"
@@ -163,7 +163,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
     }
     .btn{
         position: relative;
-        width: 200px;
+        width: 80%;
         height: 40px;
         line-height: 40px;
         text-align: center;
@@ -175,9 +175,8 @@ const resetForm = (formEl: FormInstance | undefined) => {
         &-icon{
             position: absolute;
             top: 50%;
-            left: 30%;
-            transform: translate(-300%, -45%);
-            transform-origin: 115% 0;
+            left: 5%;
+            transform: translate(0, -45%);
             transition: all 1.5s;
         }
         &-text{
@@ -190,7 +189,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
             opacity: 0;
         }
         .btn-icon{
-            transform: translate(0%, -45%);
+            transform: translate(75%, -45%)!important;
         }
         i{
             animation: iconRoto 2s linear infinite;
@@ -202,7 +201,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
             opacity: 0;
         }
         .btn-icon{
-            transform: translate(0%, -45%);
+            transform: translate(75%, -45%)!important;
         }
         i{
             animation: iconRoto 2s linear infinite;
