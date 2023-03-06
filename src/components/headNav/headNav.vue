@@ -4,12 +4,23 @@
         <el-input v-model="searchVal" style="width: 240px;" class="ml-auto" placeholder="Type something"
             :prefix-icon="Search" />
         <div class="nav-list flex-align">
-            <div class="nav-list_item hand" @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">首页</div>
-            <div class="nav-list_item hand" @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">归档</div>
-            <div class="nav-list_item hand" @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">面试</div>
-            <div class="nav-list_item hand" @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)" v-if="!userInfo.token"
-            @click="popClick(0)">注册</div>
-            <div class="nav-list_item hand" @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)" v-if="!userInfo.token" @click="popClick(1)">登录</div>
+            <div class="nav-list_item">
+                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">首页</div>
+            </div>
+            <div class="nav-list_item">
+                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">归档</div>
+            </div>
+            <div class="nav-list_item">
+                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">面试</div>
+            </div>
+            <div class="nav-list_item" v-if="!userInfo.token"
+            @click="popClick(0)">
+                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">注册</div>
+            </div>
+            <div class="nav-list_item" v-if="!userInfo.token"
+            @click="popClick(1)">
+                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">登录</div>
+            </div>
         </div>
     </div>
     <loginPop v-model="dialogVisible" :tips="tips"></loginPop>
@@ -41,15 +52,17 @@ const popClick = (index:0|1) => {
 
 // 获取pinia用户数据
 const user = useUserStore()
-const { userInfo } = user
+const userInfo = computed(() => {
+    return user.userInfo
+})
 
 
 // 鼠标移入按钮动画
 const hoverAnimation = ($event) => {
-    $event.currentTarget.className = 'nav-list_item hand animate__animated animate__bounce'
+    $event.currentTarget.className = 'hand animate__animated animate__bounce'
 }
 const hoverAnimationLeave = ($event) => {
-    $event.currentTarget.className = 'nav-list_item hand'
+    $event.currentTarget.className = 'hand'
 }
 </script>
 <style scoped lang='less'>
@@ -73,7 +86,7 @@ const hoverAnimationLeave = ($event) => {
     .nav-list {
         &_item {
             margin: 0 15px;
-
+            padding: 10px 0;
         }
     }
 }
