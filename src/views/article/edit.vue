@@ -14,7 +14,7 @@ const text = ref('Hello Editor!');
 </script>
 <style scoped lang='less'>
 .container{
-  min-height: 200vh;
+  min-height: 100vh;
 }
  .editor-box{
    position: fixed;
