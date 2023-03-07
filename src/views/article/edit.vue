@@ -15,8 +15,8 @@
         <el-input v-model="form.desc" type="textarea"/>
       </el-form-item>
       <el-form-item label="封面">
-        <el-upload class="avatar-uploader" action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-          :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+        <el-upload class="avatar-uploader" action="http://127.0.0.1:1244/article/uploadImg"
+          :show-file-list="false" :headers="uploadHeaders" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :on-error="handleAvatarError">
           <img v-if="form.cover" :src="form.cover" class="avatar" />
           <el-icon v-else class="avatar-uploader-icon">
             <Plus />
@@ -38,10 +38,15 @@ import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import type { UploadProps } from 'element-plus'
 import { ElMessage } from 'element-plus'
-
+import { useUserStore } from '@/store/user'
 import { Plus } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { fromPairs } from 'lodash';
-
+const router = useRouter()
+const user = useUserStore()
+const { userInfo } = (user)
+const uploadHeaders = {"token":userInfo.token}
 
 const form = reactive({
   title: '',
@@ -76,12 +81,22 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
 ) => {
   form.cover = URL.createObjectURL(uploadFile.raw!)
 }
+const handleAvatarError = (err) => {
+  const errStr = JSON.parse(err.message)
+  ElMessage.error(errStr.msg)
+  if(errStr.code === 401 ){
+    localStorage.removeItem('my_user')
+    // 清除用户信息缓存，刷新当前页面
+    router.push('/index')
+  }
+}
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
-  if (rawFile.type !== 'image/jpeg') {
-    ElMessage.error('Avatar picture must be JPG format!')
+  console.log(rawFile.type)
+  if (rawFile.type !== 'image/jpeg' && rawFile.type !== 'image/png') {
+    ElMessage.error('请上传png或者jpg格式的图片')
     return false
-  } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error('Avatar picture size can not exceed 2MB!')
+  } else if (rawFile.size / 1024 / 1024 > 20) {
+    ElMessage.error('上传的图片不要超过20MB!')
     return false
   }
   return true

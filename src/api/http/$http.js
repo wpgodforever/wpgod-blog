@@ -1,10 +1,11 @@
 import axios from 'axios'
 import qs from 'qs'
 import { ElMessageBox, ElMessage  } from 'element-plus'
-import router from '../../router'
+import { useRouter } from 'vue-router'
 import baseUrl from '@/assets/js/baseUrl'
 import { concatPramas } from '@/lib/utils'
 let isAlert = false
+const router = useRouter()
 
 // 允许操作cookie
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'

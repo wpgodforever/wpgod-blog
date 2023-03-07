@@ -79,7 +79,6 @@ const hoverAnimationLeave = ($event) => {
 
 // 跳转到发布文章页面
 const toArticleEdit = () => {
-    console.log(1)
     router.push('/article/edit')
 }
 
