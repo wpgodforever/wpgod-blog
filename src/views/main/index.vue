@@ -40,6 +40,7 @@ import personCard from './components/personCard.vue'
     justify-content: center;
     align-items: center;
     color: #fff;
+    margin-top: -59px;
   }
   .main{
     box-sizing: border-box;

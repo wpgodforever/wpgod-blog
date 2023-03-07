@@ -1,7 +1,34 @@
 <template>
   <div class="flex-col container">
+    <el-form :model="form">
+      <el-form-item label="标题">
+        <el-input v-model="form.title" />
+      </el-form-item>
+      <el-form-item label="标签" >
+        <div class="tags-box flex-align">
+          <div class="tag-item hand" :class="[form.tags.includes(item)?'select':'']" @click.prevent="tagClick(item)" v-for="(item, index) in tagList" :key="index" round>{{ item }}</div>
+        </div>
+        <el-input style="width: 200px; margin-right: 20px;" v-model="addTagVal" placeholder="请输入要新增的标签" />
+        <el-button type="primary" @click="addTag" :disabled="addTagVal === ''">新增标签</el-button>
+      </el-form-item>
+      <el-form-item label="摘要">
+        <el-input v-model="form.desc" type="textarea"/>
+      </el-form-item>
+      <el-form-item label="封面">
+        <el-upload class="avatar-uploader" action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+          :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+          <img v-if="form.cover" :src="form.cover" class="avatar" />
+          <el-icon v-else class="avatar-uploader-icon">
+            <Plus />
+          </el-icon>
+        </el-upload>
+      </el-form-item>
+      <el-form-item style="padding-left: 40px;">
+        <el-button type="primary" @click="onSubmit">发布</el-button>
+      </el-form-item>
+    </el-form>
     <div class="editor-box">
-      <md-editor v-model="text" />
+      <md-editor v-model.trim="form.text" />
     </div>
   </div>
 </template>
@@ -9,16 +36,116 @@
 import { ref, reactive } from 'vue'
 import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
+import type { UploadProps } from 'element-plus'
+import { ElMessage } from 'element-plus'
 
-const text = ref('Hello Editor!');
+import { Plus } from '@element-plus/icons-vue'
+import { fromPairs } from 'lodash';
+
+
+const form = reactive({
+  title: '',
+  tags: [],
+  desc: '',
+  cover: '',
+  text:''
+})
+
+const tagList = reactive(['Css', 'Js'])
+const addTagVal = ref('')
+const tagClick = (item:String) => {
+  if(!form.tags.includes(item)){
+    form.tags.push(item)
+  }else{
+    const index = form.tags.findIndex(tagItem => item === tagItem)
+    form.tags.splice(index,1)
+  }
+}
+const addTag = () => {
+  tagList.push(addTagVal.value)
+  addTagVal.value = ''
+}
+
+const onSubmit = () => {
+  console.log(form.text)
+}
+
+const handleAvatarSuccess: UploadProps['onSuccess'] = (
+  response,
+  uploadFile
+) => {
+  form.cover = URL.createObjectURL(uploadFile.raw!)
+}
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+  if (rawFile.type !== 'image/jpeg') {
+    ElMessage.error('Avatar picture must be JPG format!')
+    return false
+  } else if (rawFile.size / 1024 / 1024 > 2) {
+    ElMessage.error('Avatar picture size can not exceed 2MB!')
+    return false
+  }
+  return true
+}
 </script>
 <style scoped lang='less'>
-.container{
-  min-height: 100vh;
+.container {
+  flex: 1;
+  .tags-box{
+    margin-right: 15px;
+    .tag-item{
+      padding: 8px 15px;
+      color: var(--el-button-text-color);
+      border-color: var(--el-button-border-color);
+      border: var(--el-border);
+      margin-right: 15px;
+      border-radius: 20px;
+      line-height: 14px;
+      span{
+        height: 14px;
+      }
+    }
+    .select{
+      background-color: #539b2e;
+      color: #fff;
+    }
+  }
+
+  .el-form {
+    padding: 20px;
+  }
+
+  .editor-box {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
 }
- .editor-box{
-   position: fixed;
-   bottom: 0;
-   width: 100%;
- }
+
+
+
+.avatar-uploader .avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+:deep(.avatar-uploader .el-upload) {
+  border: 1px dashed#000;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+:deep(.avatar-uploader .el-upload:hover) {
+  border-color: var(--el-color-primary);
+}
+
+:deep(.el-icon.avatar-uploader-icon) {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
 </style>
