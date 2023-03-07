@@ -1,11 +1,10 @@
 import axios from 'axios'
 import qs from 'qs'
 import { ElMessageBox, ElMessage  } from 'element-plus'
-import { useRouter } from 'vue-router'
+import router from '@/router/index'
 import baseUrl from '@/assets/js/baseUrl'
 import { concatPramas } from '@/lib/utils'
 let isAlert = false
-const router = useRouter()
 
 // 允许操作cookie
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
@@ -60,6 +59,7 @@ service.interceptors.response.use(
           callback: () => {
             isAlert = false
             localStorage.removeItem('my_user')
+            console.log(router)
             // 清除用户信息缓存，刷新当前页面
             router.go(0)
           },
@@ -76,6 +76,13 @@ service.interceptors.response.use(
   },
   error => {
     console.error('response error', error)
+    if(error.data.code === 401){
+      console.log(1)
+      localStorage.removeItem('my_user')
+      // 清除用户信息缓存，刷新当前页面
+      router.go(0)
+      return
+    }
     ElMessageBox.alert('网络错误', '提示')
     return Promise.reject(error)
   }

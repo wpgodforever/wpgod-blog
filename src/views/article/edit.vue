@@ -1,20 +1,22 @@
 <template>
   <div class="flex-col container">
-    <el-form :model="form">
-      <el-form-item label="标题">
+    <el-form ref="ruleFormRef"
+      :model="form"
+      :rules="rules">
+      <el-form-item label="标题" prop="title">
         <el-input v-model="form.title" />
       </el-form-item>
-      <el-form-item label="标签" >
+      <el-form-item label="标签" prop="tags">
         <div class="tags-box flex-align">
           <div class="tag-item hand" :class="[form.tags.includes(item)?'select':'']" @click.prevent="tagClick(item)" v-for="(item, index) in tagList" :key="index" round>{{ item }}</div>
         </div>
         <el-input style="width: 200px; margin-right: 20px;" v-model="addTagVal" placeholder="请输入要新增的标签" />
         <el-button type="primary" @click="addTag" :disabled="addTagVal === ''">新增标签</el-button>
       </el-form-item>
-      <el-form-item label="摘要">
+      <el-form-item label="摘要" prop="tags">
         <el-input v-model="form.desc" type="textarea"/>
       </el-form-item>
-      <el-form-item label="封面">
+      <el-form-item label="封面" prop="cover">
         <el-upload class="avatar-uploader" action="http://127.0.0.1:1244/article/uploadImg"
           :show-file-list="false" :headers="uploadHeaders" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :on-error="handleAvatarError">
           <img v-if="form.cover" :src="form.cover" class="avatar" />
@@ -24,7 +26,7 @@
         </el-upload>
       </el-form-item>
       <el-form-item style="padding-left: 40px;">
-        <el-button type="primary" @click="onSubmit">发布</el-button>
+        <el-button type="primary" @click="onSubmit(ruleFormRef)">发布</el-button>
       </el-form-item>
     </el-form>
     <div class="editor-box">
@@ -36,45 +38,19 @@
 import { ref, reactive } from 'vue'
 import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import type { UploadProps } from 'element-plus'
+import type { UploadProps, FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/store/user'
 import { Plus } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
+import { articlePostFn } from '@/api/article/index'
 import { storeToRefs } from 'pinia'
 import { fromPairs } from 'lodash';
-const router = useRouter()
 const user = useUserStore()
 const { userInfo } = (user)
+// 上传文章封面-----------------------------------
+const router = useRouter()
 const uploadHeaders = {"Authorization": 'Bearer ' + userInfo.token}
-
-const form = reactive({
-  title: '',
-  tags: [],
-  desc: '',
-  cover: '',
-  text:''
-})
-
-const tagList = reactive(['Css', 'Js'])
-const addTagVal = ref('')
-const tagClick = (item:String) => {
-  if(!form.tags.includes(item)){
-    form.tags.push(item)
-  }else{
-    const index = form.tags.findIndex(tagItem => item === tagItem)
-    form.tags.splice(index,1)
-  }
-}
-const addTag = () => {
-  tagList.push(addTagVal.value)
-  addTagVal.value = ''
-}
-
-const onSubmit = () => {
-  console.log(form.text)
-}
-
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
   response,
   uploadFile
@@ -103,6 +79,66 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   }
   return true
 }
+// ---------------------------------------------
+// 发布文章
+const ruleFormRef = ref<FormInstance>()
+const form = reactive({
+  title: '',
+  tags: [],
+  desc: '',
+  cover: '',
+  text:''
+})
+const rules = reactive<FormRules>({
+  title: [
+    { required: true, message: '请输入文章标题', trigger: 'blur' },
+    { min: 3, message: '最少3个字哦', trigger: 'blur' },
+  ],
+  tags: [
+    {
+      required: true,
+      message: '请选择标签',
+      trigger: 'blur',
+    },
+  ],
+})
+const onSubmit = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      if(!form.text){
+        ElMessage.error('请输入文章内容')
+      }else{
+        console.log(form)
+        articlePostFn(form).then(res => {
+          console.log(res,'文章接口返回')
+        })
+      }
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
+}
+// ------------------------------
+// 标签相关
+const tagList = reactive(['Css', 'Js'])
+const addTagVal = ref('')
+const tagClick = (item:String) => {
+  if(!form.tags.includes(item)){
+    form.tags.push(item)
+  }else{
+    const index = form.tags.findIndex(tagItem => item === tagItem)
+    form.tags.splice(index,1)
+  }
+}
+const addTag = () => {
+  tagList.push(addTagVal.value)
+  addTagVal.value = ''
+}
+
+
+
+
 </script>
 <style scoped lang='less'>
 .container {
