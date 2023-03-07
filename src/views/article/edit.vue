@@ -46,7 +46,7 @@ import { fromPairs } from 'lodash';
 const router = useRouter()
 const user = useUserStore()
 const { userInfo } = (user)
-const uploadHeaders = {"token":userInfo.token}
+const uploadHeaders = {"Authorization": 'Bearer ' + userInfo.token}
 
 const form = reactive({
   title: '',
@@ -88,6 +88,8 @@ const handleAvatarError = (err) => {
     localStorage.removeItem('my_user')
     // 清除用户信息缓存，刷新当前页面
     router.push('/index')
+  }else{
+    form.cover = ''
   }
 }
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
