@@ -20,6 +20,11 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     console.log(config,'config')
+    let user = localStorage.getItem('my_user')
+    if(user){
+      config.headers.token = user.userInfo.token || ''
+    }
+    
     // post 请求需要序列化一下
     if (
       !config.notNeedQS &&
