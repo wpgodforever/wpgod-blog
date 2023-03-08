@@ -17,7 +17,7 @@
         <el-input v-model="form.desc" type="textarea"/>
       </el-form-item>
       <el-form-item label="封面" prop="cover">
-        <el-upload class="avatar-uploader" action="http://127.0.0.1:1244/article/uploadImg"
+        <el-upload class="avatar-uploader" action="http://127.0.0.1:1244/api/article/uploadImg"
           :show-file-list="false" :headers="uploadHeaders" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :on-error="handleAvatarError">
           <img v-if="form.cover" :src="form.cover" class="avatar" />
           <el-icon v-else class="avatar-uploader-icon">
@@ -30,27 +30,31 @@
       </el-form-item>
     </el-form>
     <div class="editor-box">
-      <md-editor v-model.trim="form.text" />
+      <md-editor v-model.trim="form.text" @on-upload-img="onUploadImg"/>
     </div>
   </div>
 </template>
 <script lang='ts' setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed, } from 'vue'
 import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import type { UploadProps, FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/store/user'
+import { storeToRefs } from "pinia";
 import { Plus } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
-import { articlePostFn } from '@/api/article/index'
-import { storeToRefs } from 'pinia'
-import { fromPairs } from 'lodash';
+import { articlePostFn, uploadImgFn } from '@/api/article/index'
+import axios from 'axios'
+import baseUrl from '@/assets/js/baseUrl'
 const user = useUserStore()
-const { userInfo } = (user)
+const { userInfo } = storeToRefs(user)
 // 上传文章封面-----------------------------------
 const router = useRouter()
-const uploadHeaders = {"Authorization": 'Bearer ' + userInfo.token}
+
+const uploadHeaders = computed(() =>{
+  return {"Authorization": 'Bearer ' + userInfo.value.token}
+})
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
   response,
   uploadFile
@@ -119,6 +123,29 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
     }
   })
 }
+// 在文章中使用图片
+// 无论是在文章中直接CV图片亦或者上传图片。都会触发这个方法
+const onUploadImg = async (files, callback) => {
+  const res = await Promise.all(
+    files.map((file) => {
+      return new Promise((rev, rej) => {
+        const form = new FormData();
+        form.append('file', file);
+        axios
+          .post(`api/article/uploadImg`, form, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+          .then((res) => rev(res))
+          .catch((error) => rej(error));
+          
+      });
+    })
+  );
+
+  callback(res.map((item) => item.data.url));
+};
 // ------------------------------
 // 标签相关
 const tagList = reactive(['Css', 'Js'])

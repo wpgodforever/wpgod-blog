@@ -10,8 +10,9 @@ let isAlert = false
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 axios.defaults.withCredentials = true
 const service = axios.create({
+  // 用了proxy不用配置baseurl了
   // axios中请求配置有baseURL选项，表示请求URL公共部分
-  baseURL: baseUrl,
+  baseURL: '/api',
   withCredentials: false, // send cookies when cross-domain requests
   timeout: 60000,
 })
@@ -54,6 +55,7 @@ service.interceptors.response.use(
   // 当后端服务器状态码为300以下会走response
   response => {
     const res = response.data
+    console.log(res.code,'res.code')
     if (response.config.returnRes) return res
     // 接口状态码为401，说明登录已过期
     if (+res.code === 401 || +res.code === -1) {

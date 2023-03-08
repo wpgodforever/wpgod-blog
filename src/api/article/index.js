@@ -10,3 +10,13 @@ export function articlePostFn(data) {
     notNeedQS: true,
   })
 }
+
+// 上传图片
+export function uploadImgFn(data) {
+    return request({
+      url: '/article/uploadImg',
+      method: 'post',
+      data: data,
+      notNeedQS: true,
+    })
+  }
