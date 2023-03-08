@@ -51,9 +51,9 @@ service.interceptors.request.use(
 
 // response interceptor
 service.interceptors.response.use(
+  // 当后端服务器状态码为300以下会走response
   response => {
     const res = response.data
-    console.log(response,'response')
     if (response.config.returnRes) return res
     // 接口状态码为401，说明登录已过期
     if (+res.code === 401 || +res.code === -1) {
@@ -80,15 +80,8 @@ service.interceptors.response.use(
     }
     return res
   },
+  // 当后端服务器状态码为300以上会走error
   error => {
-    console.error('response error', error)
-    if(error.data.code === 401){
-      console.log(1)
-      localStorage.removeItem('my_user')
-      // 清除用户信息缓存，刷新当前页面
-      router.go(0)
-      return
-    }
     ElMessageBox.alert('网络错误', '提示')
     return Promise.reject(error)
   }
