@@ -19,10 +19,11 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    console.log(config,'config')
-    let user = localStorage.getItem('my_user')
+    
+    let user = JSON.parse(localStorage.getItem('my_user'))
+    console.log(user,'config')
     if(user){
-      config.headers.token = user.userInfo.token || ''
+      config.headers.Authorization = 'Bearer ' + user.userInfo.token
     }
     
     // post 请求需要序列化一下
