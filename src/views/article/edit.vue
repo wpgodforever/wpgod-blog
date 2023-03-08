@@ -17,7 +17,7 @@
         <el-input v-model="form.desc" type="textarea"/>
       </el-form-item>
       <el-form-item label="封面" prop="cover">
-        <el-upload class="avatar-uploader" action="http://127.0.0.1:1244/api/article/uploadImg"
+        <el-upload class="avatar-uploader" action="http://127.0.0.1:1244/article/uploadImg"
           :show-file-list="false" :headers="uploadHeaders" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :on-error="handleAvatarError">
           <img v-if="form.cover" :src="form.cover" class="avatar" />
           <el-icon v-else class="avatar-uploader-icon">
@@ -73,7 +73,6 @@ const handleAvatarError = (err) => {
   }
 }
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
-  console.log(rawFile.type)
   if (rawFile.type !== 'image/jpeg' && rawFile.type !== 'image/png') {
     ElMessage.error('请上传png或者jpg格式的图片')
     return false
@@ -132,10 +131,12 @@ const onUploadImg = async (files, callback) => {
         const form = new FormData();
         form.append('file', file);
         axios
-          .post(`api/article/uploadImg`, form, {
+          .post(`${baseUrl}/article/uploadImg`, form, {
             headers: {
-              'Content-Type': 'multipart/form-data'
-            }
+              'Content-Type': 'multipart/form-data',
+              'Authorization': 'Bearer ' + user.userInfo.token,
+            },
+            withCredentials: false,
           })
           .then((res) => rev(res))
           .catch((error) => rej(error));
@@ -144,7 +145,10 @@ const onUploadImg = async (files, callback) => {
     })
   );
 
-  callback(res.map((item) => item.data.url));
+  callback(res.map((item) => {
+    console.log(item)
+    return item.data.data.url
+  }));
 };
 // ------------------------------
 // 标签相关

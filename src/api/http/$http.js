@@ -20,7 +20,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    
+    console.log(config,'config')
     let user = JSON.parse(localStorage.getItem('my_user'))
     console.log(user,'config')
     if(user){

@@ -6,6 +6,7 @@ import { resolve } from 'path';
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import baseUrl from './src/assets/js/baseUrl'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -30,7 +31,7 @@ export default defineConfig({
   server: {
     proxy: {
         '/api': { //apiTest是自行设置的请求前缀，按照这个来匹配请求，有这个字段的请求，就会进到代理来
-            target: 'http://127.0.0.1:1244',
+            target: baseUrl,
             changeOrigin: true, //是否跨域
             rewrite: path => path.replace(/^\/api/, '')
         }
