@@ -17,7 +17,7 @@
         <el-input v-model="form.desc" type="textarea"/>
       </el-form-item>
       <el-form-item label="封面" prop="cover">
-        <el-upload class="avatar-uploader" action="http://127.0.0.1:1244/article/uploadImg"
+        <el-upload class="avatar-uploader" :action="`${baseUrl}/article/uploadImg/cover`"
           :show-file-list="false" :headers="uploadHeaders" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :on-error="handleAvatarError">
           <img v-if="form.cover" :src="form.cover" class="avatar" />
           <el-icon v-else class="avatar-uploader-icon">
@@ -131,7 +131,7 @@ const onUploadImg = async (files, callback) => {
         const form = new FormData();
         form.append('file', file);
         axios
-          .post(`${baseUrl}/article/uploadImg`, form, {
+          .post(`${baseUrl}/article/uploadImg/detail`, form, {
             headers: {
               'Content-Type': 'multipart/form-data',
               'Authorization': 'Bearer ' + user.userInfo.token,
