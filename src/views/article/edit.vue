@@ -1,36 +1,39 @@
 <template>
   <div class="flex-col container">
-    <el-form ref="ruleFormRef"
-      :model="form"
-      :rules="rules">
-      <el-form-item label="标题" prop="title">
-        <el-input v-model="form.title" />
-      </el-form-item>
-      <el-form-item label="标签" prop="tags">
-        <div class="tags-box flex-align">
-          <div class="tag-item hand" :class="[form.tags.includes(item)?'select':'']" @click.prevent="tagClick(item)" v-for="(item, index) in tagList" :key="index" round>{{ item }}</div>
-        </div>
-        <el-input style="width: 200px; margin-right: 20px;" v-model="addTagVal" placeholder="请输入要新增的标签" />
-        <el-button type="primary" @click="addTag" :disabled="addTagVal === ''">新增标签</el-button>
-      </el-form-item>
-      <el-form-item label="摘要" prop="tags">
-        <el-input v-model="form.desc" type="textarea"/>
-      </el-form-item>
-      <el-form-item label="封面" prop="cover">
-        <el-upload class="avatar-uploader" :action="`${baseUrl}/article/uploadImg/cover`"
-          :show-file-list="false" :headers="uploadHeaders" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :on-error="handleAvatarError">
-          <img v-if="form.cover" :src="form.cover" class="avatar" />
-          <el-icon v-else class="avatar-uploader-icon">
-            <Plus />
-          </el-icon>
-        </el-upload>
-      </el-form-item>
-      <el-form-item style="padding-left: 40px;">
-        <el-button type="primary" @click="onSubmit(ruleFormRef)">发布</el-button>
-      </el-form-item>
-    </el-form>
+    <div class="formContainer">
+      <el-form ref="ruleFormRef" :model="form" :rules="rules">
+        
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="form.title" />
+        </el-form-item>
+        <el-form-item label="标签" prop="tags">
+          <div class="tags-box flex-align">
+            <div class="tag-item hand" :class="[form.tags.includes(item) ? 'select' : '']" @click.prevent="tagClick(item)"
+              v-for="(item, index) in tagList" :key="index" round>{{ item }}</div>
+          </div>
+          <el-input style="width: 200px; margin-right: 20px;" v-model="addTagVal" placeholder="请输入要新增的标签" />
+          <el-button type="primary" @click="addTag" :disabled="addTagVal === ''">新增标签</el-button>
+        </el-form-item>
+        <el-form-item label="摘要" prop="tags">
+          <el-input v-model="form.desc" type="textarea" />
+        </el-form-item>
+        <el-form-item label="封面" prop="cover">
+          <el-upload class="avatar-uploader" :action="`${baseUrl}/article/uploadImg/cover`" :show-file-list="false"
+            :headers="uploadHeaders" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload"
+            :on-error="handleAvatarError">
+            <img v-if="form.cover" :src="form.cover" class="avatar" />
+            <el-icon v-else class="avatar-uploader-icon">
+              <Plus />
+            </el-icon>
+          </el-upload>
+        </el-form-item>
+        <el-form-item style="padding-left: 40px;">
+          <el-button type="primary" @click="onSubmit(ruleFormRef)">发布</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <div class="editor-box">
-      <md-editor v-model.trim="form.text" @on-upload-img="onUploadImg"/>
+      <md-editor class="editor" v-model.trim="form.text" @on-upload-img="onUploadImg" />
     </div>
   </div>
 </template>
@@ -52,8 +55,8 @@ const { userInfo } = storeToRefs(user)
 // 上传文章封面-----------------------------------
 const router = useRouter()
 
-const uploadHeaders = computed(() =>{
-  return {"Authorization": 'Bearer ' + userInfo.value.token}
+const uploadHeaders = computed(() => {
+  return { "Authorization": 'Bearer ' + userInfo.value.token }
 })
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
   response,
@@ -64,11 +67,11 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
 const handleAvatarError = (err) => {
   const errStr = JSON.parse(err.message)
   ElMessage.error(errStr.msg)
-  if(errStr.code === 401 ){
+  if (errStr.code === 401) {
     localStorage.removeItem('my_user')
     // 清除用户信息缓存，刷新当前页面
     router.push('/index')
-  }else{
+  } else {
     form.cover = ''
   }
 }
@@ -90,7 +93,7 @@ const form = reactive({
   tags: [],
   desc: '',
   cover: '',
-  text:''
+  text: ''
 })
 const rules = reactive<FormRules>({
   title: [
@@ -109,12 +112,12 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      if(!form.text){
+      if (!form.text) {
         ElMessage.error('请输入文章内容')
-      }else{
+      } else {
         console.log(form)
         articlePostFn(form).then(res => {
-          console.log(res,'文章接口返回')
+          console.log(res, '文章接口返回')
         })
       }
     } else {
@@ -140,7 +143,7 @@ const onUploadImg = async (files, callback) => {
           })
           .then((res) => rev(res))
           .catch((error) => rej(error));
-          
+
       });
     })
   );
@@ -154,12 +157,12 @@ const onUploadImg = async (files, callback) => {
 // 标签相关
 const tagList = reactive(['Css', 'Js'])
 const addTagVal = ref('')
-const tagClick = (item:String) => {
-  if(!form.tags.includes(item)){
+const tagClick = (item: String) => {
+  if (!form.tags.includes(item)) {
     form.tags.push(item)
-  }else{
+  } else {
     const index = form.tags.findIndex(tagItem => item === tagItem)
-    form.tags.splice(index,1)
+    form.tags.splice(index, 1)
   }
 }
 const addTag = () => {
@@ -174,9 +177,14 @@ const addTag = () => {
 <style scoped lang='less'>
 .container {
   flex: 1;
-  .tags-box{
+  .formContainer{
+    height: 50vh;
+    overflow: scroll;
+  }
+  .tags-box {
     margin-right: 15px;
-    .tag-item{
+
+    .tag-item {
       padding: 8px 15px;
       color: var(--el-button-text-color);
       border-color: var(--el-button-border-color);
@@ -184,11 +192,13 @@ const addTag = () => {
       margin-right: 15px;
       border-radius: 20px;
       line-height: 14px;
-      span{
+
+      span {
         height: 14px;
       }
     }
-    .select{
+
+    .select {
       background-color: #539b2e;
       color: #fff;
     }
@@ -202,6 +212,11 @@ const addTag = () => {
     position: fixed;
     bottom: 0;
     width: 100%;
+    height: 50vh;
+    .editor{
+      position: absolute;
+      bottom: 0;
+    }
   }
 }
 
@@ -212,6 +227,7 @@ const addTag = () => {
   height: 178px;
   display: block;
 }
+
 :deep(.avatar-uploader .el-upload) {
   border: 1px dashed#000;
   border-radius: 6px;
