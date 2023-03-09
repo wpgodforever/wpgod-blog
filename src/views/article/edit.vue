@@ -14,7 +14,7 @@
           <el-input style="width: 200px; margin-right: 20px;" v-model="addTagVal" placeholder="请输入要新增的标签" />
           <el-button type="primary" @click="addTag" :disabled="addTagVal === ''">新增标签</el-button>
         </el-form-item>
-        <el-form-item label="摘要" prop="tags">
+        <el-form-item label="摘要" >
           <el-input v-model="form.desc" type="textarea" />
         </el-form-item>
         <el-form-item label="封面" prop="cover">
@@ -33,12 +33,13 @@
       </el-form>
     </div>
     <div class="editor-box">
-      <md-editor class="editor" v-model.trim="form.text" @on-upload-img="onUploadImg" />
+      <MdEditor class="editor" v-model.trim="form.text" @on-upload-img="onUploadImg" />
+      <!-- <MdEditor previewOnly /> -->
     </div>
   </div>
 </template>
 <script lang='ts' setup>
-import { ref, reactive, computed, } from 'vue'
+import { ref, reactive, computed, toRaw  } from 'vue'
 import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import type { UploadProps, FormInstance, FormRules } from 'element-plus'
@@ -93,7 +94,7 @@ const form = reactive({
   tags: [],
   desc: '',
   cover: '',
-  text: ''
+  text: ``
 })
 const rules = reactive<FormRules>({
   title: [
@@ -115,9 +116,16 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
       if (!form.text) {
         ElMessage.error('请输入文章内容')
       } else {
-        console.log(form)
-        articlePostFn(form).then(res => {
-          console.log(res, '文章接口返回')
+        let info = {
+          ...toRaw(form),
+          author: toRaw(userInfo.value._id)
+        }
+        console.log(info)
+        articlePostFn(info).then(res => {
+          ElMessage.success('发布成功')
+          setTimeout(() => {
+            router.push('/index')
+          },1000)
         })
       }
     } else {

@@ -6,7 +6,8 @@ export const useUserStore = defineStore({
             userInfo:{
                 username: '',
                 auth: [],
-                token: ''
+                token: '',
+                _id: ''
             },
             
         }
