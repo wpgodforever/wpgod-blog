@@ -11,12 +11,11 @@ export function articlePostFn(data) {
   })
 }
 
-// 上传图片
-export function uploadImgFn(data) {
-    return request({
-      url: '/article/uploadImg',
-      method: 'post',
-      data: data,
-      notNeedQS: true,
-    })
-  }
+// 文章详情
+export function articleDetailFn(data) {
+  return request({
+    url: '/article/detail',
+    method: 'get',
+    params: data,
+  })
+}
