@@ -147,7 +147,7 @@ const onUploadImg = async (files, callback) => {
 
   callback(res.map((item) => {
     console.log(item)
-    return item.data.data.url
+    return item.data.url
   }));
 };
 // ------------------------------
