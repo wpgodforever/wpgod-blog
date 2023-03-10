@@ -13,7 +13,7 @@
       </div>
       <!-- 右侧信息卡片区域 -->
       <div class="main-right flex-col">
-        <personCard></personCard>
+        <personCard :listNum="list.length" :tagsNum="tagsNum"></personCard>
       </div>
     </div>
   </div>
@@ -34,8 +34,10 @@ const articleInfo = reactive({
 })
 
 let list = reactive([])
+let tagsNum = ref(0)
 articleListFn(articleInfo).then(res => {
-  list.push(...res.data) 
+  list.push(...res.data.list) 
+  tagsNum.value = res.data.tagsNum
 })
 </script>
 <style scoped lang='less'>

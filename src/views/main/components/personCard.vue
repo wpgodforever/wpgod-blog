@@ -1,18 +1,17 @@
 <template>
   <div class="container flex-col">
     <div class="container-img">
-
     </div>
     <div class="container-name">wpgodforever</div>
     <div class="container-msg flex-align">
         <div class="msgItem flex-col">
             <div>文章</div>
-            <div class="msgItem-num">10</div>
+            <div class="msgItem-num">{{ listNum }}</div>
         </div>
         <el-divider direction="vertical" />
         <div class="msgItem">
             <div>标签</div>
-            <div class="msgItem-num">1999</div>
+            <div class="msgItem-num">{{ tagsNum }}</div>
         </div>
     </div>
     <el-button @click="handleFont(0)" class="hand" type="primary" color="#000" style="width: 70%;" :icon="Position">加入书签</el-button>
@@ -27,7 +26,16 @@
 import { ref, reactive } from 'vue'
 import { Position } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-
+const props = defineProps({
+    listNum: {
+        type: Number,
+        default: 0,
+    },
+    tagsNum: {
+        type: Number,
+        default: 0,
+    },
+})
 
 
 const handleFont = (index:0| 1 | 2 | 3) => {
@@ -56,6 +64,9 @@ const handleFont = (index:0| 1 | 2 | 3) => {
         border-radius: 50%;
         overflow: hidden;
         background-color: pink;
+        background-image: url('../../../assets/img/headImg.jpg');
+        background-size: cover;
+        background-position: center;
     }
     &-name{
         font-size: 24px;
