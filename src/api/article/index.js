@@ -19,3 +19,12 @@ export function articleDetailFn(data) {
     params: data,
   })
 }
+
+// 文章详情
+export function articleListFn(data) {
+  return request({
+    url: '/article/list',
+    method: 'get',
+    params: data,
+  })
+}

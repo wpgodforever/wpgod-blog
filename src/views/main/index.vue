@@ -8,7 +8,7 @@
       <!-- 左侧列表区域 -->
       <div class="main-left">
         <div class="list flex-col">
-          <listItem></listItem>
+          <listItem :list="list"></listItem>
         </div>
       </div>
       <!-- 右侧信息卡片区域 -->
@@ -22,6 +22,22 @@
 import { ref, reactive } from 'vue'
 import listItem from './components/listItem.vue'
 import personCard from './components/personCard.vue'
+import {
+  articleListFn
+} from '@/api/article/index'
+
+// 获取文章列表
+const articleInfo = reactive({
+  pageSize:10,
+  pageNo:1,
+  tags:[],
+})
+
+let list = reactive([])
+articleListFn(articleInfo).then(res => {
+  list.push(res.data) 
+  
+})
 </script>
 <style scoped lang='less'>
  .main-container{

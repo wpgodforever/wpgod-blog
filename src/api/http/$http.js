@@ -20,9 +20,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    console.log(config,'config')
     let user = JSON.parse(localStorage.getItem('my_user'))
-    console.log(user,'config')
     if(user){
       config.headers.Authorization = 'Bearer ' + user.userInfo.token
     }
@@ -55,7 +53,6 @@ service.interceptors.response.use(
   // 当后端服务器状态码为300以下会走response
   response => {
     const res = response.data
-    console.log(res.code,'res.code')
     if (response.config.returnRes) return res
     // 接口状态码为401，说明登录已过期
     if (+res.code === 401 || +res.code === -1) {
@@ -67,7 +64,6 @@ service.interceptors.response.use(
           callback: () => {
             isAlert = false
             localStorage.removeItem('my_user')
-            console.log(router)
             // 清除用户信息缓存，刷新当前页面
             router.go(0)
           },

@@ -43,7 +43,6 @@ onMounted(() => {
     }else{
         window.addEventListener("scroll", scrollTopListener, true);
     }
-    console.log(bgChange.value)
 });
 
 const searchVal = ref('')
