@@ -155,6 +155,5 @@ export function timeTransform(time) {
   minute = minute < 10 ? "0" + minute : minute;
   var s = date.getSeconds();
   s = s < 10 ? "0" + s : s;
-  console.log( y + "-" + m + "-" + d + " " + h + ":" + minute + ":" + s)
   return y + "-" + m + "-" + d + " " + h + ":" + minute + ":" + s;
 }
