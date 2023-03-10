@@ -47,7 +47,7 @@ articleListFn(articleInfo).then(res => {
    background-color: rgba(244, 244, 244);
   .banner{
     height: 600px;
-    background-image: url(../../assets/img/banner-bg.jpg);
+    background-image: url(../../assets/img/banner-bg.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center 0px;
