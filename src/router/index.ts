@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: ArticleEdit
                     },
                     {
-                        path:'/article/detail',
+                        path:'/article/detail/:id',
                         component: ArticleDetail
                     },
                 ]

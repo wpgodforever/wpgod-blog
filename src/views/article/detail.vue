@@ -10,11 +10,13 @@
 import { ref, reactive } from 'vue'
 import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
+import { useRoute } from 'vue-router';
 import {
   articleDetailFn
 } from '@/api/article/index'
+const route = useRoute()
 let text = ref('')
-articleDetailFn({_id:'64098789ad902b12624fbfac'}).then(res => {
+articleDetailFn({_id:route.params.id}).then(res => {
   console.log(res)
   text.value = res.data[0].text
 })
