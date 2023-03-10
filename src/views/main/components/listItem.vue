@@ -1,6 +1,6 @@
 <template>
     <div class="container flex-col">
-        <div class="containerItem" v-for="(item,index) in props.list" :key="index">
+        <div @click="jump(item)" class="containerItem" v-for="(item,index) in list" :key="index">
             <div class="title">{{ item.title }}</div>
             <div class="date">{{  item.updatedAt }}</div>
             <div class="tags flex-align" >
@@ -12,6 +12,8 @@
 <script lang='ts' setup>
 import { ref, reactive, PropType  } from 'vue'
 import { timeTransform } from '@/lib/utils.js'
+import { useRouter } from 'vue-router';
+const router = useRouter()
 const props = defineProps({
     list: {
         type: Array as PropType<listItem[]>,
@@ -23,6 +25,12 @@ interface listItem {
   id: string;
   tags: Array<string>;
   updatedAt: String;
+}
+
+const jump = (item) => {
+    router.push({
+        path:'/article/detail/'+item.id
+    })
 }
 </script>
 <style scoped lang='less'>

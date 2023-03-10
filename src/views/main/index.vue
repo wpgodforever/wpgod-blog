@@ -35,8 +35,7 @@ const articleInfo = reactive({
 
 let list = reactive([])
 articleListFn(articleInfo).then(res => {
-  list.push(res.data) 
-  
+  list.push(...res.data) 
 })
 </script>
 <style scoped lang='less'>
