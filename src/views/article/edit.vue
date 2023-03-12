@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-col container">
+  <div class="container">
     <div class="formContainer">
       <el-form ref="ruleFormRef" :model="form" :rules="rules">
         
@@ -185,8 +185,11 @@ const addTag = () => {
 <style scoped lang='less'>
 .container {
   flex: 1;
+  display: flex;
+  height: 100%;
   .formContainer{
-    height: 50vh;
+    width: 50vw;
+    min-height: 100%;
     overflow: scroll;
   }
   .tags-box {
@@ -217,13 +220,9 @@ const addTag = () => {
   }
 
   .editor-box {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 50vh;
+    width: 50vw;
     .editor{
-      position: absolute;
-      bottom: 0;
+      height: calc(100vh - 59px)!important;
     }
   }
 }
