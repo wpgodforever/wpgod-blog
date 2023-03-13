@@ -5,6 +5,11 @@
             <div class="date">{{ timeTransform(item.updatedAt) }}</div>
             <div class="tags flex-align">
                 <div class="tagItem" v-for="(tagsItem, tagsIndex) in item.tags" :key="tagsIndex">{{ tagsItem }}</div>
+                <div class="autoBtn">
+                    <el-button @click.stop="update(item)" type="primary">修改</el-button>
+                    <el-button @click.stop="update" type="danger">删除</el-button>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -32,6 +37,12 @@ const jump = (item) => {
         path: '/article/detail/' + item.id
     })
 }
+
+const update = (item) => {
+    router.push({
+        path: '/article/update/' + item.id
+    })
+}
 </script>
 <style scoped lang='less'>
 .container {
@@ -42,7 +53,11 @@ const jump = (item) => {
         margin-bottom: 20px;
         background-color: #fff;
     }
-
+    .containerItem:hover{
+        .autoBtn{
+            display: block;
+        }
+    }
     .title {
         font-size: 20px;
         text-overflow: ellipsis;
@@ -59,7 +74,11 @@ const jump = (item) => {
     .tags {
         flex-wrap: wrap;
         margin-top: 10px;
-
+        height: 38px;
+        .autoBtn{
+            display: none;
+            margin-left: auto;
+        }
         .tagItem {
             color: #fff;
             height: 20px;

@@ -25,6 +25,10 @@ const routes: Array<RouteRecordRaw> = [
                         path:'/article/detail/:id',
                         component: ArticleDetail
                     },
+                    {
+                        path:'/article/update/:id',
+                        component: ArticleEdit
+                    },
                 ]
             }
         ] 
