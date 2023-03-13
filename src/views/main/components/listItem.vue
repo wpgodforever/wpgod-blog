@@ -6,8 +6,8 @@
             <div class="tags flex-align">
                 <div class="tagItem" v-for="(tagsItem, tagsIndex) in item.tags" :key="tagsIndex">{{ tagsItem }}</div>
                 <div class="autoBtn">
-                    <el-button @click.stop="update(item)" type="primary">修改</el-button>
-                    <el-button @click.stop="update" type="danger">删除</el-button>
+                    <el-button @click.stop="updateFn(item)" type="primary">修改</el-button>
+                    <el-button @click.stop="deleteFn(item)" type="danger">删除</el-button>
                 </div>
                 
             </div>
@@ -18,6 +18,8 @@
 import { ref, reactive, PropType } from 'vue'
 import { timeTransform } from '@/lib/utils.js'
 import { useRouter } from 'vue-router';
+import { articleDeleteFn, } from '@/api/article/index';
+import { ElMessage } from 'element-plus';
 const router = useRouter()
 const props = defineProps({
     list: {
@@ -38,9 +40,18 @@ const jump = (item) => {
     })
 }
 
-const update = (item) => {
+const updateFn = (item) => {
     router.push({
         path: '/article/update/' + item.id
+    })
+}
+
+const emit = defineEmits(['deleteFn'])
+
+const deleteFn = (item) => {
+    articleDeleteFn({id:item.id}).then(res => {
+        ElMessage.success('删除成功');
+        emit('deleteFn')
     })
 }
 </script>

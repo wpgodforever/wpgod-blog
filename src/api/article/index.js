@@ -21,6 +21,16 @@ export function articleUpdateFn(data) {
   })
 }
 
+// 删除文章
+export function articleDeleteFn(data) {
+  return request({
+    url: '/article/delete',
+    method: 'post',
+    data: data,
+    notNeedQS: true,
+  })
+}
+
 // 文章详情
 export function articleDetailFn(data) {
   return request({

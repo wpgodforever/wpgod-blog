@@ -8,12 +8,12 @@
       <!-- 左侧列表区域 -->
       <div class="main-left">
         <div class="list flex-col">
-          <listItem :list="list"></listItem>
+          <listItem :list="listInfo.list" @deleteFn="deleteFn"></listItem>
         </div>
       </div>
       <!-- 右侧信息卡片区域 -->
       <div class="main-right flex-col">
-        <personCard :listNum="list.length" :tagsNum="tagsNum"></personCard>
+        <personCard :listNum="listInfo.list.length" :tagsNum="tagsNum"></personCard>
       </div>
     </div>
   </div>
@@ -26,19 +26,29 @@ import {
   articleListFn
 } from '@/api/article/index'
 
-// 获取文章列表
+// 获取文章列表----------------------------
 const articleInfo = reactive({
   pageSize:10,
   pageNo:1,
   tags:[],
 })
 
-let list = reactive([])
+let listInfo = reactive({
+  list: []
+})
 let tagsNum = ref(0)
 articleListFn(articleInfo).then(res => {
-  list.push(...res.data.list) 
+  listInfo.list.push(...res.data.list) 
   tagsNum.value = res.data.tagsNum
 })
+// 删除文字触发--------------------
+const deleteFn = () => {
+  articleListFn(articleInfo).then(res => {
+    listInfo.list = []
+    listInfo.list.push(...res.data.list) 
+    tagsNum.value = res.data.tagsNum
+  })
+}
 </script>
 <style scoped lang='less'>
  .main-container{

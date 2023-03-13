@@ -168,7 +168,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
         const method = isUpdateMode.value? articleUpdateFn:articlePostFn
         console.log(info);
         method(info).then((res) => {
-          ElMessage.success(`${isUpdateMode.value?'更新成功':'发布成'}`);
+          ElMessage.success(`${isUpdateMode.value?'更新成功':'发布成功'}`);
           setTimeout(() => {
             router.push('/index');
           }, 1000);
