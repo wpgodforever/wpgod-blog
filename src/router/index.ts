@@ -27,6 +27,7 @@ const routes: Array<RouteRecordRaw> = [
                     },
                     {
                         path:'/article/update/:id',
+                        name:'articleUpdate',
                         component: ArticleEdit
                     },
                 ]

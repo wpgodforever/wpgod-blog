@@ -11,6 +11,16 @@ export function articlePostFn(data) {
   })
 }
 
+// 更新文章
+export function articleUpdateFn(data) {
+  return request({
+    url: '/article/update',
+    method: 'post',
+    data: data,
+    notNeedQS: true,
+  })
+}
+
 // 文章详情
 export function articleDetailFn(data) {
   return request({
@@ -20,7 +30,7 @@ export function articleDetailFn(data) {
   })
 }
 
-// 文章详情
+// 文章列表
 export function articleListFn(data) {
   return request({
     url: '/article/list',
