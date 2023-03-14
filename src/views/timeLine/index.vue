@@ -3,8 +3,9 @@
         <el-row :gutter="20">
             <el-col :span="16">
                 <el-timeline>
-                    <el-timeline-item v-for="(item,index) in listInfo.list" :key="index" :class="[index%2 !== 0?'right':'']" center>
-                        <timeLine v-bind="{...item}" :isRight="index%2 !== 0?true:false"></timeLine>
+                    <el-timeline-item hollow v-for="(item, index) in listInfo.list" :key="index" :class="[index % 2 !== 0 ? 'right' : '']"
+                        center>
+                        <timeLine v-bind="{ ...item }" :isRight="index % 2 !== 0 ? true : false"></timeLine>
                     </el-timeline-item>
                 </el-timeline>
             </el-col>
@@ -17,23 +18,23 @@
 <script lang='ts' setup>
 import timeLine from './components/timeItem.vue'
 import {
-  articleListFn
+    articleListFn
 } from '@/api/article/index'
 import { ref, reactive } from 'vue'
 // 获取文章列表----------------------------
 const articleInfo = reactive({
-  pageSize:10,
-  pageNo:1,
-  tags:[],
+    pageSize: 10,
+    pageNo: 1,
+    tags: [],
 })
 
 let listInfo = reactive({
-  list: []
+    list: []
 })
 let tagsNum = ref(0)
 articleListFn(articleInfo).then(res => {
-  listInfo.list.push(...res.data.list) 
-  tagsNum.value = res.data.tagsNum
+    listInfo.list.push(...res.data.list)
+    tagsNum.value = res.data.tagsNum
 })
 </script>
 <style scoped lang='less'>
@@ -60,7 +61,7 @@ articleListFn(articleInfo).then(res => {
 .right {
 
     :deep(.el-timeline-item__wrapper) {
-        left: calc(0% - 45px)!important;
+        left: calc(0% - 45px) !important;
     }
 }
 </style>

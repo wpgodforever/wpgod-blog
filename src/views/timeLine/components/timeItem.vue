@@ -41,6 +41,7 @@ const colorInfo = reactive({
 <style scoped lang='less'>
  .itemContainer{
      padding: 10px;
+     border-bottom: 1px dashed #ccc;
      .title{
          font-weight: 700;
          font-size: 18px;
