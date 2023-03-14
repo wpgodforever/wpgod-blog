@@ -4,16 +4,16 @@
         <el-input v-model="searchVal" style="width: 240px;" class="ml-auto" placeholder="Type something"
             :prefix-icon="Search" />
         <div class="nav-list flex-align">
-            <div class="nav-list_item">
-                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">首页</div>
+            <div class="nav-list_item" @click="jump('/index')">
+                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)" >首页</div>
             </div>
-            <div class="nav-list_item">
-                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">归档</div>
+            <div class="nav-list_item" @click="jump('/timeLine')">
+                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)" >时间线</div>
             </div>
             <div class="nav-list_item">
                 <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">面试</div>
             </div>
-            <div class="nav-list_item" @click="toArticleEdit" v-if="userInfo.token && (userInfo.auth.includes('admin'))">
+            <div class="nav-list_item" @click="jump('/article/edit')" v-if="userInfo.token && (userInfo.auth.includes('admin'))">
                 <div class="hand" @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">发布文章</div>
             </div>
             <div class="nav-list_item" v-if="!userInfo.token"
@@ -76,16 +76,19 @@ const hoverAnimationLeave = ($event) => {
     $event.currentTarget.className = 'hand'
 }
 
-// 跳转到发布文章页面
-const toArticleEdit = () => {
-    router.push('/article/edit')
-}
-
 // 顶部导航栏颜色变化
 
 const scrollTop = ref(0);//侧边栏初始高度
 const scrollTopListener = () => {
     scrollTop.value = document.documentElement.scrollTop || document.body.scrollTop;
+}
+
+// 跳转方法
+const jump = (url, params={}) => {
+    router.push({
+        path: url,
+        params
+    })
 }
 
 </script>
