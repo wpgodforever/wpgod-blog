@@ -1,7 +1,9 @@
 <template>
   <div class="itemContainer flex-col" :class="[isRight?'right':'']">
-   <span class="title" >{{ title }}</span>
-   <span class="desc">{{ desc }}</span>
+   <span class="title">{{ title }}</span>
+   <span class="desc" :style="{
+       color: colorInfo[Math.floor(Math.random() * 5 + 1)]
+   }">{{ desc }}</span>
    <div class="img" v-if="img">{{ img}}</div>
    <span class="date">{{ date }}</span>
   </div>
@@ -25,6 +27,13 @@ const props = defineProps({
         type: Boolean
     }
 })
+const colorInfo = reactive({
+    1: 'coral',
+    2: 'rgba(14, 143, 200, 0.8)',
+    3: 'rgba(19, 206, 102, 0.8)',
+    4: 'rgba(173, 12, 242, 0.8)',
+    5: 'rgba(235, 12, 105, 0.8)',
+})
 </script>
 <style scoped lang='less'>
  .itemContainer{
@@ -41,6 +50,9 @@ const props = defineProps({
          height: 200px;
          background-color: pink;
          margin: 10px 0;
+     }
+     .date{
+         color: #6ca189;
      }
  }
  .itemContainer.right{
