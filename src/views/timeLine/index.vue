@@ -39,7 +39,7 @@ articleListFn(articleInfo).then(res => {
 <style scoped lang='less'>
 .timeLine-container {
     width: 80%;
-    min-height: 100vh;
+    min-height: calc(100vh - 59px);
     background-color: #fff;
     margin: 0 auto;
 }

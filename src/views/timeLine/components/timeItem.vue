@@ -4,7 +4,9 @@
    <span class="desc" :style="{
        color: colorInfo[Math.floor(Math.random() * 5 + 1)]
    }">{{ desc }}</span>
-   <div class="img" v-if="img">{{ img}}</div>
+   <div class="img" v-if="cover">
+    <img :src="cover" alt="" srcset="">
+</div>
    <span class="date">{{ timeTransform(createdAt) }}</span>
   </div>
 </template>
@@ -21,7 +23,7 @@ const props = defineProps({
     createdAt: {
         type:String
     },
-    img: {
+    cover: {
         type:String
     },
     isRight:{
@@ -49,8 +51,9 @@ const colorInfo = reactive({
      .img{
          width: 300px;
          height: 200px;
-         background-color: pink;
          margin: 10px 0;
+         object-fit: cover;
+         overflow: hidden;
      }
      .date{
          color: #6ca189;

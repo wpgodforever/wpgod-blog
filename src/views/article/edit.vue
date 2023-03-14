@@ -36,7 +36,7 @@
         <el-form-item label="封面" prop="cover">
           <el-upload
             class="avatar-uploader"
-            :action="`${baseUrl}/article/uploadImg/cover`"
+            :action="`${baseUrl}article/uploadImg/cover`"
             :show-file-list="false"
             :headers="uploadHeaders"
             :on-success="handleAvatarSuccess"
@@ -107,7 +107,7 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
   response,
   uploadFile
 ) => {
-  form.cover = URL.createObjectURL(uploadFile.raw!);
+  form.cover = response.url
 };
 const handleAvatarError = (err) => {
   const errStr = JSON.parse(err.message);
@@ -188,7 +188,7 @@ const onUploadImg = async (files, callback) => {
         const form = new FormData();
         form.append('file', file);
         axios
-          .post(`${baseUrl}/article/uploadImg/detail`, form, {
+          .post(`${baseUrl}article/uploadImg/detail`, form, {
             headers: {
               'Content-Type': 'multipart/form-data',
               Authorization: 'Bearer ' + user.userInfo.token
