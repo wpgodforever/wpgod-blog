@@ -11,7 +11,10 @@
                 <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)" >时间线</div>
             </div>
             <div class="nav-list_item">
-                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">面试</div>
+                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">练手实例</div>
+            </div>
+            <div class="nav-list_item">
+                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">留言建议</div>
             </div>
             <div class="nav-list_item" @click="jump('/article/edit')" v-if="userInfo.token && (userInfo.auth.includes('admin'))">
                 <div class="hand" @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">发布文章</div>
