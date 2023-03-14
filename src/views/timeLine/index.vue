@@ -3,7 +3,7 @@
         <el-row :gutter="20">
             <el-col :span="16">
                 <el-timeline>
-                    <el-timeline-item v-for="(item,index) in list" :key="index" :class="[index%2 !== 0?'right':'']" center>
+                    <el-timeline-item v-for="(item,index) in listInfo.list" :key="index" :class="[index%2 !== 0?'right':'']" center>
                         <timeLine v-bind="{...item}" :isRight="index%2 !== 0?true:false"></timeLine>
                     </el-timeline-item>
                 </el-timeline>
@@ -16,30 +16,25 @@
 </template>
 <script lang='ts' setup>
 import timeLine from './components/timeItem.vue'
+import {
+  articleListFn
+} from '@/api/article/index'
 import { ref, reactive } from 'vue'
-const list = reactive([
-    {
-        title:'这是文章标题',
-        desc:'这是文章描述',
-        img:'',
-        date:'2023-10-10',
-        id:1
-    },
-    {
-        title:'这是文章标题',
-        desc:'这是文章描述',
-        img:'',
-        date:'2023-10-10',
-        id:2
-    },
-    {
-        title:'这是文章标题',
-        desc:'这是文章描述',
-        img:'',
-        date:'2023-10-10',
-        id:3
-    },
-])
+// 获取文章列表----------------------------
+const articleInfo = reactive({
+  pageSize:10,
+  pageNo:1,
+  tags:[],
+})
+
+let listInfo = reactive({
+  list: []
+})
+let tagsNum = ref(0)
+articleListFn(articleInfo).then(res => {
+  listInfo.list.push(...res.data.list) 
+  tagsNum.value = res.data.tagsNum
+})
 </script>
 <style scoped lang='less'>
 .timeLine-container {

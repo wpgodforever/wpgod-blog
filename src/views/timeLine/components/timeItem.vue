@@ -5,10 +5,11 @@
        color: colorInfo[Math.floor(Math.random() * 5 + 1)]
    }">{{ desc }}</span>
    <div class="img" v-if="img">{{ img}}</div>
-   <span class="date">{{ date }}</span>
+   <span class="date">{{ timeTransform(createdAt) }}</span>
   </div>
 </template>
 <script lang='ts' setup>
+import { timeTransform } from '@/lib/utils.js'
 import { ref, reactive } from 'vue'
 const props = defineProps({
     title: {
@@ -17,7 +18,7 @@ const props = defineProps({
     desc: {
         type:String
     },
-    date: {
+    createdAt: {
         type:String
     },
     img: {
