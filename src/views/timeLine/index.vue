@@ -3,14 +3,18 @@
         <el-row :gutter="20">
             <el-col :span="16">
                 <el-timeline>
-                    <el-timeline-item hollow v-for="(item, index) in listInfo.list" :key="index" :class="[index % 2 !== 0 ? 'right' : '']"
-                        center>
+                    <el-timeline-item hollow v-for="(item, index) in listInfo.list" :key="index" :id="item.id"
+                        :class="[index % 2 !== 0 ? 'right' : '']" center>
                         <timeLine v-bind="{ ...item }" :isRight="index % 2 !== 0 ? true : false"></timeLine>
                     </el-timeline-item>
                 </el-timeline>
             </el-col>
             <el-col :span="8">
-                <div class="grid-content ep-bg-purple" />
+                <div class="linkBox flex-col">
+                    <h2>锚点</h2>
+                    <span @click="scrollTo(item)" v-for="(item, index) in listInfo.list" :key="index">{{ item.title
+                    }}</span>
+                </div>
             </el-col>
         </el-row>
     </div>
@@ -36,6 +40,11 @@ articleListFn(articleInfo).then(res => {
     listInfo.list.push(...res.data.list)
     tagsNum.value = res.data.tagsNum
 })
+// 锚点滚动------------------------------------
+const scrollTo = (item) => {
+    const scrollId = item.id // 设置选中的锚点为当前点击的
+    document.getElementById(scrollId).scrollIntoView({ behavior: 'smooth',block: 'center', })
+}
 </script>
 <style scoped lang='less'>
 .timeLine-container {
@@ -43,6 +52,7 @@ articleListFn(articleInfo).then(res => {
     min-height: calc(100vh - 59px);
     background-color: #fff;
     margin: 0 auto;
+    padding: 10px;
 }
 
 :deep(.el-timeline-item__tail) {
@@ -62,6 +72,18 @@ articleListFn(articleInfo).then(res => {
 
     :deep(.el-timeline-item__wrapper) {
         left: calc(0% - 45px) !important;
+    }
+}
+
+.linkBox {
+    border-radius: 20px;
+    padding: 10px;
+    color: #3eaf7c;
+    margin-left: 30px;
+
+    span {
+        margin-bottom: 15px;
+        text-decoration: underline;
     }
 }
 </style>
