@@ -10,9 +10,9 @@
                 </el-timeline>
             </el-col>
             <el-col :span="8">
-                <div class="linkBox flex-col">
+                <div class="linkBox flex-col" id="smallBox">
                     <h2>锚点</h2>
-                    <span @click="scrollTo(item)" v-for="(item, index) in listInfo.list" :key="index">{{ item.title
+                    <span class="hand" :id="item.id +124" @click="scrollTo(item)" v-for="(item, index) in listInfo.list" :key="index">{{ item.title
                     }}</span>
                 </div>
             </el-col>
@@ -24,6 +24,7 @@ import timeLine from './components/timeItem.vue'
 import {
     articleListFn
 } from '@/api/article/index'
+
 import { ref, reactive } from 'vue'
 // 获取文章列表----------------------------
 const articleInfo = reactive({
@@ -43,7 +44,22 @@ articleListFn(articleInfo).then(res => {
 // 锚点滚动------------------------------------
 const scrollTo = (item) => {
     const scrollId = item.id // 设置选中的锚点为当前点击的
-    document.getElementById(scrollId).scrollIntoView({ behavior: 'smooth',block: 'center', })
+    // 点击对应的时间轴的那一项
+    const smallScrollBoxItem = document.getElementById(scrollId + 124)
+    const smallScrollBox = document.getElementById('smallBox')
+    // 点击对应的时间轴的那一项
+    const bigScrollBoxItem = document.getElementById(scrollId)
+    const bigOffsetTop = bigScrollBoxItem.offsetTop
+    const smallOffsetTop = smallScrollBoxItem.offsetTop
+    window.scrollTo({
+        behavior:'smooth',
+        top:bigOffsetTop
+    })
+    // 父盒子滚动，而不是那一项滚动
+    smallScrollBox.scrollTo({
+        behavior:'smooth',
+        top:smallOffsetTop
+    })
 }
 </script>
 <style scoped lang='less'>
@@ -76,11 +92,14 @@ const scrollTo = (item) => {
 }
 
 .linkBox {
+    position: sticky;
+    top: 69px;
     border-radius: 20px;
     padding: 10px;
     color: #3eaf7c;
     margin-left: 30px;
-
+    max-height: 50vh;
+    overflow: scroll;
     span {
         margin-bottom: 15px;
         text-decoration: underline;
