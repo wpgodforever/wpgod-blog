@@ -15,6 +15,7 @@ import { ref, reactive, toRefs } from 'vue'
 import { useUserStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
 import loginPop from '@/components/loginPop/loginPop.vue'
+import { useLogin } from '@/hooks/useLogin'
 const state = reactive({
   circleUrl:
     'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
@@ -25,16 +26,7 @@ const user = useUserStore()
 // 获取是否登录
 const { isLogin } = storeToRefs(user)
 // 登录注册弹框逻辑
-const dialogVisible = ref(false)
-const tips = ref('登录')
-const popClick = (index:0|1) => {
-    const textConfig = {
-        0: '注册',
-        1: '登录'
-    }
-    tips.value = textConfig[index]
-    dialogVisible.value = true
-}
+const { dialogVisible, tips, popClick } = useLogin()
 </script>
 <style scoped lang='less'>
 .container{

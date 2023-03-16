@@ -38,6 +38,7 @@ import { Search } from '@element-plus/icons-vue'
 import loginPop from '../loginPop/loginPop.vue'
 import { useUserStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
+import { useLogin } from '@/hooks/useLogin'
 import { includes } from 'lodash'
 onMounted(() => {
     // 导航栏颜色修改
@@ -54,17 +55,7 @@ const bgChange = computed(() => {
     return router.currentRoute.value.path !== '/index' || (scrollTop.value>540)
 })
 
-// 登录注册弹框逻辑
-const dialogVisible = ref(false)
-const tips = ref('登录')
-const popClick = (index:0|1) => {
-    const textConfig = {
-        0: '注册',
-        1: '登录'
-    }
-    tips.value = textConfig[index]
-    dialogVisible.value = true
-}
+const { dialogVisible, tips, popClick } = useLogin()
 
 // 获取pinia用户数据
 const user = useUserStore()
