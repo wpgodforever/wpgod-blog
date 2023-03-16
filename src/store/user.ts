@@ -12,6 +12,11 @@ export const useUserStore = defineStore({
             
         }
     },
+    getters:{
+      isLogin(state){
+        return state.userInfo.token !== ''
+      }
+    },
     actions:{
 
     },

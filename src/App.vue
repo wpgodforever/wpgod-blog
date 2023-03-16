@@ -7,7 +7,7 @@
 </script>
 <style>
  #app {
-  font-family: 黑体;
+  font-family: Microsoft YaHei;
   background-color: rgba(244, 244, 244);
 }
 ::-webkit-scrollbar {

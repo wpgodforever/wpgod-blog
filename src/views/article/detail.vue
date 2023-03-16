@@ -3,7 +3,10 @@
     <div class="editorBox-detail">
       <MdEditor v-model.trim="text" previewOnly/>
     </div>
-    
+    <!-- 评论区域 -->
+    <div class="commentBox">
+      <myComment v-bind="$attrs"></myComment>
+    </div>
   </div>
 </template>
 <script lang='ts' setup>
@@ -14,6 +17,7 @@ import { useRoute } from 'vue-router';
 import {
   articleDetailFn
 } from '@/api/article/index'
+import myComment from '@/components/comment/index.vue'
 const route = useRoute()
 let text = ref('')
 articleDetailFn({_id:route.params.id}).then(res => {
@@ -24,7 +28,11 @@ articleDetailFn({_id:route.params.id}).then(res => {
 <style scoped lang='less'>
  .editorBox{
    align-items: center;
+   background-color: #fff;
   &-detail{
+    width: 80%;
+  }
+  .commentBox{
     width: 80%;
   }
  }
