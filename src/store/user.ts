@@ -15,7 +15,10 @@ export const useUserStore = defineStore({
     getters:{
       isLogin(state){
         return state.userInfo.token !== ''
-      }
+      },
+      userId(state){
+        return state.userInfo._id
+      },
     },
     actions:{
 

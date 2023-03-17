@@ -5,7 +5,7 @@
     </div>
     <!-- 评论区域 -->
     <div class="commentBox">
-      <myComment v-bind="$attrs"></myComment>
+      <myComment v-bind="$attrs" @commentSuccess="commentSuccess"></myComment>
     </div>
   </div>
 </template>
@@ -24,6 +24,9 @@ articleDetailFn({_id:route.params.id}).then(res => {
   console.log(res)
   text.value = res.data[0].text
 })
+const commentSuccess = () => {
+  articleDetailFn()
+}
 </script>
 <style scoped lang='less'>
  .editorBox{
