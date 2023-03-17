@@ -1,17 +1,20 @@
 <!-- 普通评论输入框 -->
 <template>
-    <div class="container">
-        <el-avatar :size="50" :src="circleUrl" />
-        <!-- 未登录时显示 -->
-        <div class="loginBox" v-if="!isLogin">
-            看完啦，<span class="hand" @click="popClick(1)">登录</span>分享一下感受吧~
+    <div class="container flex-col">
+        <div class="headComment">
+            <el-avatar :size="50" :src="circleUrl" />
+            <!-- 未登录时显示 -->
+            <div class="loginBox" v-if="!isLogin">
+                看完啦，<span class="hand" @click="popClick(1)">登录</span>分享一下感受吧~
+            </div>
+            <!-- 登录时显示 -->
+            <div class="inputBox" v-else>
+                <el-input style="white-space: pre-line" v-model="content" :autosize="{ minRows: 4 }" type="textarea"
+                    placeholder="请留下你的评论吧~" />
+                <el-button @click="send" :disabled="!content" type="primary">发表评论</el-button>
+            </div>
         </div>
-        <!-- 登录时显示 -->
-        <div class="inputBox" v-else>
-            <el-input style="white-space: pre-line" v-model="content" :autosize="{ minRows: 4 }" type="textarea"
-                placeholder="请留下你的评论吧~" />
-            <el-button @click="send" :disabled="!content" type="primary">发表评论</el-button>
-        </div>
+        <commentList v-if="isLogin" v-bind="$attrs"></commentList>
         <loginPop v-model="dialogVisible" :tips="tips"></loginPop>
     </div>
 </template>
@@ -24,6 +27,7 @@ import { useLogin } from '@/hooks/useLogin'
 import { ElMessage } from 'element-plus'
 import { commentInput } from '@/api/comment'
 import { useRoute } from 'vue-router';
+import commentList from './commentList.vue'
 const route = useRoute()
 const emit = defineEmits(['commentSuccess'])
 const state = reactive({
@@ -48,8 +52,8 @@ const send = () => {
         })
     }
     commentInput({
-        content:content.value, 
-        article_id: route.params.id, 
+        content: content.value,
+        article_id: route.params.id,
         reply_user_id: userId.value
     }).then(res => {
         ElMessage({
@@ -64,8 +68,10 @@ const send = () => {
 </script>
 <style scoped lang='less'>
 .container {
-    display: flex;
     margin-bottom: 20px;
+    .headComment{
+        display: flex;
+    }
 }
 
 .inputBox,
