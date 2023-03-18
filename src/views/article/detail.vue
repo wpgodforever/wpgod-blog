@@ -21,13 +21,15 @@ import myComment from '@/components/comment/index.vue'
 const route = useRoute()
 let text = ref('')
 const list = ref([])
-articleDetailFn({_id:route.params.id}).then(res => {
-  console.log(res)
+const getCommentList = () => {
+  articleDetailFn({_id:route.params.id}).then(res => {
   text.value = res.data[0].text
   list.value = res.data[0].coms
 })
+}
+getCommentList()
 const commentSuccess = () => {
-  articleDetailFn()
+  getCommentList()
 }
 </script>
 <style scoped lang='less'>
