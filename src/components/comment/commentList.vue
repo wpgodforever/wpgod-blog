@@ -1,6 +1,6 @@
 <template>
   <div class="conmentListContainer">
-    <commentItem v-for="(item, index) in list" :key="index" :info="item"></commentItem>
+    <commentItem v-for="(item, index) in list" :key="index" :info="item" v-bind="$attrs"></commentItem>
   </div>
 </template>
 <script lang='ts' setup>
