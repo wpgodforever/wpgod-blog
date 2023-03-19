@@ -20,11 +20,20 @@ export function commentReply(data) {
   })
 }
 
-// 文章列表
-export function articleListFn(data) {
+// 留言板列表
+export function boardList(data) {
   return request({
-    url: '/article/list',
+    url: '/comment/list',
     method: 'get',
     params: data,
+  })
+}
+// 留言板评论列表
+export function boardReply(data) {
+  return request({
+    url: '/comment/board',
+    method: 'post',
+    data: data,
+    notNeedQS: true,
   })
 }

@@ -53,7 +53,7 @@ const send = () => {
     }
     commentInput({
         content: content.value,
-        article_id: route.params.id,
+        article_id: route.params.id || null,
         reply_user_id: userId.value
     }).then(res => {
         ElMessage({

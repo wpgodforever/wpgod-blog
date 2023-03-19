@@ -80,7 +80,7 @@ const send = () => {
       reply_common_id: props.info.id,
       reply_user_id: userId.value,
       get_reply_user_id: reply_user_id.value._id,
-      article_id: props.info.article_id
+      article_id: props.info.article_id || null
     }).then((res) => {
       console.log(res)
       ElMessage({
