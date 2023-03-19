@@ -14,7 +14,7 @@
                 <el-button @click="send" :disabled="!content" type="primary">发表评论</el-button>
             </div>
         </div>
-        <commentList v-if="isLogin" v-bind="$attrs"></commentList>
+        <commentList v-bind="$attrs"></commentList>
         <loginPop v-model="dialogVisible" :tips="tips"></loginPop>
     </div>
 </template>
@@ -76,7 +76,7 @@ const send = () => {
 
 .inputBox,
 .loginBox {
-    margin: 0 0 0px 20px;
+    margin: 0 0 20px 20px;
     width: 100%;
     min-height: 80px;
     border-radius: 10px;

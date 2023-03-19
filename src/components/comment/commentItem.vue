@@ -22,6 +22,9 @@
             >发表评论</el-button
           >
         </div>
+        <div class="reply-box-item" v-if="info.replys.length > 0">
+            <replyItem :replyInfo="item" v-for="(item,index) in info.replys" :key="item._id" :commonId="info.id" v-bind="$attrs"></replyItem>
+        </div>
       </div>
     </div>
   </div>
@@ -32,6 +35,7 @@ import { ElMessage } from 'element-plus';
 import { commentReply } from '@/api/comment/index';
 import { useUserStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
+import replyItem from '@/components/comment/replyItem.vue'
 // 获取pinia用户数据
 const user = useUserStore()
 // 获取是否登录
@@ -51,7 +55,8 @@ const props = defineProps({
       },
       content: '',
       id: '',
-      article_id: ''
+      article_id: '',
+      replys:[]
     })
   },
 });
@@ -84,6 +89,7 @@ const send = () => {
         type: 'success'
       });
       replyContent.value = '';
+      showReply.value = false
       emit('replySuccess');
     });
 };
@@ -131,6 +137,11 @@ const replyBlur = () => {
           margin-top: 10px;
           margin-left: auto;
         }
+      }
+      &-item{
+        background: rgba(247,248,250,.7);
+        padding: 20px 20px 1px 20px;
+        margin-top: 15px;
       }
     }
   }
