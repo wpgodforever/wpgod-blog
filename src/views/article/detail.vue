@@ -5,7 +5,7 @@
     </div>
     <!-- 评论区域 -->
     <div class="commentBox">
-      <myComment v-bind="$attrs" :list="list"  @commentSuccess="commentSuccess" :author_id="author_id"></myComment>
+      <myComment v-bind="$attrs" :list="list"  @commentSuccess="commentSuccess"></myComment>
     </div>
   </div>
 </template>
@@ -20,13 +20,11 @@ import {
 import myComment from '@/components/comment/index.vue'
 const route = useRoute()
 let text = ref('')
-let author_id = ref('')
 const list = ref([])
 const getCommentList = () => {
   articleDetailFn({_id:route.params.id}).then(res => {
   text.value = res.data[0].text
   list.value = res.data[0].coms
-  author_id.value = res.data[0].author._id
 })
 }
 getCommentList()

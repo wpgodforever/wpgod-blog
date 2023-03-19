@@ -54,9 +54,6 @@ const props = defineProps({
       article_id: ''
     })
   },
-  author_id: {
-    default: ''
-  }
 });
 
 const { reply_user_id, content } = toRefs(props.info);
