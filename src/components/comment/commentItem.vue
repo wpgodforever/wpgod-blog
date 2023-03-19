@@ -4,7 +4,7 @@
     <div class="right flex-col">
       <div class="right-name">{{ reply_user_id.username }}</div>
       <div class="right-content">{{ content }}</div>
-      <span class="right-reply flex-align hand" @click="switchReply">
+      <span class="right-reply flex-align hand" @mousedown.capture.prevent.stop="switchReply">
         <el-icon><ChatDotSquare /></el-icon>回复
       </span>
       <div class="reply-box">
@@ -69,10 +69,11 @@ const send = () => {
     });
     return;
   }
+  
     commentReply({
       replyContent:replyContent.value,
       reply_common_id: props.info.id,
-      reply_user_id: userId,
+      reply_user_id: userId.value,
       get_reply_user_id: reply_user_id.value._id,
       article_id: props.info.article_id
     }).then((res) => {
