@@ -30,6 +30,12 @@
 import { ref, reactive, toRefs } from 'vue';
 import { ElMessage } from 'element-plus';
 import { commentReply } from '@/api/comment/index';
+import { useUserStore } from '@/store/user'
+import { storeToRefs } from 'pinia'
+// 获取pinia用户数据
+const user = useUserStore()
+// 获取是否登录
+const { userId } = storeToRefs(user)
 const emit = defineEmits(['replySuccess']);
 const state = reactive({
   circleUrl:
@@ -69,8 +75,8 @@ const send = () => {
     commentReply({
       replyContent:replyContent.value,
       reply_common_id: props.info.id,
-      reply_user_id: reply_user_id.value._id,
-      get_reply_user_id: props.author_id,
+      reply_user_id: userId,
+      get_reply_user_id: reply_user_id.value._id,
       article_id: props.info.article_id
     }).then((res) => {
       console.log(res)
