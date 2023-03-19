@@ -13,7 +13,7 @@
             <div class="nav-list_item">
                 <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">练手实例</div>
             </div>
-            <div class="nav-list_item">
+            <div class="nav-list_item" @click="jump('/board')">
                 <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">留言建议</div>
             </div>
             <div class="nav-list_item" @click="jump('/article/edit')" v-if="userInfo.token && (userInfo.auth.includes('admin'))">

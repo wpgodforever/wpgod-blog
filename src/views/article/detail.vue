@@ -5,7 +5,7 @@
     </div>
     <!-- 评论区域 -->
     <div class="commentBox">
-      <myComment v-bind="$attrs" :list="list"  @commentSuccess="commentSuccess" @replySuccess="replySuccess" @replyDeepSuccess="replyDeepSuccess" ></myComment>
+      <myComment v-bind="$attrs" :list="list"  @commentSuccess="commentSuccess" @replySuccess="replySuccess" @replyDeepSuccess="replyDeepSuccess"></myComment>
     </div>
   </div>
 </template>

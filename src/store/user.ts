@@ -16,6 +16,9 @@ export const useUserStore = defineStore({
       isLogin(state){
         return state.userInfo.token !== ''
       },
+      isAdmin(state){
+        return state.userInfo.auth.includes('admin')
+      },
       userId(state){
         return state.userInfo._id
       },

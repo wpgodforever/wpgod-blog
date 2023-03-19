@@ -4,6 +4,7 @@ const Main = () => import('../views/main/index.vue')
 const ArticleEdit = () => import('../views/article/edit.vue')
 const ArticleDetail = () => import('../views/article/detail.vue')
 const TimeLine = () => import('../views/timeLine/index.vue')
+const Board = () => import('../views/Board/index.vue')
 const routes: Array<RouteRecordRaw> = [
     { 
         path: '/', 
@@ -36,6 +37,10 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path:'/timeLine',
                 component: TimeLine,
+            },
+            {
+                path:'/board',
+                component: Board,
             },
         ] 
     },

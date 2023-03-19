@@ -5,7 +5,7 @@
             <div class="date">{{ timeTransform(item.updatedAt) }}</div>
             <div class="tags flex-align">
                 <div class="tagItem" v-for="(tagsItem, tagsIndex) in item.tags" :key="tagsIndex">{{ tagsItem }}</div>
-                <div class="autoBtn">
+                <div class="autoBtn" v-if="isAdmin">
                     <el-button @click.stop="updateFn(item)" type="primary">修改</el-button>
                     <el-button @click.stop="deleteFn(item)" type="danger">删除</el-button>
                 </div>
@@ -20,6 +20,11 @@ import { timeTransform } from '@/lib/utils.js'
 import { useRouter } from 'vue-router';
 import { articleDeleteFn, } from '@/api/article/index';
 import { ElMessage } from 'element-plus';
+import { useUserStore } from '@/store/user'
+import { storeToRefs } from 'pinia'
+// 获取pinia用户数据
+const user = useUserStore()
+const { isAdmin } = storeToRefs(user)
 const router = useRouter()
 const props = defineProps({
     list: {
