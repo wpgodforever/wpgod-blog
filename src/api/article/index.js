@@ -40,6 +40,15 @@ export function articleDetailFn(data) {
   })
 }
 
+// 标签列表
+export function articleTagsFn(data) {
+  return request({
+    url: '/article/tags',
+    method: 'get',
+    params: data,
+  })
+}
+
 // 文章列表
 export function articleListFn(data) {
   return request({

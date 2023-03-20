@@ -79,7 +79,7 @@ import { useUserStore } from '@/store/user';
 import { storeToRefs } from 'pinia';
 import { Plus } from '@element-plus/icons-vue';
 import { useRouter, useRoute } from 'vue-router';
-import { articlePostFn, articleDetailFn, articleUpdateFn } from '@/api/article/index';
+import { articlePostFn, articleDetailFn, articleUpdateFn, articleTagsFn } from '@/api/article/index';
 import axios from 'axios';
 import baseUrl from '@/assets/js/baseUrl';
 import { id } from 'element-plus/es/locale';
@@ -133,10 +133,6 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   }
   return true;
 };
-const isTopChange = (e) => {
-  console.log(e)
-  console.log(form.isTop)
-}
 // ---------------------------------------------
 // 发布文章
 const ruleFormRef = ref<FormInstance>();
@@ -218,7 +214,13 @@ const onUploadImg = async (files, callback) => {
 };
 // ------------------------------
 // 标签相关
-const tagList = reactive(['Css', 'Js']);
+const articleTagsList = () => {
+  articleTagsFn().then(res => {
+    tagList.push(...res.data)
+  })
+}
+articleTagsList()
+let tagList = reactive([]);
 const addTagVal = ref('');
 const tagClick = (item: String) => {
   if (!form.tags.includes(item)) {
