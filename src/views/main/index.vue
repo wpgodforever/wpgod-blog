@@ -38,7 +38,10 @@ let listInfo = reactive({
 })
 let tagsNum = ref(0)
 articleListFn(articleInfo).then(res => {
-  listInfo.list.push(...res.data.list) 
+  // 将置顶文章筛选出来
+  const topList = res.data.list.filter(v => v.isTop === 1)
+  const bottomList = res.data.list.filter(v => v.isTop !== 1)
+  listInfo.list.push(...[...topList,...bottomList]) 
   tagsNum.value = res.data.tagsNum
 })
 // 删除文字触发--------------------

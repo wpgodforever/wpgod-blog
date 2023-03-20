@@ -1,6 +1,6 @@
 <template>
     <div class="container flex-col">
-        <div @click="jump(item)" class="containerItem" v-for="(item, index) in list" :key="index">
+        <div @click="jump(item)" class="containerItem" v-for="(item, index) in list" :key="item.id">
             <div class="title">{{ item.title }}</div>
             <div class="date">{{ timeTransform(item.updatedAt) }}</div>
             <div class="tags flex-align">

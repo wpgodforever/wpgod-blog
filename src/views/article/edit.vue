@@ -30,6 +30,9 @@
             >
           </div>
         </el-form-item>
+        <el-form-item label="置顶">
+          <el-switch :active-value="1" :inactive-value="0" v-model="form.isTop" />
+        </el-form-item>
         <el-form-item label="摘要">
           <el-input v-model="form.desc" type="textarea" />
         </el-form-item>
@@ -130,6 +133,10 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   }
   return true;
 };
+const isTopChange = (e) => {
+  console.log(e)
+  console.log(form.isTop)
+}
 // ---------------------------------------------
 // 发布文章
 const ruleFormRef = ref<FormInstance>();
@@ -138,7 +145,8 @@ const form = reactive({
   tags: [],
   desc: '',
   cover: '',
-  text: ``
+  text: ``,
+  isTop:0
 });
 const rules = reactive<FormRules>({
   title: [
