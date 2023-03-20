@@ -2,14 +2,20 @@
     <div class="container flex-col">
         <div @click="jump(item)" class="containerItem" v-for="(item, index) in list" :key="item.id">
             <div class="title">{{ item.title }}</div>
-            <div class="date">{{ timeTransform(item.updatedAt) }}</div>
             <div class="tags flex-align">
-                <div class="tagItem" v-for="(tagsItem, tagsIndex) in item.tags" :key="tagsIndex">{{ tagsItem }}</div>
+                <div class="tagItem" v-if="!item.isTop" v-for="(tagsItem, tagsIndex) in item.tags" :key="tagsIndex">{{ tagsItem }}</div>
+                <div class="tagItem isTop flex-align" v-if="item.isTop">
+                    <el-icon><Top /></el-icon>置顶
+                </div>
                 <div class="autoBtn" v-if="isAdmin">
                     <el-button @click.stop="updateFn(item)" type="primary">修改</el-button>
                     <el-button @click.stop="deleteFn(item)" type="danger">删除</el-button>
                 </div>
                 
+            </div>
+            <div class="date flex-align">
+                <span>{{ '该文章发布于' + timeTransform(item.createdAt)  }}</span>
+         <span>{{ '更新于' + timeTransform(item.updatedAt) }}</span>
             </div>
         </div>
     </div>
@@ -37,6 +43,8 @@ interface listItem {
     id: string;
     tags: Array<string>;
     updatedAt: String;
+    createdAt: String;
+    isTop: Number;
 }
 
 const jump = (item) => {
@@ -84,12 +92,13 @@ const deleteFn = (item) => {
     .date {
         color: rgba(0, 0, 0, .6);
         font-size: 14px;
-        margin-top: 10px;
+        margin-top: 0px;
+        justify-content: space-between;
     }
 
     .tags {
         flex-wrap: wrap;
-        margin-top: 10px;
+        margin-top: 0px;
         height: 38px;
         .autoBtn{
             display: none;
@@ -105,6 +114,13 @@ const deleteFn = (item) => {
             border-radius: 4px;
             box-sizing: border-box;
             background-color: #20b041;
+        }
+        .isTop{
+            background-color: black;
+            padding-left: 2px;
+            .el-icon{
+                margin-right: 2px;
+            }
         }
     }
 }
