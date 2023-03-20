@@ -4,21 +4,10 @@
         <el-input v-model="searchVal" style="width: 240px;" class="ml-auto" placeholder="Type something"
             :prefix-icon="Search" />
         <div class="nav-list flex-align">
-            <div class="nav-list_item" @click="jump('/index')">
-                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)" >首页</div>
+            <div class="nav-list_item" @click="jump(item.path)" v-for="(item, index) in config" :key="index">
+                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)" >{{ item.name }}</div>
             </div>
-            <div class="nav-list_item" @click="jump('/timeLine')">
-                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)" >时间线</div>
-            </div>
-            <div class="nav-list_item" @click="jump('/demo')">
-                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">练手实例</div>
-            </div>
-            <div class="nav-list_item" @click="jump('/board')">
-                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">留言建议</div>
-            </div>
-            <div class="nav-list_item" @click="jump('/article/edit')" v-if="userInfo.token && (userInfo.auth.includes('admin'))">
-                <div class="hand" @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">发布文章</div>
-            </div>
+
             <div class="nav-list_item" v-if="!userInfo.token"
             @click="popClick(0)">
                 <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">注册</div>
@@ -39,6 +28,7 @@ import loginPop from '../loginPop/loginPop.vue'
 import { useUserStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
 import { useLogin } from '@/hooks/useLogin'
+import config from './headNavConfig.js'
 import { includes } from 'lodash'
 onMounted(() => {
     // 导航栏颜色修改
