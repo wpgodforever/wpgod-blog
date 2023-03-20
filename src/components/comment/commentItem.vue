@@ -4,9 +4,12 @@
     <div class="right flex-col">
       <div class="right-name">{{ reply_user_id.username }}</div>
       <div class="right-content">{{ content }}</div>
-      <span class="right-reply flex-align hand" @mousedown.capture.prevent.stop="switchReply">
-        <el-icon><ChatDotSquare /></el-icon>回复
-      </span>
+      <div class="right-reply flex-align">
+        <span class="reply-span hand" @mousedown.capture.prevent.stop="switchReply"><el-icon>
+            <ChatDotSquare />
+          </el-icon>回复</span>
+        <span class="time">{{ timeTransform(createdAt) }}</span>
+      </div>
       <div class="reply-box">
         <div class="reply-box-input flex-col" v-show="showReply">
           <el-input
@@ -35,6 +38,7 @@ import { ElMessage } from 'element-plus';
 import { commentReply } from '@/api/comment/index';
 import { useUserStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
+import { timeTransform } from '@/lib/utils.js'
 import replyItem from '@/components/comment/replyItem.vue'
 // 获取pinia用户数据
 const user = useUserStore()
@@ -56,12 +60,13 @@ const props = defineProps({
       content: '',
       id: '',
       article_id: '',
-      replys:[]
+      replys:[],
+      createdAt:''
     })
   },
 });
 
-const { reply_user_id, content } = toRefs(props.info);
+const { reply_user_id, content, createdAt } = toRefs(props.info);
 const replyRef = ref();
 const replyContent = ref('');
 const showReply = ref(false);
@@ -117,15 +122,17 @@ const replyBlur = () => {
       margin-bottom: 10px;
     }
     &-reply {
-      width: 58px;
       font-size: 15px;
       margin-top: 10px;
       .el-icon {
         margin-right: 7px;
       }
-    }
-    &-reply:hover {
-      color: #1171ee;
+      .time{
+          margin-left: 20px;
+      }
+      .reply-span:hover {
+        color: #1171ee;
+      }
     }
     .reply-box {
       align-items: end;
