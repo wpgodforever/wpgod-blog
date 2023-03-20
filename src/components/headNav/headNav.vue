@@ -10,7 +10,7 @@
             <div class="nav-list_item" @click="jump('/timeLine')">
                 <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)" >时间线</div>
             </div>
-            <div class="nav-list_item">
+            <div class="nav-list_item" @click="jump('/demo')">
                 <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">练手实例</div>
             </div>
             <div class="nav-list_item" @click="jump('/board')">
