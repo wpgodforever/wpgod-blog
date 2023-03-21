@@ -9,7 +9,7 @@
                 </div>
                 <div class="autoBtn" v-if="isAdmin">
                     <el-button @click.stop="updateFn(item)" type="primary">修改</el-button>
-                    <el-button @click.stop="deleteFn(item)" type="danger">删除</el-button>
+                    <el-button v-if="!item.isTop" @click.stop="deleteFn(item)" type="danger">删除</el-button>
                 </div>
                 
             </div>
