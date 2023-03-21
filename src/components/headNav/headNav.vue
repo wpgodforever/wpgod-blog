@@ -4,17 +4,20 @@
         <el-input v-model="searchVal" style="width: 240px;" class="ml-auto" placeholder="Type something"
             :prefix-icon="Search" />
         <div class="nav-list flex-align">
-            <div class="nav-list_item" @click="jump(item.path)" v-for="(item, index) in config" :key="index">
-                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)" >{{ item.name }}</div>
+            <div v-for="(item, index) in config" :key="index">
+                <div class="nav-list_item" v-if="item.isAdmin === 0 || (item.isAdmin === 1 && isAdmin)"
+                    @click="jump(item.path)">
+                    <div class="hand" @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">{{ item.name }}
+                    </div>
+                </div>
             </div>
 
-            <div class="nav-list_item" v-if="!userInfo.token"
-            @click="popClick(0)">
-                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">注册</div>
+
+            <div class="nav-list_item" v-if="!userInfo.token" @click="popClick(0)">
+                <div class="hand" @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">注册</div>
             </div>
-            <div class="nav-list_item" v-if="!userInfo.token"
-            @click="popClick(1)">
-                <div class="hand"  @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">登录</div>
+            <div class="nav-list_item" v-if="!userInfo.token" @click="popClick(1)">
+                <div class="hand" @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">登录</div>
             </div>
         </div>
     </div>
@@ -32,9 +35,9 @@ import config from './headNavConfig.js'
 import { includes } from 'lodash'
 onMounted(() => {
     // 导航栏颜色修改
-    if(router.currentRoute.value.path !== '/index'){
+    if (router.currentRoute.value.path !== '/index') {
         window.removeEventListener("scroll", scrollTopListener)
-    }else{
+    } else {
         window.addEventListener("scroll", scrollTopListener, true);
     }
 });
@@ -42,14 +45,14 @@ onMounted(() => {
 const searchVal = ref('')
 const router = useRouter()
 const bgChange = computed(() => {
-    return router.currentRoute.value.path !== '/index' || (scrollTop.value>540)
+    return router.currentRoute.value.path !== '/index' || (scrollTop.value > 540)
 })
 
 const { dialogVisible, tips, popClick } = useLogin()
 
 // 获取pinia用户数据
 const user = useUserStore()
-const { userInfo } = storeToRefs(user)
+const { userInfo, isAdmin } = storeToRefs(user)
 
 
 // 鼠标移入按钮动画
@@ -68,7 +71,7 @@ const scrollTopListener = () => {
 }
 
 // 跳转方法
-const jump = (url, params={}) => {
+const jump = (url, params = {}) => {
     router.push({
         path: url,
         params
@@ -77,11 +80,11 @@ const jump = (url, params={}) => {
 
 </script>
 <style scoped lang='less'>
-
-.bgChange{
+.bgChange {
     background-color: #fff;
-    color: #000!important;
+    color: #000 !important;
 }
+
 .headNav {
     position: fixed;
     top: 0;
@@ -114,4 +117,5 @@ const jump = (url, params={}) => {
     .nav-islogin {
         display: none;
     }
-}</style>
+}
+</style>
