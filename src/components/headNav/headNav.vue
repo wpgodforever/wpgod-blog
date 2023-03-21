@@ -81,7 +81,7 @@ const jump = (url, params = {}) => {
 </script>
 <style scoped lang='less'>
 .bgChange {
-    background-color: #fff;
+    background-color: #fff!important;
     color: #000 !important;
 }
 
