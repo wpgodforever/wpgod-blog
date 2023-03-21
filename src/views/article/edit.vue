@@ -248,6 +248,7 @@ const addTag = () => {
   .tags-box {
     flex-wrap: wrap;
     margin-right: 15px;
+    margin-top: -10px;
 
     .tag-item {
       padding: 8px 15px;
