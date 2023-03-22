@@ -1,6 +1,9 @@
 <template>
   <div class="main-container flex-col">
     <div class="banner flex-col">
+      <div class="banner-bg">
+        <ProgressiveImage src="https://wpbucket124.oss-cn-guangzhou.aliyuncs.com/public/assets/banner-bg.png" />
+      </div>
       <h1>一砖一瓦，码出我的国度</h1>
       <h3>No Pain No Gain.</h3>
     </div>
@@ -24,6 +27,7 @@ import { ref, reactive } from 'vue'
 import listItem from './components/listItem.vue'
 import personCard from './components/personCard.vue'
 import tagList from './components/tagList.vue'
+import { ProgressiveImage } from "vue-progressive-image";
 import {
   articleListFn
 } from '@/api/article/index'
@@ -89,8 +93,9 @@ const tagClick = (item) => {
   background-color: rgba(244, 244, 244);
 
   .banner {
+    position: relative;
     height: 600px;
-    background-image: url(../../assets/img/banner-bg.png);
+    // background-image: url(../../assets/img/banner-bg.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center 0px;
@@ -99,6 +104,16 @@ const tagClick = (item) => {
     align-items: center;
     color: #fff;
     margin-top: -59px;
+    &-bg{
+      position: absolute;
+      height: 600px;
+      width: 100%;
+      object-fit: cover;
+      overflow: hidden;
+    }
+    h1, h3{
+      z-index: 2;
+    }
   }
 
   .main {

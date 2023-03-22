@@ -8,6 +8,8 @@ import router from './router/index'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/theme-chalk/index.css'
 import 'animate.css';
+// 渐进式加载图片插件
+import "vue-progressive-image/dist/style.css"; // <--- very important!
 
 
 

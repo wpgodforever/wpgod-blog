@@ -1,6 +1,9 @@
 <template>
     <div>
         <el-dialog :modelValue="modelValue" width="40%" :before-close="onBeforeClose">
+            <div class="img">
+                <ProgressiveImage src="https://wpbucket124.oss-cn-guangzhou.aliyuncs.com/public/assets/login-bg.png" />
+            </div>
             <div class="login-box flex-col">
                 <div class="text-line flex-align">
                     <transition-group @after-enter="transitionComplete" @before-leave="transitionleave" leave-active-class="animate__animated animate__rollOut" enter-active-class="animate__animated animate__rollIn">
@@ -47,6 +50,7 @@ import { User } from '@element-plus/icons-vue'
 import { registerFn, loginFn } from '@/api/login/login'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/store/user'
+import { ProgressiveImage } from "vue-progressive-image";
 // pinia用户信息
 const user = useUserStore()
 
@@ -226,11 +230,19 @@ const resetForm = (formEl: FormInstance | undefined) => {
 
 
 :deep(.el-dialog){
-    border-radius: 20px;
-    background-image: url(../../assets/img/login-bg.png);
+    position: relative;
+    border-radius: 0px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center 0;
+    overflow: hidden;
+}
+.img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 110%;
+    height: 100%;
 }
 :deep(el-dialog__header){
     display: none;
