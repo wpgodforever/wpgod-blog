@@ -1,8 +1,6 @@
 <template>
     <div class="headNav flex-align" :class="[bgChange ? 'bgChange' : 'noBorder']">
         <div>{{ user.userInfo.username }}</div>
-        <el-input v-model="searchVal" style="width: 240px;" class="ml-auto" placeholder="Type something"
-            :prefix-icon="Search" />
         <div class="nav-list flex-align">
             <div v-for="(item, index) in config" :key="index">
                 <div class="nav-list_item" v-if="item.isAdmin === 0 || (item.isAdmin === 1 && isAdmin)"
@@ -26,7 +24,6 @@
 <script lang='ts' setup>
 import { ref, reactive, computed, onMounted, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
-import { Search } from '@element-plus/icons-vue'
 import loginPop from '../loginPop/loginPop.vue'
 import { useUserStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
@@ -42,7 +39,6 @@ onMounted(() => {
     }
 });
 
-const searchVal = ref('')
 const router = useRouter()
 const bgChange = computed(() => {
     return router.currentRoute.value.path !== '/index' || (scrollTop.value > 540)
