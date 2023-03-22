@@ -5,23 +5,24 @@
     </div>
 </template>
 <script lang='ts' setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, PropType } from 'vue'
 import { colorInfo } from '@/assets/js/color'
+
 const props = defineProps({
     tagList: {
-        type: Array,
+        type: Array as PropType<String[]>,
         default: () => [],
     },
     tagsClickList: {
-        type: Array,
+        type: Array as PropType<String[]>,
         default: () => [],
     },
 })
 const emit = defineEmits(['tagClick'])
-const tagClick = (item) => {
+const tagClick = (item:String) => {
     emit('tagClick',item)
 }
-const randomColor = (obj) => {
+const randomColor = (obj:Object) => {
   const randomIndex = Math.floor(Math.random() * Object.getOwnPropertyNames(obj).length +1);
   return colorInfo[randomIndex];
 }
