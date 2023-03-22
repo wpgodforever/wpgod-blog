@@ -1,12 +1,11 @@
 <template>
     <div class="container flex-align">
-        <div :class="[tagsClickList.includes(item)?'animateText':'']" class="item hand" @click="tagClick(item)" :style="{
-            backgroundColor: colorInfo[Math.floor(Math.random() * 5 + 1)]
-        }" v-for="(item, index) in tagList" :key="index"> {{ item }}</div>
+        <div :class="[tagsClickList.includes(item)?'animateText':'']" class="item hand" @click="tagClick(item)"
+        :style="{ backgroundColor: randomColor(colorInfo) }" v-for="(item, index) in tagList" :key="index"> {{ item }}</div>
     </div>
 </template>
 <script lang='ts' setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { colorInfo } from '@/assets/js/color'
 const props = defineProps({
     tagList: {
@@ -21,6 +20,10 @@ const props = defineProps({
 const emit = defineEmits(['tagClick'])
 const tagClick = (item) => {
     emit('tagClick',item)
+}
+const randomColor = (obj) => {
+  const randomIndex = Math.floor(Math.random() * Object.getOwnPropertyNames(obj).length +1);
+  return colorInfo[randomIndex];
 }
 </script>
 <style scoped lang='less'>
