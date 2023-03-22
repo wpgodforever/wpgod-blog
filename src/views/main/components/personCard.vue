@@ -37,14 +37,15 @@ const props = defineProps({
     },
 })
 
+const textConfig = {
+    0: '按 CTRL + D 将本页加入书签',
+    1: 'github地址: https://github.com/wpgodforever/wpgod-blog',
+    2: '微信号: wp997587729',
+    3: '邮箱地址: 9975877292@qq.com',
+}
 
 const handleFont = (index:0| 1 | 2 | 3) => {
-    const textConfig = {
-        0: '按 CTRL + D 将本页加入书签',
-        1: 'github地址: https://github.com/wpgodforever/wpgod-blog',
-        2: '微信号: wp997587729',
-        3: '邮箱地址: 9975877292@qq.com',
-    }
+    
     ElMessage({
       message: textConfig[index],
       type: 'success',
@@ -63,7 +64,6 @@ const handleFont = (index:0| 1 | 2 | 3) => {
         height: 80px;
         border-radius: 50%;
         overflow: hidden;
-        background-color: pink;
         background-image: url('../../../assets/img/headImg.jpg');
         background-size: cover;
         background-position: center;
