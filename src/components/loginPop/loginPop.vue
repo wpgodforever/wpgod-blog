@@ -209,24 +209,6 @@ const resetForm = (formEl: FormInstance | undefined) => {
     }
 }
 
-// 输入后字体的漂浮效果
-.animateText{
-    animation: flow 1.6s linear infinite;
-    // animation-delay:1s;
-}
-
-@keyframes flow {
-        25% {
-             transform: translateY(-4px);
-        }
-        50%, 100% {
-             transform: translateY(0);
-        }
-        75% {
-             transform: translateY(4px);
-        }
-}
-
 @keyframes iconRoto {
         25% {
             transform:  rotate(90deg);

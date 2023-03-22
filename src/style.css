@@ -29,3 +29,20 @@ html,body{
     display: flex;
     flex-direction: column;
 }
+
+/* 上下漂浮效果 */
+.animateText{
+    animation: flow 1.6s linear infinite;
+}
+
+@keyframes flow {
+        25% {
+             transform: translateY(-4px);
+        }
+        50%, 100% {
+             transform: translateY(0);
+        }
+        75% {
+             transform: translateY(4px);
+        }
+}

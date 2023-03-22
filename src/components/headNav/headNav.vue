@@ -99,6 +99,7 @@ const jump = (url, params = {}) => {
     }
 
     .nav-list {
+        margin-left: auto;
         &_item {
             margin: 0 15px;
             padding: 10px 0;
