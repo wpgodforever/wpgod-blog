@@ -74,11 +74,7 @@ const replyDeepSuccess = () => {
     width: 100%;
   }
 }
-.md-editor-previewOnly {
-  // background-color: rgba(255,255,255,.1);
-  // color: #fff;
-  p {
-    color: red !important;
-  }
+.md-editor-dark {
+  --md-bk-color: rgba(0, 0, 0,.1);
 }
 </style>
