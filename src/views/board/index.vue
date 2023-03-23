@@ -1,5 +1,5 @@
 <template>
-    <div class="conmentListContainer">
+    <div class="conmentListContainer themeBg">
         <myComment v-bind="$attrs" :list="list"  @commentSuccess="commentSuccess" @replySuccess="replySuccess" @replyDeepSuccess="replyDeepSuccess"></myComment>
     </div>
   </template>
@@ -33,7 +33,6 @@ const replyDeepSuccess = () => {
      z-index: 2;
        width: 70%;
        margin: 0 auto ;
-       background-color: #FFF;
        padding: 20px 10px;
        min-height: calc(100vh - 99px);
    }

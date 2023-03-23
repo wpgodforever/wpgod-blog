@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="themeTextBg">
         <el-dialog :modelValue="modelValue" width="40%" :before-close="onBeforeClose">
-            <div class="img">
+            <div class="img themeTextBg">
                 <ProgressiveImage src="https://wpbucket124.oss-cn-guangzhou.aliyuncs.com/public/assets/login-bg.png" />
             </div>
             <div class="login-box flex-col">
@@ -161,6 +161,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
         color: #fff;
         font-size: 38px;
         height: 30px;
+        margin-bottom: 20px;
         .transitionClass{
             transition: all 1s;
         }
@@ -236,6 +237,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
     background-size: cover;
     background-position: center 0;
     overflow: hidden;
+    background-color: #1a1a1a;
 }
 .img{
     position: absolute;
@@ -243,13 +245,16 @@ const resetForm = (formEl: FormInstance | undefined) => {
     left: 0;
     width: 110%;
     height: 100%;
+    .v-progressive-image{
+        background-color: #1a1a1a!important;
+
+    }
 }
 :deep(el-dialog__header){
     display: none;
 }
 :deep(.el-input__wrapper){
     background-color: rgba(255, 255, 255, 0);
-    margin-top: 20px;
     border: 0;
 }
 :deep(.el-input__inner){

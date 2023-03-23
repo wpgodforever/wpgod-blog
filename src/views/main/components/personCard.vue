@@ -1,5 +1,5 @@
 <template>
-    <div class="container flex-col">
+    <div class="container themeBg flex-col">
         <div class="container-img">
             <div class="test">
                 <ProgressiveImage src="https://wpbucket124.oss-cn-guangzhou.aliyuncs.com/public/assets/headImg.jpg" />
@@ -62,7 +62,6 @@ const handleFont = (index: 0 | 1 | 2 | 3) => {
     width: 100%;
     padding: 20px;
     border-radius: 20px;
-    background-color: #fff;
     align-items: center;
 
     &-img {

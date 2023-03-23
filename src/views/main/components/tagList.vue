@@ -1,5 +1,5 @@
 <template>
-    <div class="container flex-align">
+    <div class="container themeBg flex-align">
         <div :class="[tagsClickList.includes(item)?'animateText':'']" class="item hand" @click="tagClick(item)"
         :style="{ backgroundColor: randomColor(colorInfo) }" v-for="(item, index) in tagList" :key="index"> {{ item }}</div>
     </div>
@@ -32,7 +32,6 @@ const randomColor = (obj:Object) => {
     width: 100%;
     padding: 20px 20px 16px;
     border-radius: 20px;
-    background-color: #fff;
     flex-wrap: wrap;
     margin-top: 20px;
 

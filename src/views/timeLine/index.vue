@@ -1,5 +1,5 @@
 <template>
-    <div class="timeLine-container">
+    <div class="timeLine-container themeBg">
         <el-row :gutter="20">
             <el-col :span="16">
                 <div id="big">
@@ -12,7 +12,7 @@
                 </div>
             </el-col>
             <el-col :span="8">
-                <div class="linkBox flex-col" id="smallBox">
+                <div class="linkBox themeText flex-col" id="smallBox">
                     <h2>锚点</h2>
                     <span class="hand" :id="item.id + 124" @click="scrollTo(item)" v-for="(item, index) in listInfo.list"
                         :key="index">{{ item.title
@@ -71,7 +71,6 @@ const scrollTo = (item) => {
 .timeLine-container {
     width: 70%;
     min-height: calc(100vh - 59px);
-    background-color: #fff;
     margin: 0 auto;
     padding: 10px;
 }
@@ -106,7 +105,6 @@ const scrollTo = (item) => {
     top: 69px;
     border-radius: 20px;
     padding: 10px;
-    color: #3eaf7c;
     margin-left: 30px;
     max-height: 50vh;
     overflow: scroll;

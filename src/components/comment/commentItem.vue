@@ -146,7 +146,6 @@ const replyBlur = () => {
         }
       }
       &-item{
-        background: rgba(247,248,250,.7);
         padding: 20px 20px 1px 20px;
         margin-top: 15px;
       }

@@ -1,13 +1,11 @@
 <template>
     <div class="itemContainer flex-col" :class="[isRight ? 'right' : '']">
         <span class="title">{{ title }}</span>
-        <span class="desc" :style="{
-            color: colorInfo[Math.floor(Math.random() * 5 + 1)]
-        }">{{ desc }}</span>
+        <span class="desc">{{ desc }}</span>
         <div class="img" v-if="cover">
             <img :src="cover" alt="" srcset="">
         </div>
-        <span class="date">{{ timeTransform(createdAt) }}</span>
+        <span class="date themeTip">{{ timeTransform(createdAt) }}</span>
     </div>
 </template>
 <script lang='ts' setup>
@@ -40,10 +38,12 @@ const props = defineProps({
     .title {
         font-weight: 700;
         font-size: 18px;
+        color: #fff;
     }
 
     .desc {
         margin: 5px 0;
+        color: #CFD3DC;
     }
 
     .img {
@@ -58,7 +58,7 @@ const props = defineProps({
     }
 
     .date {
-        color: #6ca189;
+        margin-top: 5px;
     }
 }
 

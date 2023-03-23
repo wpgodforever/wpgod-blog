@@ -4,8 +4,8 @@
         <div class="headComment">
             <el-avatar :size="50" :src="circleUrl" />
             <!-- 未登录时显示 -->
-            <div class="loginBox" v-if="!isLogin">
-                看完啦，<span class="hand" @click="popClick(1)">登录</span>分享一下感受吧~
+            <div class="loginBox themeTextBg" v-if="!isLogin">
+                看完啦，<span class="hand" @click="popClick(1)">登录 </span>分享一下感受吧~
             </div>
             <!-- 登录时显示 -->
             <div class="inputBox" v-else>
@@ -80,10 +80,10 @@ const send = () => {
     width: 100%;
     min-height: 80px;
     border-radius: 10px;
+    padding-right: 10px;
 }
 
 .loginBox {
-    background-color: #f2f3f5;
     line-height: 80px;
     text-align: center;
 

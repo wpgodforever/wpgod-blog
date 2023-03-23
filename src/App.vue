@@ -13,12 +13,17 @@ import starBg from '@/components/starBg/index.vue'
   width: 100%;
   height: 100%;
   overflow: scroll;
+  color: #fff;
 }
 ::-webkit-scrollbar {
   width: 0 !important;
 }
 ::-webkit-scrollbar {
   width: 0 !important;height: 0;
+}
+
+.el-input{
+  background: #1a1a1a;
 }
 
 html,body {

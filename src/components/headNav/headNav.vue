@@ -1,5 +1,5 @@
 <template>
-    <div class="headNav flex-align" :class="[bgChange ? 'bgChange' : 'noBorder']">
+    <div class="headNav flex-align">
         <div>{{ user.userInfo.username }}</div>
         <div class="nav-list flex-align">
             <div v-for="(item, index) in config" :key="index">
@@ -76,10 +76,6 @@ const jump = (url, params = {}) => {
 
 </script>
 <style scoped lang='less'>
-.bgChange {
-    background-color: #fff!important;
-    color: #000 !important;
-}
 
 .headNav {
     position: fixed;
@@ -89,7 +85,6 @@ const jump = (url, params = {}) => {
     color: #fff;
     backdrop-filter: blur(2px);
     padding: 10px;
-    border-bottom: 1px solid #eaecef;
     box-sizing: border-box;
     z-index: 10;
 

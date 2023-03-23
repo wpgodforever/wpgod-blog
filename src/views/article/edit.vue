@@ -244,6 +244,7 @@ const addTag = () => {
     width: 50vw;
     min-height: 100%;
     overflow: scroll;
+    background-color: #fff;
   }
   .tags-box {
     flex-wrap: wrap;

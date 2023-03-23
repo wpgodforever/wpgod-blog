@@ -1,6 +1,6 @@
 <template>
     <div class="container flex-col">
-        <div @click="jump(item)" class="containerItem" v-for="(item, index) in list" :key="item.id">
+        <div @click="jump(item)" class="containerItem themeBg" v-for="(item, index) in list" :key="item.id">
             <div class="title">{{ item.title }}</div>
             <div class="tags flex-align">
                 <div class="tagItem" v-if="!item.isTop" v-for="(tagsItem, tagsIndex) in item.tags" :key="tagsIndex">{{ tagsItem }}</div>
@@ -13,7 +13,7 @@
                 </div>
                 
             </div>
-            <div class="date flex-align">
+            <div class="date themeTip flex-align">
                 <span>{{ '该文章发布于' + timeTransform(item.createdAt)  }}</span>
          <span>{{ '更新于' + timeTransform(item.updatedAt) }}</span>
             </div>
@@ -75,7 +75,6 @@ const deleteFn = (item) => {
         padding: 20px;
         border-radius: 10px;
         margin-bottom: 20px;
-        background-color: #fff;
     }
     .containerItem:hover{
         .autoBtn{
@@ -90,7 +89,6 @@ const deleteFn = (item) => {
     }
 
     .date {
-        color: rgba(0, 0, 0, .6);
         font-size: 14px;
         margin-top: 0px;
         justify-content: space-between;

@@ -1,7 +1,7 @@
 <template>
-  <div class="editorBox flex-col">
+  <div class="editorBox themeBg flex-col">
     <div class="editorBox-detail">
-      <MdEditor v-model.trim="text" previewOnly/>
+      <MdEditor v-model.trim="text" previewOnly theme="dark"/>
       <div class="time flex-align">
          <span>{{ '该文章发布于' + timeTransform(createdAt)  }}</span>
          <span>{{ '更新于' + timeTransform(updatedAt) }}</span>
@@ -23,6 +23,10 @@ import {
   articleDetailFn
 } from '@/api/article/index'
 import myComment from '@/components/comment/index.vue'
+const state = reactive({
+  text: '',
+  theme: 'dark'
+});
 const route = useRoute()
 let text = ref('')
 let updatedAt = ref('')
@@ -52,7 +56,6 @@ const replyDeepSuccess = () => {
    box-sizing: border-box;
     width: 80%;
    align-items: center;
-   background-color: #fff;
    min-height: calc(100vh - 59px);
    margin: 0 auto;
    padding: 20px 40px;
