@@ -2,18 +2,21 @@
     <div class="timeLine-container">
         <el-row :gutter="20">
             <el-col :span="16">
-                <el-timeline>
-                    <el-timeline-item hollow v-for="(item, index) in listInfo.list" :key="index" :id="item.id"
-                        :class="[index % 2 !== 0 ? 'right' : '']" center>
-                        <timeLine v-bind="{ ...item }" :isRight="index % 2 !== 0 ? true : false"></timeLine>
-                    </el-timeline-item>
-                </el-timeline>
+                <div id="big">
+                    <el-timeline>
+                        <el-timeline-item hollow v-for="(item, index) in listInfo.list" :key="index" :id="item.id"
+                            :class="[index % 2 !== 0 ? 'right' : '']" center>
+                            <timeLine v-bind="{ ...item }" :isRight="index % 2 !== 0 ? true : false"></timeLine>
+                        </el-timeline-item>
+                    </el-timeline>
+                </div>
             </el-col>
             <el-col :span="8">
                 <div class="linkBox flex-col" id="smallBox">
                     <h2>锚点</h2>
-                    <span class="hand" :id="item.id +124" @click="scrollTo(item)" v-for="(item, index) in listInfo.list" :key="index">{{ item.title
-                    }}</span>
+                    <span class="hand" :id="item.id + 124" @click="scrollTo(item)" v-for="(item, index) in listInfo.list"
+                        :key="index">{{ item.title
+                        }}</span>
                 </div>
             </el-col>
         </el-row>
@@ -51,14 +54,16 @@ const scrollTo = (item) => {
     const bigScrollBoxItem = document.getElementById(scrollId)
     const bigOffsetTop = bigScrollBoxItem.offsetTop
     const smallOffsetTop = smallScrollBoxItem.offsetTop
-    window.scrollTo({
-        behavior:'smooth',
-        top:bigOffsetTop
+    const bigScrollBox = document.getElementById('big')
+    console.log(bigOffsetTop)
+    bigScrollBox.scrollTo({
+        behavior: 'smooth',
+        top: bigOffsetTop - 62
     })
     // 父盒子滚动，而不是那一项滚动
     smallScrollBox.scrollTo({
-        behavior:'smooth',
-        top:smallOffsetTop
+        behavior: 'smooth',
+        top: smallOffsetTop
     })
 }
 </script>
@@ -91,6 +96,11 @@ const scrollTo = (item) => {
     }
 }
 
+#big{
+    max-height: 100vh;
+    overflow: scroll;
+}
+
 .linkBox {
     position: sticky;
     top: 69px;
@@ -100,6 +110,7 @@ const scrollTo = (item) => {
     margin-left: 30px;
     max-height: 50vh;
     overflow: scroll;
+
     span {
         margin-bottom: 15px;
         text-decoration: underline;

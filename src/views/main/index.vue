@@ -90,7 +90,8 @@ const tagClick = (item) => {
   width: 100%;
   position: relative;
   min-height: 100vh;
-  background-color: rgba(244, 244, 244);
+  // background-color: rgba(244, 244, 244);
+  z-index: 2;
 
   .banner {
     position: relative;

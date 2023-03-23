@@ -30,6 +30,7 @@ const replyDeepSuccess = () => {
   </script>
   <style scoped lang='less'>
    .conmentListContainer{
+     z-index: 2;
        width: 70%;
        margin: 0 auto ;
        background-color: #FFF;
