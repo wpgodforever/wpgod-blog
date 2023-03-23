@@ -49,18 +49,22 @@ const replyDeepSuccess = () => {
 </script>
 <style scoped lang='less'>
  .editorBox{
+   box-sizing: border-box;
+    width: 80%;
    align-items: center;
    background-color: #fff;
    min-height: calc(100vh - 59px);
+   margin: 0 auto;
+   padding: 20px 40px;
   &-detail{
-    width: 80%;
+    width: 100%;
     .time{
       justify-content: space-between;
       margin-bottom: 20px;
     }
   }
   .commentBox{
-    width: 80%;
+    width: 100%;
   }
  }
 </style>
