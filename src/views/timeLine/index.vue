@@ -69,7 +69,7 @@ const scrollTo = (item) => {
 </script>
 <style scoped lang='less'>
 .timeLine-container {
-    width: 70%;
+    width: 80%;
     min-height: calc(100vh - 59px);
     margin: 0 auto;
     padding: 10px;
