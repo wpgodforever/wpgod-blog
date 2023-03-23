@@ -253,7 +253,7 @@ const addTag = () => {
 
     .tag-item {
       padding: 8px 15px;
-      color: var(--el-button-text-color);
+      color: #000;
       border-color: var(--el-button-border-color);
       border: var(--el-border);
       border-radius: 20px;

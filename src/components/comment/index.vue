@@ -1,7 +1,7 @@
 <!-- 普通评论输入框 -->
 <template>
     <div class="container flex-col">
-        <div class="headComment">
+        <div class="headComment flex">
             <el-avatar :size="50" :src="circleUrl" />
             <!-- 未登录时显示 -->
             <div class="loginBox themeTextBg" v-if="!isLogin">
@@ -76,6 +76,7 @@ const send = () => {
 
 .inputBox,
 .loginBox {
+    flex: 1;
     margin: 0 0 20px 20px;
     width: 100%;
     min-height: 80px;
