@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container themeBg">
     <div class="formContainer">
       <el-form ref="ruleFormRef" :model="form" :rules="rules">
         <el-form-item label="标题" prop="title">
@@ -63,6 +63,7 @@
       <MdEditor
         class="editor"
         v-model.trim="form.text"
+        previewTheme="mk-cute" theme="dark"
         @on-upload-img="onUploadImg"
       />
       <!-- <MdEditor previewOnly /> -->
@@ -244,7 +245,6 @@ const addTag = () => {
     width: 50vw;
     min-height: 100%;
     overflow: scroll;
-    background-color: #fff;
   }
   .tags-box {
     flex-wrap: wrap;
@@ -253,7 +253,6 @@ const addTag = () => {
 
     .tag-item {
       padding: 8px 15px;
-      color: #000;
       border-color: var(--el-button-border-color);
       border: var(--el-border);
       border-radius: 20px;
@@ -290,7 +289,7 @@ const addTag = () => {
 }
 
 :deep(.avatar-uploader .el-upload) {
-  border: 1px dashed#000;
+  border: 1px dashed#fff;
   border-radius: 6px;
   cursor: pointer;
   position: relative;
@@ -308,5 +307,17 @@ const addTag = () => {
   width: 178px;
   height: 178px;
   text-align: center;
+}
+:deep(.el-textarea){
+  --el-input-bg-color: #232323!important;
+  --el-input-text-color: #fff;
+}
+
+:deep(.el-input){
+  --el-input-bg-color: #232323!important;
+  --el-input-text-color: #fff;
+}
+:deep(.el-form-item__label){
+  color: #fff;
 }
 </style>
