@@ -61,7 +61,7 @@
     </div>
     <div class="editor-box">
       <MdEditor
-        class="editor"
+        class="editor themeBg"
         v-model.trim="form.text"
         previewTheme="mk-cute" theme="dark"
         @on-upload-img="onUploadImg"
@@ -319,5 +319,8 @@ const addTag = () => {
 }
 :deep(.el-form-item__label){
   color: #fff;
+}
+.md-editor-dark {
+  --md-bk-color: rgba(0, 0, 0,.1);
 }
 </style>
