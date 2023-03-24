@@ -1,17 +1,21 @@
 <template>
   <div class="editorBox flex-col">
+    <h1 class="editorBox-title">
+      {{ info.title }}
+    </h1>
     <div class="editorBox-detail">
-      <MdEditor v-model.trim="text" previewOnly theme="dark"/>
       <div class="time flex-align">
-        <span>{{ '该文章发布于' + timeTransform(createdAt) }}</span>
-        <span>{{ '更新于' + timeTransform(updatedAt) }}</span>
+        <span>{{ '该文章发布于' + timeTransform(info.createdAt) }}</span>
+        <span>{{ '更新于' + timeTransform(info.updatedAt) }}</span>
       </div>
+      <MdEditor v-model.trim="info.text" previewOnly previewTheme="mk-cute" theme="dark"/>
+      
     </div>
     <!-- 评论区域 -->
     <div class="commentBox">
       <myComment
         v-bind="$attrs"
-        :list="list"
+        :list="info.coms"
         @commentSuccess="commentSuccess"
         @replySuccess="replySuccess"
         @replyDeepSuccess="replyDeepSuccess"
@@ -32,16 +36,20 @@ const state = reactive({
   theme: 'dark'
 });
 const route = useRoute();
-let text = ref('');
-let updatedAt = ref('');
-let createdAt = ref('');
-const list = ref([]);
+const info = reactive({
+  text:'',
+  updatedAt:'',
+  createdAt:'',
+  coms:[],
+  tags:[],
+  title:'',
+})
 const getCommentList = () => {
   articleDetailFn({ _id: route.params.id }).then((res) => {
-    text.value = res.data[0].text;
-    list.value = res.data[0].coms;
-    updatedAt.value = res.data[0].updatedAt;
-    createdAt.value = res.data[0].createdAt;
+    for(let i in info){
+      info[i] = res.data[0][i]
+    }
+    console.log(info.coms)
   });
 };
 getCommentList();
@@ -63,15 +71,20 @@ const replyDeepSuccess = () => {
   min-height: calc(100vh - 59px);
   margin: 0 auto;
   padding: 20px 40px;
+  &-title{
+    width: 100%;
+    color: #999999;
+  }
   &-detail {
     width: 100%;
     .time {
       justify-content: space-between;
-      margin: 20px 0;
+      margin: 0 0 20px 0;
     }
   }
   .commentBox {
     width: 100%;
+    margin-top: 20px;
   }
 }
 .md-editor-dark {

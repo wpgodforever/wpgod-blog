@@ -152,4 +152,7 @@ const replyBlur = () => {
     }
   }
 }
+:deep(.el-textarea){
+  --el-input-bg-color: #232323!important;
+}
 </style>

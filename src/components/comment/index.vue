@@ -102,4 +102,8 @@ const send = () => {
         margin-top: 20px;
     }
 }
+:deep(.el-textarea){
+  --el-input-bg-color: #232323!important;
+  --el-input-text-color: #fff;
+}
 </style>
