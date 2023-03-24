@@ -293,7 +293,7 @@ onMounted(() => {
 .canvas-container {
   margin-top: 50px;
   display: flex;
-  width: 100vw;
+  width: 90vw;
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.4);
 

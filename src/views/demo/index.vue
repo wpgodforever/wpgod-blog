@@ -1,65 +1,56 @@
 <template>
   <div class="demo-container">
     <div class="left">
-        <el-menu
-        :default-active="activeIndex"
-        class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
-      >
-      <el-menu-item :index="demoIndex + ''" v-for="(demoItem,demoIndex) in demoConfig">
-        {{ demoItem.name }}
-      </el-menu-item>
-          
+      <el-menu :default-active="route.path" router :default-openeds="openeds" active-text-color="#409eff" text-color="#fff" background-color="rgba(0, 0, 0, 0)">
+        <el-sub-menu :index="demoItem.index" v-for="(demoItem, demoIndex) in demoConfig">
+          <template #title>
+            <span>{{ demoItem.title }}</span>
+          </template>
+          <el-menu-item :index="childrenItem.path" v-for="(childrenItem, childrenIndex) in demoItem.children">
+            {{ childrenItem.name }}
+          </el-menu-item>
+        </el-sub-menu>
+        
+
       </el-menu>
     </div>
     <div class="right">
-        <RouterView></RouterView>
+      <RouterView></RouterView>
     </div>
   </div>
 </template>
 <script lang='ts' setup>
+import { useRoute} from 'vue-router'
 import { ref, reactive, shallowRef } from 'vue'
-import demoConfig from './demoConfig.js' 
-const activeIndex = ref('0')
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
+import demoConfig from './demoConfig.js'
+const route = useRoute()
+const openeds =ref(['1'])
+interface childrenItem {
+    name:string,
+    path:string,
+    index: string
 }
 
 </script>
 <style scoped lang='less'>
- .demo-container{
-     display: flex;
+.demo-container {
+  display: flex;
+  min-height: calc(100vh - 59px);
+
+  .left {
+    width: 12%;
     min-height: calc(100vh - 59px);
-     .left{
-         width: 20%;
-         min-height: calc(100vh - 59px);
-         .el-menu{
-             height: 100%;
-         }
-     }
-     .right{
-       box-sizing: border-box;
-      //  padding: 30px;
-      padding-bottom: 20px;
-        flex: 1;
-        min-height: calc(100vh - 59px);
-     }
-     .el-menu{
-       background-color: rgba(0,0,0,0);
-       
-     }
-     .el-menu-item{
-      color: #fff;
-     }
-     .el-menu-item:hover{
-      background-color: rgba(0,0,0,0);
-     }
-     .el-menu-item.is-active{
-      color: #409eff!important;
-     }
- }
-</style>
+    flex-shrink: 0;
+
+    .el-menu {
+      height: 100%;
+    }
+  }
+
+  .right {
+    box-sizing: border-box;
+    padding-bottom: 20px;
+    flex: 1;
+    min-height: calc(100vh - 59px);
+  }
+}</style>
