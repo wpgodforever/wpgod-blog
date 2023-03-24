@@ -20,14 +20,19 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
+import kazimierzUrl from '@/assets/img/demoGrain/logo_kazimierz.png'
+import rhineUrl from '@/assets/img/demoGrain/logo_rhine.png'
+import rhodesUrl from '@/assets/img/demoGrain/logo_rhodes.png'
+import victoriazUrl from '@/assets/img/demoGrain/logo_victoria.png'
+import yanUrl from '@/assets/img/demoGrain/logo_yan.png'
 
 // 准备logo数据
 const logos = reactive([
-  { label: "kazimierz", url: "/src/assets/img/demoGrain/logo_kazimierz.png" },
-  { label: "rhine", url: "/src/assets/img/demoGrain/logo_rhine.png" },
-  { label: "rhodes", url: "/src/assets/img/demoGrain/logo_rhodes.png" },
-  { label: "victoria", url: "/src/assets/img/demoGrain/logo_victoria.png" },
-  { label: "yan", url: "/src/assets/img/demoGrain/logo_yan.png" },
+  { label: "kazimierz", url: kazimierzUrl },
+  { label: "rhine", url: rhineUrl },
+  { label: "rhodes", url: rhodesUrl },
+  { label: "victoria", url: victoriazUrl },
+  { label: "yan", url: yanUrl },
 ]);
 
 /** 存储由logos生成的logoImg对象 */

@@ -29,6 +29,7 @@ export default defineConfig({
     // extensions: [".ts", ".js"],
   },
   server: {
+    host: '0.0.0.0',
     proxy: {
         '/api': { //apiTest是自行设置的请求前缀，按照这个来匹配请求，有这个字段的请求，就会进到代理来
             target: baseUrl,
