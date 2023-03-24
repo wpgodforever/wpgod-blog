@@ -68,7 +68,7 @@ service.interceptors.response.use(
             isAlert = false
             localStorage.removeItem('my_user')
             // 清除用户信息缓存，刷新当前页面
-            router.go(0)
+            router.push('/')
           },
         })
       }
