@@ -6,7 +6,7 @@ const ArticleDetail = () => import('../views/article/detail.vue')
 const TimeLine = () => import('../views/timeLine/index.vue')
 const Board = () => import('../views/board/index.vue')
 const Demo = () => import('../views/demo/index.vue')
-const demoGrain = () => import('../views/demo/components/demoGrain.vue')
+const demoGrain = () => import('../views/demo/components/demoGrain/index.vue')
 const routes: Array<RouteRecordRaw> = [
     { 
         path: '/', 

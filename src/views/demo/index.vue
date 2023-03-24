@@ -42,7 +42,10 @@ const handleClose = (key: string, keyPath: string[]) => {
          }
      }
      .right{
-         flex: 1;
+       box-sizing: border-box;
+      //  padding: 30px;
+      padding-bottom: 20px;
+        flex: 1;
         min-height: calc(100vh - 59px);
      }
      .el-menu{
