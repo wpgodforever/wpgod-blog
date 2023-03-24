@@ -13,7 +13,6 @@
 const list = ref([])
   const getCommentList = () => {
     boardList().then(res => {
-        console.log(res.data,'------------------')
         list.value = res.data
 })
 }

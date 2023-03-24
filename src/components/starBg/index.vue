@@ -5,11 +5,11 @@
     </div>
 </template>
 <script lang='ts' setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 // 静态星星-----------------------------------------
-const starts = 333; // 页面中全体星星个数
+const starts = 633; // 页面中全体星星个数
 const starsRef = ref<HTMLDivElement | null>(null)
-
+const timer = ref()
 onMounted(() => {
     if (starsRef.value) {
         let shadow = ""
@@ -21,8 +21,13 @@ onMounted(() => {
         shadow = shadow.substring(0, shadow.length - 2)
         starsRef.value.style.boxShadow = shadow
         start()
-        setInterval(start, 10000);
+        // 每10S从新设置休息下落
+        timer.value = setInterval(start, 10000);
     }
+})
+onUnmounted(() => {
+    clearInterval(timer.value)
+    timer.value = ''
 })
 // 流星------------------------------------------
 const meteors = 30;  // 流星个数
@@ -31,11 +36,12 @@ const start = () => {
   metreorRef.value.forEach((item: HTMLDivElement) => {
     let v = Math.floor(Math.random() * 100);
     let h = Math.floor(Math.random() * 1950 - 500);
-    // 每个流星下落的持续时间
-    let time = Math.floor(Math.random() * 5 + 2);
+    // 每个流星随机下落的持续时间
+    let time = Math.floor(Math.random() * 5 + 3);
     // 流星位置
     item.style.top = `${h}px`;
     item.style.left = `${v}%`;
+    item.style.animation = `meteorAnim ${time}s linear infinite`
   })
 }
 </script>
