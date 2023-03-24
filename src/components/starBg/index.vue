@@ -20,8 +20,8 @@ onMounted(() => {
         }
         shadow = shadow.substring(0, shadow.length - 2)
         starsRef.value.style.boxShadow = shadow
-        // setInterval(start, 1500);
         start()
+        setInterval(start, 10000);
     }
 })
 // 流星------------------------------------------
@@ -81,13 +81,13 @@ const start = () => {
 
 @keyframes meteorAnim {
     0% {
-        opacity: 1;
+        opacity: 0;
         transform:  rotate(-45deg);
     }
 
     50% {
         transform: translate(-100%,500px) rotate(-45deg);
-        opacity: .5;
+        opacity: 1;
     }
 
     100% {
