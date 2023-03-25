@@ -38,7 +38,7 @@ interface childrenItem {
   min-height: calc(100vh - 59px);
 
   .left {
-    width: 12%;
+    width: 15%;
     min-height: calc(100vh - 59px);
     flex-shrink: 0;
 

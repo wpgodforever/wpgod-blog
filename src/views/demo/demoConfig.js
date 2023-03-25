@@ -9,7 +9,7 @@ export default [
                 index: '1-1'
             },
             {
-                name:'canvas基础练习',
+                name:'canvas基础练习(一)',
                 path:'/demo/canvas/baseApi',
                 index: '1-2'
             },
