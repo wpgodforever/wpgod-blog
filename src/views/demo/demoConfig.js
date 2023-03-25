@@ -4,7 +4,7 @@ export default [
         index:'1',
         children:[
             {
-                name:'粒子特效',
+                name:'canvas粒子特效',
                 path:'/demo/canvas/canvasGrain',
                 index: '1-1'
             },
