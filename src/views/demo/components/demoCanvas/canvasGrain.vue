@@ -291,7 +291,6 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .canvas-container {
-  margin-top: 50px;
   display: flex;
   width: 90vw;
   border-radius: 8px;
@@ -305,7 +304,7 @@ onMounted(() => {
 .logo-options-container {
   padding: 10px;
   margin: 0 auto;
-  margin-top: 5vw;
+  margin-top: 1vw;
   display: flex;
   justify-content: space-around;
   max-width: 80vw;
