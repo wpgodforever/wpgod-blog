@@ -70,4 +70,7 @@ const props = defineProps({
     .date {
         text-align: end;
     }
+    .img{
+        align-self: flex-end;
+    }
 }</style>
