@@ -18,6 +18,11 @@ export default [
                 path:'/demo/canvas/baseStyle',
                 index: '1-3'
             },
+            {
+                name:'canvas基础练习(三)',
+                path:'/demo/canvas/baseText',
+                index: '1-4'
+            },
         ]
     }
 ]

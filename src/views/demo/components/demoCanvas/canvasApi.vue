@@ -201,6 +201,34 @@ const drawColor = () => {
   ctx.fillRect(0, 0, 500, 400);
 };
 
+const drawText = () => {
+  ctx.font = '40px 微软雅黑';
+  ctx.strokeStyle = 'red';
+  ctx.fillStyle = 'red';
+  ctx.fillText('文本绘制测试', 20, 40);
+  ctx.strokeText('文本绘制测试', 20, 80);
+  ctx.moveTo(200, 100);
+  ctx.lineTo(200, 400);
+  ctx.stroke();
+
+  ctx.font = '20px serif';
+  const aligns = ['center', 'left', 'right', 'start', 'end'];
+  aligns.forEach((align, index) => {
+    ctx.textAlign = align as any;
+    ctx.fillText('文本 ' + align, 200, 150 + 30 * index);
+  });
+
+  ctx.textAlign = 'start'
+  const directions = ['ltr', 'rtl', 'inherit']
+directions.forEach((direction, index) => {
+  ctx.beginPath()
+  ctx.direction = direction as any;
+  // 绘制文本
+  ctx.fillText('canvas ' + direction + '!', 440, 230 + 40 * index)
+})
+
+};
+
 const demo1 = () => {
   drawLine();
   drawTwoLine();
@@ -212,7 +240,7 @@ const demo2 = () => {
   drawColor();
 };
 const demo3 = () => {
-  drawColor();
+  drawText();
 };
 
 const useMethods = {

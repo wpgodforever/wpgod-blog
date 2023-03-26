@@ -63,6 +63,11 @@ const routes: Array<RouteRecordRaw> = [
                         name:'baseStyle',
                         component: demoCanvasApi
                     },
+                    {
+                        path:'/demo/canvas/baseText',
+                        name:'baseText',
+                        component: demoCanvasApi
+                    },
                 ]
             },
         ] 
