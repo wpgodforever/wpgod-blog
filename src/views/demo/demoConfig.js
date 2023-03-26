@@ -13,6 +13,11 @@ export default [
                 path:'/demo/canvas/baseApi',
                 index: '1-2'
             },
+            {
+                name:'canvas基础练习(二)',
+                path:'/demo/canvas/baseStyle',
+                index: '1-3'
+            },
         ]
     }
 ]

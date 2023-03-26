@@ -4,18 +4,23 @@
   </div>
 </template>
 <script lang='ts' setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
+import { useRoute } from 'vue-router';
+const route = useRoute()
+
 // 获取canvas画布
 const canvas = ref<HTMLCanvasElement>(null);
 let ctx: CanvasRenderingContext2D;
 
+const demoName = computed(() => {
+  return route.name
+})
+const useMethod = computed(() => {
+  return useMethods[demoName.value]
+})
 onMounted(() => {
   ctx = canvas.value.getContext('2d') as CanvasRenderingContext2D;
-  drawLine()
-  drawTwoLine()
-  drawTrangle()
-  drawRect()
-  drawCircle()
+  useMethod.value()
 })
 const drawLine = () => {
   ctx.beginPath()
@@ -79,6 +84,21 @@ const drawCircle = () => {
   ctx.closePath()
 }
 
+const demo1 = () => {
+  drawLine()
+  drawTwoLine()
+  drawTrangle()
+  drawRect()
+  drawCircle()
+}
+const demo2 = () => {
+  drawLine()
+}
+
+const useMethods = {
+  'baseApi': demo1,
+  'baseStyle': demo2,
+}
 </script>
 <style scoped lang='less'>
 .parctise-box {

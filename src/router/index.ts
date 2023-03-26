@@ -56,6 +56,11 @@ const routes: Array<RouteRecordRaw> = [
                     },
                     {
                         path:'/demo/canvas/baseApi',
+                        name:'baseApi',
+                        component: demoCanvasApi
+                    },{
+                        path:'/demo/canvas/baseStyle',
+                        name:'baseStyle',
                         component: demoCanvasApi
                     },
                 ]
