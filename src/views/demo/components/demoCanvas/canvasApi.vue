@@ -229,6 +229,18 @@ directions.forEach((direction, index) => {
 
 };
 
+const drawImg = () => {
+  const img = new Image()
+  img.src = 'https://wpbucket124.oss-cn-guangzhou.aliyuncs.com/public/assets/headImg.jpg'
+  img.onload = () => {
+    ctx.drawImage(img,0,0,250,150)
+    ctx.drawImage(img,125,0,250,150)
+    ctx.drawImage(img,0,160,250,200)
+    ctx.drawImage(img,0,0,125,75,400,0,250,150)
+    ctx.drawImage(img,0,0,1000,600,400,200,250,150)
+  }
+}
+
 const demo1 = () => {
   drawLine();
   drawTwoLine();
@@ -242,11 +254,15 @@ const demo2 = () => {
 const demo3 = () => {
   drawText();
 };
+const demo4 = () => {
+  drawImg();
+};
 
 const useMethods = {
   baseApi: demo1,
   baseStyle: demo2,
-  baseText: demo3
+  baseText: demo3,
+  baseImg: demo4,
 };
 </script>
 <style scoped lang="less">

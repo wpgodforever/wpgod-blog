@@ -23,6 +23,11 @@ export default [
                 path:'/demo/canvas/baseText',
                 index: '1-4'
             },
+            {
+                name:'canvas基础练习(四)',
+                path:'/demo/canvas/baseImg',
+                index: '1-5'
+            },
         ]
     }
 ]

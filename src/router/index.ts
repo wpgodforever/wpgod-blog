@@ -68,6 +68,11 @@ const routes: Array<RouteRecordRaw> = [
                         name:'baseText',
                         component: demoCanvasApi
                     },
+                    {
+                        path:'/demo/canvas/baseImg',
+                        name:'baseImg',
+                        component: demoCanvasApi
+                    },
                 ]
             },
         ] 
