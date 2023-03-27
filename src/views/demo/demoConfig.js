@@ -33,6 +33,11 @@ export default [
                 path:'/demo/canvas/basePx',
                 index: '1-6'
             },
+            {
+                name:'canvas截图功能',
+                path:'/demo/canvas/canvasPhotoShot',
+                index: '1-7'
+            },
         ]
     }
 ]
