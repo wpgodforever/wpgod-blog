@@ -47,7 +47,7 @@ const shot = () => {
 const swi = () => {
     img.src = 'https://p3-passport.byteimg.com/img/user-avatar/edcdbbde0d6f5cb89d7c28187ed55480~180x180.awebp'
     img.onload = () => {
-        screenShot.init(canvas.value, img);
+        screenShot.init(canvas.value, img,300,300);
     };
 };
 </script>
