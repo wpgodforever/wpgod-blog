@@ -10,6 +10,14 @@
         @click="shot"
         >截图</el-button
       >
+      <el-button
+        class="canvas-button"
+        size="small"
+        id="file-shot"
+        type="primary"
+        @click="swi"
+        >切换</el-button
+      >
     </div>
   </div>
 </template>
@@ -33,6 +41,11 @@ onMounted(() => {
 // 点击截图
 const shot = () => {
     screenShot.save();
+};
+// 点击截图
+const swi = () => {
+    img.src = 'https://p3-passport.byteimg.com/img/user-avatar/edcdbbde0d6f5cb89d7c28187ed55480~180x180.awebp'
+    screenShot.init(canvas.value, img);
 };
 </script>
 <style scoped lang="less">
