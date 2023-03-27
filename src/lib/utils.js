@@ -157,3 +157,15 @@ export function timeTransform(time) {
   s = s < 10 ? "0" + s : s;
   return y + "-" + m + "-" + d + " " + h + ":" + minute + ":" + s;
 }
+// 图片转base64
+export function getBase64Image(img) {  
+  var canvas = document.createElement("canvas");  
+  canvas.width = img.width;  
+  canvas.height = img.height;  
+  var ctx = canvas.getContext("2d");  
+  ctx.drawImage(img, 0, 0, img.width, img.height);  
+  var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();  
+  var dataURL = canvas.toDataURL("image/"+ext);  
+  console.log(dataURL)
+  return dataURL;  
+} 
