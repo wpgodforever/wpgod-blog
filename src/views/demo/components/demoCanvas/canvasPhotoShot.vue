@@ -36,6 +36,7 @@ onMounted(() => {
   img.onload = () => {
     // 实例化截图框类
     screenShot = new ScreenShot(canvas.value, img, 0, 0, 200, 200);
+    screenShot.init(canvas.value, img, 1100, 600);
   };
 });
 // 点击截图
@@ -45,7 +46,9 @@ const shot = () => {
 // 点击截图
 const swi = () => {
     img.src = 'https://p3-passport.byteimg.com/img/user-avatar/edcdbbde0d6f5cb89d7c28187ed55480~180x180.awebp'
-    screenShot.init(canvas.value, img);
+    img.onload = () => {
+        screenShot.init(canvas.value, img, 1100, 300);
+    };
 };
 </script>
 <style scoped lang="less">

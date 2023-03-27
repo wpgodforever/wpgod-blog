@@ -22,9 +22,9 @@ export const ScreenShot = class ScreenShot {
       this.height = height;
       this.canvasDom = canvasDom;
       this.img = img
-      this.init(canvasDom,img);
     }
     draw(img) {
+      this.ctx.beginPath()
       // 绘制图片
       this.ctx.drawImage(img, 0, 0, this.canvaswidth, this.canvasHeight);
       // 绘制蒙层
@@ -46,9 +46,11 @@ export const ScreenShot = class ScreenShot {
       this.ctx.fillRect(px - 3, py - 3, 6, 6);
     }
     //   初始化
-    init(canvasDom,img) {
-      this.canvaswidth = canvasDom.width;
-      this.canvasHeight = canvasDom.height;
+    init(canvasDom,img,limitWidth?,limitHeight?) {
+      this.canvaswidth = limitWidth || img.width;
+      this.canvasHeight = limitHeight|| img.height;
+      this.canvasDom.height = limitHeight || img.height;
+      this.canvasDom.width = limitWidth || img.width;
       this.ctx = canvasDom.getContext('2d') as CanvasRenderingContext2D;
       this.draw(img);
       canvasDom.addEventListener('mousemove',(e) =>{
