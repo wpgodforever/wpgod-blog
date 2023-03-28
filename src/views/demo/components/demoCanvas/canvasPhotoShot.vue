@@ -43,7 +43,7 @@ onMounted(() => {
 const shot = () => {
     screenShot.save();
 };
-// 点击截图
+// 切换图片
 const swi = () => {
     img.src = 'https://p3-passport.byteimg.com/img/user-avatar/edcdbbde0d6f5cb89d7c28187ed55480~180x180.awebp'
     img.onload = () => {

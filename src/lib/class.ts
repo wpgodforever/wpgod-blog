@@ -1,21 +1,29 @@
 export const ScreenShot = class ScreenShot {
-    width; // 截图框的宽度
-    height; // 截图框的高度
-    x; // x坐标
-    y; // y坐标
-    points = []; // 点的位置
-    canvasDom; //canvas dom
-    canvasHeight; //canvas dom高度
-    canvaswidth; //canvas dom宽度
-    ctx; //canvas上下文
-    isDown; // 鼠标在canvas画布中是否按下
-    preMask; // 截图框位置
-    xPercent;
-    yPercent;
-    widthPercent;
-    heightPercent;
-    img; //传入的图片
-    constructor(canvasDom: HTMLCanvasElement, img, x, y, width, height) {
+    // 截图框的属性
+    private width: number;// 截图框的宽度
+    private height: number;// 截图框的高度
+    private x: number;// 截图框的左上角点坐标
+    private y: number;// 截图框的左上角点坐标
+    private points: Array<number>;// 拖拽点的位置
+    private preMask: Array<number>;// 截图框位置
+    private xPercent: number;//截图框移动的X轴距离与画布总宽度之比
+    private yPercent: number;//截图框移动的Y轴距离与画布总高度之比
+    private widthPercent: number;//截图框宽度与画布总宽度之比
+    private heightPercent: number;//截图框高度与画布总高度之比
+
+    // canvas相关属性
+    private canvasDom: HTMLCanvasElement;//canvas dom
+    private canvasHeight: number;//canvas dom高度
+    private canvaswidth: number;//canvas dom宽度
+    private ctx: CanvasRenderingContext2D;//canvas上下文
+
+    // 图片相关属性
+    private img: HTMLImageElement;//传入的图片
+
+    // 鼠标相关属性
+    private isDown: boolean;// 鼠标在canvas画布中是否按下
+    
+    constructor(canvasDom: HTMLCanvasElement, img: HTMLImageElement, x: number, y: number, width: number, height: number) {
       this.x = x;
       this.y = y;
       this.width = width;
@@ -23,7 +31,7 @@ export const ScreenShot = class ScreenShot {
       this.canvasDom = canvasDom;
       this.img = img
     }
-    draw(img) {
+    draw(img: HTMLImageElement) {
       this.ctx.beginPath()
       // 绘制图片
       this.ctx.drawImage(img, 0, 0, this.canvaswidth, this.canvasHeight);
@@ -46,7 +54,10 @@ export const ScreenShot = class ScreenShot {
       this.ctx.fillRect(px - 3, py - 3, 6, 6);
     }
     //   初始化
-    init(canvasDom,img,limitWidth?,limitHeight?) {
+    init(canvasDom: HTMLCanvasElement, img: HTMLImageElement, limitWidth?: number, limitHeight?: number) {
+      //切换图片重置截图框位置
+      this.x = 0;
+      this.y = 0;
       this.canvaswidth = limitWidth || img.width;
       this.canvasHeight = limitHeight|| img.height;
       this.canvasDom.height = limitHeight || img.height;
@@ -89,6 +100,10 @@ export const ScreenShot = class ScreenShot {
       );
       // 将canvas转换成base64的url
       let url = tmp_canvas.toDataURL('image/png');
+      this.toImg(url)
+    }
+
+    toImg(url:string){
       // 把Canvas 转化为图片
       // img.src = url;
       // 将base64转换为文件对象
@@ -118,8 +133,9 @@ export const ScreenShot = class ScreenShot {
         let moveX = offsetX - this.preMask[0]
         let moveY = offsetY - this.preMask[1]
         // 移动的逻辑
-        if (offsetX >= this.x && offsetX <= (this.x + this.width - 10) &&
-            offsetY >= this.y && offsetY <= (this.y + this.height - 10)) {
+        if ((offsetX >= this.x && offsetX <= (this.x + this.width) &&
+            offsetY >= this.y && offsetY <= (this.y + this.height - 10)) || (offsetX >= this.x && offsetX <= (this.x + this.width - 10) &&
+            offsetY >= (this.y + this.height - 10) && offsetY <= (this.y + this.height))) {
             this.canvasDom.style.cursor = 'move'
             if (this.isDown) {
                 // 判断mask移动的趋向
