@@ -38,6 +38,11 @@ export default [
                 path:'/demo/canvas/canvasPhotoShot',
                 index: '1-7'
             },
+            {
+                name:'canvas小球弹跳',
+                path:'/demo/canvas/canvasBallJump',
+                index: '1-8'
+            },
         ]
     }
 ]
