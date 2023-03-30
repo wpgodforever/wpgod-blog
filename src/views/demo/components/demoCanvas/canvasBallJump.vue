@@ -71,11 +71,11 @@ class Ball {
       let dy = this.y + this.vy; // 粒子移动后的y坐标
 
       //   下面的条件是当小球超出画板时，将水平方向相反
-      if (dx > this.canvasWidth || dx < this.r) {
+      if (dx > this.canvasWidth-this.r || dx < this.r) {
         this.vx = -this.vx;
       }
       if (
-        (dy >= this.canvasHeigh && this.vy > 0) ||
+        (dy >= this.canvasHeigh-this.r && this.vy > 0) ||
         (dy < this.r && this.vy < 0)
       ) {
         if (Math.abs(this.vy) <= 1.5) return;
