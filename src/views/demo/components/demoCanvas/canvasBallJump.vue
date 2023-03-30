@@ -1,117 +1,117 @@
 <template>
   <div class="canvas-container">
-    <canvas ref="canvasRef" width="1200" height="500"></canvas>
+    <canvas ref="canvas" width="650" height="500"></canvas>
+    随便点点呗
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-// import { Ball } from './ball';
+const canvas = ref<HTMLCanvasElement>();
+let ball = null;
+
 class Ball {
-    x: number; // 粒子x轴的位置
-    y: number; // 粒子y轴的位置
-    r: number; // 粒子的半径
-    vx: number; // 粒子向右的速率
-    vy: number; // 粒子向下的速率
-    maxX: number; // 粒子的右边界
-    maxY: number; // 粒子的下边界
-    color = randomColor(); // 粒子的颜色
-    friction = 0.99; // 阻力系数
-  
-    constructor(x: number, y: number, width: number, height: number, r = 20) {
-      this.x = x;
-      this.y = y;
-      this.r = r;
-      const [vx, vy] = randomDirect();
-      this.vx = vx;
-      this.vy = vy;
-      this.maxX = width - r;
-      this.maxY = height - r;
+  canvas: HTMLCanvasElement; //canvas DOM
+  canvasWidth: number; //小球右边界
+  canvasHeigh: number; //小球下边界
+  ctx: CanvasRenderingContext2D; //canvas上下文
+  x: number; //小球出现位置
+  y: number; //小球出现位置
+  r: number; //小球半径
+  color: string; //小球颜色
+  vx: number; //水平速度
+  vy: number; //下落速度
+  constructor(canvas: HTMLCanvasElement,x: number, y: number,r?: number, color?: string) {
+    this.x = x
+    this.y = y
+    this.canvas = canvas;
+    this.canvasWidth = canvas.width;
+    this.canvasHeigh = canvas.height;
+    this.ctx = canvas.getContext('2d');
+    this.init(r,color)
+  }
+  init(r?: number, color?: string) {
+    this.randomDirect()
+    this.setBall(r, color);
+  }
+  setBall(r?: number, color?: string) {
+    if (r && (typeof r !== 'number' || isNaN(r) || r <= 0)) {
+      throw new Error('小球半径必须是正数');
     }
-  
-    draw() {
-      drawCircle(this.x, this.y, this.r, this.color);
-    }
-  
-    update() {
-    this.vx *= this.friction; // 逐渐减缓小球的水平速度
-    this.vy += 1.5; // 增加小球的垂直速度
-    let dx = this.x + this.vx; // 粒子移动后的x坐标
-    let dy = this.y + this.vy; // 粒子移动后的y坐标
+    this.r = r || Math.floor(Math.random() * 5) + 15;
+    this.color = color || this.randomColor();
+  }
+  drawBall(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+    // 定义随机渐变圆
+    const circleStyle = this.ctx.createRadialGradient(
+      this.x,
+      this.y,
+      this.r,
+      this.x,
+      this.y,
+      this.r - 3
+    );
+    circleStyle.addColorStop(1, this.color);
+    circleStyle.addColorStop(0, '#fff');
+    this.ctx.fillStyle = circleStyle;
+    // 每次点都清空画布
+    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeigh);
+    this.ctx.beginPath();
+    this.ctx.arc(this.x, this.y, this.r, 0, 360 * (Math.PI / 180));
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+  fall() {
+    window.requestAnimationFrame(() => {
+      this.vx *= 0.9999999;
+      this.vy += 1.5;
+      let dx = this.x + this.vx; // 粒子移动后的x坐标
+      let dy = this.y + this.vy; // 粒子移动后的y坐标
 
-    this.x = dx;
-    this.y = dy;
-
-    if (dx > this.maxX || dx < this.r) {
-      this.vx = -this.vx;
-    }
-
-    if ((dy >= this.maxY && this.vy > 0) || (dy < this.r && this.vy < 0)) {
-      if (Math.abs(this.vy) <= 1.5) {
-        this.vy = 0;
-        return;
+      //   下面的条件是当小球超出画板时，将水平方向相反
+      if (dx > this.canvasWidth || dx < this.r) {
+        this.vx = -this.vx;
       }
-      this.vy = -this.vy * 0.5;
-      this.vx *= 0.5;
-    }
+      if (
+        (dy >= this.canvasHeigh && this.vy > 0) ||
+        (dy < this.r && this.vy < 0)
+      ) {
+        if (Math.abs(this.vy) <= 1.5) return;
+        this.vy = -this.vy;
+      }
 
-    this.vy *= this.friction; // 逐渐减缓小球的垂直速度
+      this.drawBall(dx, dy);
+
+      this.fall();
+    });
   }
-  
-    isStopped() {
-      return this.vy === 0 && this.vx === 0;
-    }
-  }
-  
-  // 随机生成颜色
-  const randomColor = () => {
+  // 随机颜色
+  randomColor() {
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
     const b = Math.floor(Math.random() * 256);
     return `rgb(${r},${g},${b})`;
-  };
-  
-  // 随机生成一个0-180°的方向
-  const randomDirect = () => {
-    const vx = Math.floor(Math.random() * 20) - 10;
-    const vy =  - 10;
-    // const vy = Math.floor(Math.random() * 5) - 10;
-    return [vx, vy];
-  };
-const canvasRef = ref();
-const width = ref(0);
-const height = ref(0);
-const ctx = ref<CanvasRenderingContext2D>();
-const ball = ref<Ball>();
-
-const drawCircle = (x: number, y: number, r: number, color: string) => {
-  ctx.value?.clearRect(0, 0, width.value, height.value);
-  ctx.value?.beginPath();
-  ctx.value.fillStyle = color;
-  ctx.value?.arc(x, y, r, 0, 360 * (Math.PI / 180));
-  ctx.value?.fill();
-  ctx.value?.closePath();
-};
-
-const animate = () => {
-  ball.value?.update();
-  drawCircle(ball.value?.x ?? 0, ball.value?.y ?? 0, ball.value?.r ?? 0, ball.value?.color ?? '');
-  if (ball.value?.isStopped() ?? false) {
-    return;
   }
-  window.requestAnimationFrame(animate);
-};
+  // 随机生成一个0-180°的方向
+  randomDirect() {
+    this.vx = Math.floor(Math.random() * 20) - 10;
+    this.vy = Math.floor(Math.random() * 5) - 10;
+  }
+}
 
 onMounted(() => {
-  ctx.value = canvasRef.value?.getContext('2d');
-  width.value = canvasRef.value.width = canvasRef.value?.offsetWidth ?? 0;
-  height.value = canvasRef.value.height = canvasRef.value?.offsetHeight ?? 0;
-  canvasRef.value?.addEventListener('click', (e) => {
+  canvas.value.addEventListener('click', (e) => {
     const { offsetX, offsetY } = e;
-    ball.value = new Ball(offsetX, offsetY, width.value, height.value);
-    animate();
+    ball = new Ball(canvas.value,offsetX, offsetY);
+    ball.fall();
   });
 });
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+canvas {
+  border: 1px solid #fff;
+}
+</style>
