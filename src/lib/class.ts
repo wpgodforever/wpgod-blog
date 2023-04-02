@@ -187,77 +187,75 @@ export class Ball {
     canvasWidth: number; //小球右边界
     canvasHeigh: number; //小球下边界
     ctx: CanvasRenderingContext2D; //canvas上下文
-    x: number; //小球出现位置
-    y: number; //小球出现位置
-    r: number; //小球半径
-    color: string; //小球颜色
-    vx: number; //水平速度
-    vy: number; //下落速度
-    constructor(canvas: HTMLCanvasElement,x: number, y: number,r?: number, color?: string) {
-      this.x = x
-      this.y = y
+    ballList: Array<{
+      offsetX:number,//小球下一帧位置
+      offsetY:number,//小球下一帧位置
+      vx:number,//小球水平速度
+      vy:number,//小球下落速度
+      r:number,
+      color:string
+    }> = [];//小球下落数组
+    constructor(canvas: HTMLCanvasElement,) {
       this.canvas = canvas;
       this.canvasWidth = canvas.width;
       this.canvasHeigh = canvas.height;
       this.ctx = canvas.getContext('2d');
-      this.init(r,color)
+      this.init()
     }
-    init(r?: number, color?: string) {
-      this.randomDirect()
-      this.setBall(r, color);
+    init() {
+      this.animate()
     }
     setBall(r?: number, color?: string) {
       if (r && (typeof r !== 'number' || isNaN(r) || r <= 0)) {
         throw new Error('小球半径必须是正数');
       }
-      this.r = r || Math.floor(Math.random() * 5) + 15;
-      this.color = color || this.randomColor();
+      r = r || Math.floor(Math.random() * 5) + 15;
+      color = color || this.randomColor();
+      return { r, color }
     }
-    drawBall(x: number, y: number) {
-      this.x = x;
-      this.y = y;
+    drawBall(x: number, y: number,r?: number, color?: string) {
       // 定义随机渐变圆
       const circleStyle = this.ctx.createRadialGradient(
-        this.x,
-        this.y,
-        this.r,
-        this.x,
-        this.y,
-        this.r - 3
+        x,
+        y,
+        r,
+        x,
+        y,
+        r - 3
       );
-      circleStyle.addColorStop(1, this.color);
+      circleStyle.addColorStop(1, color);
       circleStyle.addColorStop(0, '#fff');
       this.ctx.fillStyle = circleStyle;
       // 每次点都清空画布
-      this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeigh);
+      // this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeigh);
       this.ctx.beginPath();
-      this.ctx.arc(this.x, this.y, this.r, 0, 360 * (Math.PI / 180));
+      this.ctx.arc(x, y, r, 0, 360 * (Math.PI / 180));
       this.ctx.fill();
       this.ctx.closePath();
     }
-    fall() {
-      window.requestAnimationFrame(() => {
-        this.vx *= 0.9999999;
-        this.vy += 1.5;
-        let dx = this.x + this.vx; // 粒子移动后的x坐标
-        let dy = this.y + this.vy; // 粒子移动后的y坐标
-  
-        //   下面的条件是当小球超出画板时，将水平方向相反
-        if (dx > this.canvasWidth-this.r || dx < this.r) {
-          this.vx = -this.vx;
-        }
-        if (
-          (dy >= this.canvasHeigh-this.r && this.vy > 0) ||
-          (dy < this.r && this.vy < 0)
-        ) {
-          if (Math.abs(this.vy) <= 1.5) return;
-          this.vy = -this.vy;
-        }
-  
-        this.drawBall(dx, dy);
-  
-        this.fall();
-      });
+    fall(x: number, y: number,vx: number, vy: number,index: number,r?: number, color?: string) {
+      let speedY = vy +1.5;
+      const dx = x + vx; // 粒子移动后的x坐标
+      const dy = y + speedY; // 粒子移动后的y坐标
+      //   下面的条件是当小球超出画板时，将水平方向相反
+      if (dx > this.canvasWidth-r || dx < r) {
+        this.ballList[index].vx = -vx;
+      }
+      if (
+        (dy >= this.canvasHeigh-r && vy > 0) ||
+        (dy < r && vy < 0)
+      ) {
+        if (Math.abs(vy) <= 1.5) {
+          this.drawBall(dx, dy,r,color);
+          return
+        };
+        this.ballList[index].vy = -vy;
+      }else{
+        this.ballList[index].vy = speedY;
+      }
+      this.drawBall(dx, dy,r,color);
+      this.ballList[index].offsetX = dx; // 粒子移动后的x坐标
+      this.ballList[index].offsetY = dy; // 粒子移动后的y坐标
     }
     // 随机颜色
     randomColor() {
@@ -268,7 +266,24 @@ export class Ball {
     }
     // 随机生成一个0-180°的方向
     randomDirect() {
-      this.vx = Math.floor(Math.random() * 20) - 10;
-      this.vy = Math.floor(Math.random() * 5) - 10;
+      const vx = Math.floor(Math.random() * 20) - 10;
+      const vy = Math.floor(Math.random() * 5) - 10;
+      return {vx,vy}
+    }
+    animate(){
+      window.requestAnimationFrame(() => {
+        this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeigh);
+        this.ballList.forEach((v,index) => {
+          this.fall(v.offsetX,v.offsetY,v.vx,v.vy,index,v.r,v.color)
+        })
+        
+        this.animate()
+      });
+    }
+    add(offsetX?:number, offsetY?:number,ballR?: number, ballColor?: string){
+      const { r, color } = this.setBall(ballR, ballColor);
+      const vx = this.randomDirect().vx
+      const vy = this.randomDirect().vy
+      this.ballList.push({offsetX,offsetY,vx,vy,r,color})
     }
   }

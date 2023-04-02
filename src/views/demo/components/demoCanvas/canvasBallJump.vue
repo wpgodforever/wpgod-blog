@@ -14,10 +14,11 @@ let ball = null;
 
 
 onMounted(() => {
+  ball = new Ball(canvas.value);
   canvas.value.addEventListener('click', (e) => {
     const { offsetX, offsetY } = e;
-    ball = new Ball(canvas.value,offsetX, offsetY);
-    ball.fall();
+    
+    ball.add(offsetX, offsetY);
   });
 });
 </script>
