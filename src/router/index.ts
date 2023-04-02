@@ -12,6 +12,7 @@ const demoCanvasPx = () => import('../views/demo/components/demoCanvas/canvasPx.
 const demoCanvaPhotoShot = () => import('../views/demo/components/demoCanvas/canvasPhotoShot.vue')
 const canvasBallJump = () => import('../views/demo/components/demoCanvas/canvasBallJump.vue')
 const canvasBoom = () => import('../views/demo/components/demoCanvas/canvasBoom.vue')
+const test = () => import('../views/demo/components/demoCanvas/test.vue')
 const routes: Array<RouteRecordRaw> = [
     { 
         path: '/', 
@@ -96,6 +97,11 @@ const routes: Array<RouteRecordRaw> = [
                         path:'/demo/canvas/canvasBoom',
                         name:'canvasBoom',
                         component: canvasBoom
+                    },
+                    {
+                        path:'/demo/canvas/test',
+                        name:'test',
+                        component: test
                     },
                 ]
             },
