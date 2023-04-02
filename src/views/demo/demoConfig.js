@@ -43,6 +43,11 @@ export default [
                 path:'/demo/canvas/canvasBallJump',
                 index: '1-8'
             },
+            {
+                name:'canvas点击爆炸',
+                path:'/demo/canvas/canvasBoom',
+                index: '1-9'
+            },
         ]
     }
 ]
