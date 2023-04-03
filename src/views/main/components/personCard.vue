@@ -5,7 +5,7 @@
                 <ProgressiveImage src="https://wpbucket124.oss-cn-guangzhou.aliyuncs.com/public/assets/headImg.jpg" />
             </div>
         </div>
-        <div class="container-name">wpgodforever</div>
+        <div class="container-name">阿平要努力啊</div>
         <div class="container-msg flex-align">
             <div class="msgItem flex-col">
                 <div>文章</div>
