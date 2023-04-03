@@ -8,30 +8,25 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 const canvas = ref<HTMLCanvasElement>();
-onMounted(() => {
-  const ctx = canvas.value.getContext('2d');
-
-  // Configuration, Play with these
-  const config = {
-    particleNumber: 100,//粒子数量
-    maxParticleSize: 10,//最大的粒子大小
-    maxSpeed: 20,//最大的粒子速度
-    colorVariation: 50//粒子颜色变化
-  };
-
-  // Colors
-  let colorPalette = {
-    bg: {//canvas画布背景颜色
-      r: 12,
-      g: 9,
-      b: 29
-    },
-    matter: [//matter 属性是一个颜色数组，其中包含了四种不同的颜色，用于作为粒子的颜色。
+interface ballColorConfigInterface {
+  r: number,
+  g: number,
+  b: number,
+}
+class Boom {
+  canvasDom:HTMLCanvasElement;
+  ctx:CanvasRenderingContext2D;
+  ballList: Array<Ball> = [];//存放每次点击出现的小球数组
+  ballNum: number;//每次点击出现多少个小球
+  ballColorConfig: Array<ballColorConfigInterface>;
+  constructor(canvasDom:HTMLCanvasElement,ballNum: number, ballColorConfig?: Array<ballColorConfigInterface>) {
+    this.ballNum = ballNum
+    this.ballColorConfig = ballColorConfig || [//一个颜色数组，其中包含了四种不同的颜色，用于作为粒子的颜色。可以根据需求调整颜色
       {
         r: 36,
         g: 18,
         b: 42
-      }, 
+      },
       {
         r: 78,
         g: 36,
@@ -41,151 +36,97 @@ onMounted(() => {
         r: 252,
         g: 178,
         b: 96
-      }, 
+      },
       {
         r: 253,
         g: 238,
         b: 152
       }
     ]
-  };
-
-  // 存储粒子对象的数组
-  let particles = [];
-
-  // 绘制背景颜色
-  let drawBg = function drawBg(ctx, color) {
-    ctx.fillStyle = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')';
-    ctx.fillRect(0, 0, canvas.value.width, canvas.value.height);
-  };
-
-  // 用于创建粒子对象的构造函数
-  let Particle = function Particle(x, y) {
-    // X Coordinate
-    this.x = x || Math.round(Math.random() * canvas.value.width);
-    // Y Coordinate
-    this.y = y || Math.round(Math.random() * canvas.value.height);
-    // Radius of the space dust
-    this.r = Math.ceil(Math.random() * config.maxParticleSize);
-    // Color of the rock, given some randomness
-    this.c = colorVariation(
-      colorPalette.matter[
-        Math.floor(Math.random() * colorPalette.matter.length)
-      ],
-      true
-    );
-    // Speed of which the rock travels
-    this.s = Math.pow(Math.ceil(Math.random() * config.maxSpeed), 0.7);
-    // Direction the Rock flies
-    this.d = Math.round(Math.random() * 360);
-  };
-
-  //颜色处理变化
-  let colorVariation = (color, returnString) => {
-    let r, g, b, a, variation;
-    r = Math.round(
-      Math.random() * config.colorVariation -
-        config.colorVariation / 2 +
-        color.r
-    );
-    g = Math.round(
-      Math.random() * config.colorVariation -
-        config.colorVariation / 2 +
-        color.g
-    );
-    b = Math.round(
-      Math.random() * config.colorVariation -
-        config.colorVariation / 2 +
-        color.b
-    );
-    a = Math.random() + 0.5;
-    if (returnString) {
-      return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-    } else {
-      return {
-        r: r,
-        g: g,
-        b: b,
-        a: a
-      };
-    }
-  };
-
-  // 用于计算粒子运动轨迹的函数
-  let updateParticleModel = (p) => {
-    let a = 180 - (p.d + 90); // find the 3rd angle
-    p.d > 0 && p.d < 180
-      ? (p.x += (p.s * Math.sin(p.d)) / Math.sin(p.s))
-      : (p.x -= (p.s * Math.sin(p.d)) / Math.sin(p.s));
-    p.d > 90 && p.d < 270
-      ? (p.y += (p.s * Math.sin(a)) / Math.sin(p.s))
-      : (p.y -= (p.s * Math.sin(a)) / Math.sin(p.s));
-    return p;
-  };
-
-  // 绘制粒子
-  let drawParticle = (x, y, r, c) => {
-    ctx.beginPath();
-    ctx.fillStyle = c;
-    ctx.arc(x, y, r, 0, 2 * Math.PI, false);
-    ctx.fill();
-    ctx.closePath();
-  };
-//用于初始化粒子效果。在该函数中，会创建一个包含一定数量粒子的数组，并将这些粒子对象存储在 particles 数组中。在每个粒子对象中，会设置其随机的位置、大小、颜色、速度和运动方向等属性。
-  let initParticles = (numParticles, x?, y?) => {
-    for (let i = 0; i < numParticles; i++) {
-      particles.push(new Particle(x, y));
-    }
-    particles.forEach(function (p) {
-      drawParticle(p.x, p.y, p.r, p.c);
-    });
-  };
-
-  // That thing
-  (window as any).requestAnimFrame = (function () {
-    return (
-      window.requestAnimationFrame ||
-      (window as any).webkitRequestAnimationFrame ||
-      (window as any).mozRequestAnimationFrame ||
-      function (callback) {
-        window.setTimeout(callback, 1000 / 60);
+    this.canvasDom = canvasDom
+    this.ctx = canvasDom.getContext('2d')
+    this.init(canvasDom)
+  }
+  init(canvasDom){
+    this.animate()
+    canvasDom.addEventListener('click',(e) => {
+      const { offsetX, offsetY } = e;
+      for(let i = 0;i<this.ballNum; i++){
+        const color = this.ballColorConfig[Math.floor(Math.random()*this.ballColorConfig.length)]
+        this.ballList.push(new Ball(canvasDom,offsetX,offsetY,color))
       }
-    );
-  })();
+    })
+  }
+  animate(){
+    window.requestAnimationFrame(() => {
+      this.ctx.clearRect(0,0,this.canvasDom.width,this.canvasDom.height)
+      this.ballList.forEach(v => {
+        v.updateBall()
+        v.draw()
+      })
+      this.animate()
+    })
+  }
+}
 
-  // Our Frame function
-  let frame = () => {
-    // Draw background first
-    drawBg(ctx, colorPalette.bg);
-    // Update Particle models to new position
-    particles.map(function (p) {
-      return updateParticleModel(p);
-    });
-    // Draw em'
-    particles.forEach(function (p) {
-      drawParticle(p.x, p.y, p.r, p.c);
-    });
-    // Play the same song? Ok!
-    (window as any).requestAnimFrame(frame);
-  };
-
-  // Click listener
-  document.body.addEventListener('click', function (event) {
-    let x = event.clientX;
-    let y = event.clientY;
-    initParticles(config.particleNumber, x, y);
-  });
-
-//   // First Fram
-  frame();
-
-//   // First particle explosion
-//   initParticles(config.particleNumber);
+class Ball {
+  canvasDom:HTMLCanvasElement;
+  ctx:CanvasRenderingContext2D;
+  x:number;//小球X轴位置
+  y:number;//小球Y轴位置
+  speed:number;//小球移动速度
+  deg:number;//小球运动角度
+  r:number;//小球半径
+  ballColor:ballColorConfigInterface;//小球颜色
+  constructor(canvasDom:HTMLCanvasElement,x:number,y:number,ballColor?:ballColorConfigInterface){
+    this.canvasDom = canvasDom
+    this.x = x
+    this.y = y
+    this.ballColor = ballColor || {
+        r: 36,
+        g: 18,
+        b: 42
+      }
+    this.r = this.randomR()
+    this.randomSpeed()
+    this.randomDeg()
+    this.ctx = canvasDom.getContext('2d')
+    this.draw()
+  }
+  draw(){
+    this.ctx.beginPath()
+    this.ctx.fillStyle = `rgba(${this.ballColor.r},${this.ballColor.g},${this.ballColor.b},255)`
+    this.ctx.arc(this.x,this.y,this.r,0,360*(Math.PI/180))
+    this.ctx.fill()
+    this.ctx.closePath()
+  }
+  updateBall(){
+    let a = 180 - (this.deg + 90);
+    this.deg > 0 && this.deg < 180
+      ? (this.x += Math.cos(this.deg)*this.speed)
+      : (this.x -= Math.cos(this.deg)*this.speed);
+      this.deg > 90 && this.deg < 270
+      ? (this.y += this.speed * Math.sin(a))
+      : (this.y -= this.speed * Math.sin(a));
+  }
+  randomSpeed(){//小球随机速度
+    this.speed = Math.random() * 15
+  }
+  randomDeg(){//小球随机运动角度
+    this.deg = Math.round(Math.random() * 360)
+  }
+  randomR(){//小球随机半径
+    return Math.floor(Math.random() * 5) + 5
+  }
+}
+onMounted(() => {
+  new Boom(canvas.value,40)
 });
 </script>
 
 <style lang="less" scoped>
 canvas {
   border: 1px solid #fff;
+  background-color: #fff;
 }
 </style>
