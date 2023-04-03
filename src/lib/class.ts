@@ -272,10 +272,11 @@ export class Ball {
     }
     animate(){
       window.requestAnimationFrame(() => {
-        this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeigh);
-        this.ballList.forEach((v,index) => {
-          this.fall(v.offsetX,v.offsetY,v.vx,v.vy,index,v.r,v.color)
-        })
+        console.log(1)
+        // this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeigh);
+        // this.ballList.forEach((v,index) => {
+        //   this.fall(v.offsetX,v.offsetY,v.vx,v.vy,index,v.r,v.color)
+        // })
         
         this.animate()
       });

@@ -37,7 +37,9 @@ const start = () => {
     let v = Math.floor(Math.random() * 100);
     let h = Math.floor(Math.random() * 1950 - 500);
     // 每个流星随机下落的持续时间
-    let time = Math.floor(Math.random() * 5 + 3);
+    // 流星的下落时间必须能被10整除，要不然动画没有执行完就重新加载，会很突兀
+    let time = Math.floor(Math.random() * 5 + 1);
+    time = 10%time === 0?time:5;
     // 流星位置
     item.style.top = `${h}px`;
     item.style.left = `${v}%`;
