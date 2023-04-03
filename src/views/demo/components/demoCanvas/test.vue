@@ -51,6 +51,29 @@ class Boom {
 }
 
 class Ball {
+  canvasDom:HTMLCanvasElement;
+  ctx:CanvasRenderingContext2D;
+  x:number;//小球X轴位置
+  y:number;//小球Y轴位置
+  ballColor:ballColorConfigInterface;//小球颜色
+  constructor(canvasDom:HTMLCanvasElement,x:number,y:number,ballColor?:ballColorConfigInterface){
+    this.canvasDom = canvasDom
+    this.x = x
+    this.y = y
+    this.ballColor = ballColor || {
+        r: 36,
+        g: 18,
+        b: 42
+      }
+    this.ctx = canvasDom.getContext('2d')
+    this.draw()
+  }
+  draw(){
+    console.log(2)
+  }
+  updateBall(){
+
+  }
 
 }
 onMounted(() => {
