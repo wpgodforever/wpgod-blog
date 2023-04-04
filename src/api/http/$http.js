@@ -4,6 +4,9 @@ import { ElMessageBox, ElMessage  } from 'element-plus'
 import router from '@/router/index'
 import baseUrl from '@/assets/js/baseUrl'
 import { concatPramas } from '@/lib/utils'
+import { useUserStore } from "@/store/user";
+// 获取pinia用户数据
+const user = useUserStore()
 let isAlert = false
 
 // 允许操作cookie
@@ -67,6 +70,7 @@ service.interceptors.response.use(
           callback: () => {
             isAlert = false
             localStorage.removeItem('my_user')
+            user.logout()
             // 清除用户信息缓存，刷新当前页面
             router.push('/')
           },
