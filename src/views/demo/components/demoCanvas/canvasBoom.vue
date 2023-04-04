@@ -13,7 +13,7 @@ interface ballColorConfigInterface {
   g: number,
   b: number,
 }
-class Boom {
+class BoomBoard {
   canvasDom:HTMLCanvasElement;
   ctx:CanvasRenderingContext2D;
   ballList: Array<Ball> = [];//存放每次点击出现的小球数组
@@ -120,7 +120,7 @@ class Ball {
   }
 }
 onMounted(() => {
-  new Boom(canvas.value,40)
+  new BoomBoard(canvas.value,40)
 });
 </script>
 
