@@ -11,6 +11,7 @@ const demoCanvasApi = () => import('../views/demo/components/demoCanvas/canvasAp
 const demoCanvasPx = () => import('../views/demo/components/demoCanvas/canvasPx.vue')
 const demoCanvaPhotoShot = () => import('../views/demo/components/demoCanvas/canvasPhotoShot.vue')
 const canvasBallJump = () => import('../views/demo/components/demoCanvas/canvasBallJump.vue')
+const canvasBallJumpTwo = () => import('../views/demo/components/demoCanvas/canvasBallJumpTwo.vue')
 const canvasBoom = () => import('../views/demo/components/demoCanvas/canvasBoom.vue')
 const test = () => import('../views/demo/components/demoCanvas/test.vue')
 const routes: Array<RouteRecordRaw> = [
@@ -92,6 +93,11 @@ const routes: Array<RouteRecordRaw> = [
                         path:'/demo/canvas/canvasBallJump',
                         name:'canvasBallJump',
                         component: canvasBallJump
+                    },
+                    {
+                        path:'/demo/canvas/canvasBallJumpTwo',
+                        name:'canvasBallJumpTwo',
+                        component: canvasBallJumpTwo
                     },
                     {
                         path:'/demo/canvas/canvasBoom',

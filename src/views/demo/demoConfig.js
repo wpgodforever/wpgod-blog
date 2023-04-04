@@ -44,9 +44,14 @@ export default [
                 index: '1-8'
             },
             {
+                name:'canvas小球弹跳升级',
+                path:'/demo/canvas/canvasBallJumpTwo',
+                index: '1-9'
+            },
+            {
                 name:'canvas点击爆炸',
                 path:'/demo/canvas/canvasBoom',
-                index: '1-9'
+                index: '1-10'
             },
         ]
     }
