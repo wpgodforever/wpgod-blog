@@ -53,7 +53,8 @@ interface childrenItem {
     box-sizing: border-box;
     padding-bottom: 20px;
     flex: 1;
-    min-height: calc(100vh - 59px);
+    max-height: calc(100vh - 59px);
+    overflow: auto;
   }
 }
 .el-menu{
