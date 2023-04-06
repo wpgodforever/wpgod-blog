@@ -58,6 +58,11 @@ export default [
                 path:'/demo/canvas/canvasDot',
                 index: '1-11'
             },
+            {
+                name:'粒子特效(2):点图聚集',
+                path:'/demo/canvas/canvasDotMove',
+                index: '1-12'
+            },
         ]
     }
 ]

@@ -35,12 +35,14 @@ interface childrenItem {
 <style scoped lang='less'>
 .demo-container {
   display: flex;
-  min-height: calc(100vh - 59px);
+  max-height: calc(100vh - 59px);
 
   .left {
-    width: 15%;
-    min-height: calc(100vh - 59px);
+    min-width: 15%;
+    max-height: calc(100vh - 59px);
     flex-shrink: 0;
+    overflow: scroll;
+    border-right: 1px solid #fff;
 
     .el-menu {
       height: 100%;
@@ -53,4 +55,8 @@ interface childrenItem {
     flex: 1;
     min-height: calc(100vh - 59px);
   }
-}</style>
+}
+.el-menu{
+  border: 0;
+}
+</style>
