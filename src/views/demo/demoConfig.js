@@ -53,6 +53,11 @@ export default [
                 path:'/demo/canvas/canvasBoom',
                 index: '1-10'
             },
+            {
+                name:'粒子特效(1):生成点图',
+                path:'/demo/canvas/canvasDot',
+                index: '1-11'
+            },
         ]
     }
 ]
