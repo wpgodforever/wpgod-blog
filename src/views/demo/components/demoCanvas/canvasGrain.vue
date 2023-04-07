@@ -214,6 +214,7 @@ class ParticleCanvas {
   }
   // 改变图片 如果已存在图片则根据情况额外操作
   changeImg(img: LogoImg) {
+    console.log(img.particleData[0])
     if (this.ParticleArr.length) {
       // 获取新旧两个粒子数组与它们的长度
       let newPrtArr = img.particleData;

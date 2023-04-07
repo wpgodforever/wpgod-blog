@@ -33,6 +33,7 @@
     { label: 'victoria', url: victoriazUrl },
     { label: 'yan', url: yanUrl }
   ]);
+  let logoList = reactive([]);
   // 获取canvas画布
   const canvas = ref<HTMLCanvasElement>(null);
   let board;
@@ -41,23 +42,60 @@
     canvasDom: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
     logoDotList = [];
-    logoList = [];
+    // logoList = []
     index: number = -1;
     constructor(canvasDom: HTMLCanvasElement, logos) {
       this.canvasDom = canvasDom;
       this.ctx = canvasDom.getContext('2d');
       logos.forEach((v) => {
-        this.logoList.push(new Img(canvas.value, v.url).dotList);
+        logoList.push(new Img(canvas.value, v.url));
       });
       this.animate()
     }
-    init(index) {
-      this.index = index;
+    changeImg(list){
+        if(this.logoDotList.length === 0){//如果一开始没有选中图片，不需要对粒子做额外处理
+            //注意 这里不可以直接.map(v=>{return v }) 会导致你选中的第一张图的粒子对象数组一直被更改，导致这张图切换后再切换回来会被上张图片粒子数据污染
+            this.logoDotList = list.map(v=>{return new Dot(this.canvasDom, v.totalX, v.totalY, v.colorList) })
+        }else{//如果切换图片的时候，已经存在粒子了，则对比前后两个粒子数组
+              //已有的粒子替换为新的粒子，让过渡更丝滑
+            let newArr = list//新粒子数组
+            let newLen = newArr.length//新粒子数组长度
+            let oldArr = this.logoDotList
+            let oldLen = oldArr.length
+            for(let i = 0;i < newLen; i++){
+                const { totalX, totalY, colorList } = newArr[i];
+                if(oldArr[i]){//如果旧数组有第i个粒子，改变其终点位置
+                    oldArr[i].change(totalX, totalY, colorList)
+                }else{//新数组的粒子长度比原数组多，就添加粒子
+                    oldArr[i] = new Dot(this.canvasDom, totalX, totalY, colorList)
+                }
+            }
+            // 新粒子数组较小 删除多余的粒子
+            if (newLen < oldLen){
+                this.logoDotList = oldArr.splice(0,newLen)
+            }
+
+            let len = this.logoDotList.length//获取处理完后的粒子数组长度
+            while(len){//打乱数组中的粒子顺序
+                let randomIdx = ~~(Math.random() * len--);
+                let randomPrt = this.logoDotList[randomIdx];
+                let { totalX: tx, totalY: ty, colorList } = randomPrt;
+
+                // 交换目标位置与颜色
+                randomPrt.totalX = this.logoDotList[len].totalX;
+                randomPrt.totalY = this.logoDotList[len].totalY;
+                randomPrt.colorList = this.logoDotList[len].colorList;
+                this.logoDotList[len].totalX = tx;
+                this.logoDotList[len].totalY = ty;
+                this.logoDotList[len].colorList = colorList;
+            }
+        }
+       
     }
     animate() {
-      if (this.index >= 0 && this.logoList.length > 0) {
+      if (this.logoDotList.length > 0) {
         this.ctx.clearRect(0, 0, this.canvasDom.width, this.canvasDom.height);
-        this.logoList[this.index].forEach((v) => {
+        this.logoDotList.forEach((v) => {
           v.update();
           v.draw();
         });
@@ -70,11 +108,12 @@
     src: string;
     canvasDom: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
-    dotList = [];
+    dotList;
   
     constructor(canvasDom: HTMLCanvasElement, src: string) {
       // 获取图片像素数据
       this.canvasDom = canvasDom;
+      this.dotList = []
       const img = new Image();
       img.src = src;
       img.crossOrigin = 'Anonymous';
@@ -157,13 +196,18 @@
       this.y += this.vy;
       if (this.opacity < 1) this.opacity += 1 / this.time;
     }
+    change(totalX: number, totalY: number, colorList: number[]){
+        this.totalX = totalX;
+        this.totalY = totalY;
+        this.colorList =[...colorList];
+    }
   }
   
   onMounted(() => {
     board = new Board(canvas.value, logos);
   });
   const putImg = (index) => {
-    board.init(index);
+    board.changeImg(logoList[index].dotList);
   };
   </script>
   <style scoped lang="less">
