@@ -63,6 +63,11 @@ export default [
                 path:'/demo/canvas/canvasDotMove',
                 index: '1-12'
             },
+            {
+                name:'粒子特效(3):点图切换',
+                path:'/demo/canvas/canvasDotStepThird',
+                index: '1-13'
+            },
         ]
     }
 ]

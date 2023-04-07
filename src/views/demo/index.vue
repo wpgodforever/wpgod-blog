@@ -35,8 +35,8 @@ interface childrenItem {
 <style scoped lang='less'>
 .demo-container {
   display: flex;
-  max-height: calc(100vh - 59px);
-
+  height: calc(100vh - 59px);
+  overflow: auto;
   .left {
     min-width: 15%;
     max-height: calc(100vh - 59px);
