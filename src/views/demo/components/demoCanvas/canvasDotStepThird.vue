@@ -22,16 +22,17 @@
   import yanUrl from '@/assets/img/demoGrain/logo_yan.png';
   
   // 准备logo数据
-  // const logos = reactive([
-  //     { label: "kazimierz", url: 'https://wpbucket124.oss-cn-guangzhou.aliyuncs.com/public/assets/headImg.jpg' },
-  //     { label: "rhine", url: 'https://p3-passport.byteimg.com/img/user-avatar/edcdbbde0d6f5cb89d7c28187ed55480~180x180.awebp' },
-  // ]);
+//   const logos = reactive([
+//       { label: "kazimierz", url: 'https://wpbucket124.oss-cn-guangzhou.aliyuncs.com/public/assets/headImg.jpg' },
+//       { label: "rhine", url: 'https://p3-passport.byteimg.com/img/user-avatar/edcdbbde0d6f5cb89d7c28187ed55480~180x180.awebp' },
+//   ]);
   const logos = reactive([
     { label: 'kazimierz', url: kazimierzUrl },
     { label: 'rhine', url: rhineUrl },
     { label: 'rhodes', url: rhodesUrl },
     { label: 'victoria', url: victoriazUrl },
-    { label: 'yan', url: yanUrl }
+    { label: 'yan', url: yanUrl },
+    { label: "test", url: 'https://p3-passport.byteimg.com/img/user-avatar/edcdbbde0d6f5cb89d7c28187ed55480~180x180.awebp' },
   ]);
   let logoList = reactive([]);
   // 获取canvas画布
