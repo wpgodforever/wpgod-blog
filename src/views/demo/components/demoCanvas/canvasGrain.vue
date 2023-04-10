@@ -293,10 +293,10 @@ onMounted(() => {
 <style lang="less" scoped>
 .canvas-container {
   display: flex;
-  width: 90vw;
+  width: calc(80vw - 10px);
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.4);
-
+  box-sizing: border-box;
   canvas {
     margin: auto;
   }

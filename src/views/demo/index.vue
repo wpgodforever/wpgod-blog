@@ -36,7 +36,6 @@ interface childrenItem {
 .demo-container {
   display: flex;
   height: calc(100vh - 59px);
-  // overflow: auto;
   .left {
     min-width: 15%;
     max-height: calc(100vh - 59px);
@@ -54,7 +53,8 @@ interface childrenItem {
     padding-bottom: 20px;
     flex: 1;
     max-height: calc(100vh - 59px);
-    // overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 }
 .el-menu{

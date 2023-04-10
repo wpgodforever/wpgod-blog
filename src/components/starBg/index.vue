@@ -51,8 +51,9 @@ const start = () => {
 .star-container {
     flex: 1;
     position: absolute;
-    // width: calc(100%);
+    width: calc(100%);
     height: 100%;
+    left: -10px;
     /* 在容器中心的渐变，从红色开始，变成蓝色，最后变成绿色 */
     background-image: radial-gradient(ellipse at top, #050b12 0%, #181b25 100%);
     z-index: 1;
