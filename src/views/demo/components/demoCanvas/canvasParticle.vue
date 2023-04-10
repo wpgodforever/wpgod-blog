@@ -14,16 +14,16 @@ let mouseDot = ref<Dot>()
 
 class Board {
     dotList:Array<Dot> = [];
-    dotNum:number = 80;
+    dotNum:number = 120;
     constructor(){
         this.init()
-        
     }
     init(){
         for(let i = 0; i < this.dotNum; i ++){
             this.dotList.push(new Dot(ctx)) 
         }
         mouseDot.value = new Dot(ctx,0,0,0,0)
+        this.dotList.push(mouseDot.value) 
         canvas.value.addEventListener('mousemove',(e)=>{
             const { offsetX, offsetY } = e
             mouseDot.value.change(offsetX,offsetY)
@@ -35,9 +35,6 @@ class Board {
             v.update()
             v.draw()
         })
-        if(mouseDot.value){
-            mouseDot.value.draw()
-        }
         window.requestAnimationFrame(() => this.animate())
     }
 }
@@ -47,25 +44,22 @@ class Dot {
     vx:number;
     vy:number;
     r:number = 3;
-    maxLine:number = 50;
+    maxLine:number = 70;
     ctx:CanvasRenderingContext2D;
     constructor(ctx:CanvasRenderingContext2D,x?:number,y?:number,vx?:number,vy?:number){
         this.x = x || (Math.random() * canvas.value.width) >> 0;
         this.y = y || (Math.random() * canvas.value.height) >> 0;
-        this.vx = vx || 2 * Math.random() - 1;
-        this.vy = vy || 2 * Math.random() - 1;
+        this.vx = (vx !== undefined) ? vx : 2 * Math.random() - 1;
+        this.vy = (vy !== undefined) ? vy : 2 * Math.random() - 1;
         this.ctx = ctx
     }
     draw(){
-        this.ctx.beginPath()
-        this.ctx.fillRect(this.x,this.y,this.r,this.r)
-        this.ctx.fillStyle = 'black'
-        this.ctx.fill()
-        
         board.value.dotList.forEach(v=>{
+            const distance = Math.sqrt(((v.x - this.x)*(v.x - this.x) +(v.y - this.y)*(v.y - this.y)))
+            const w = (this.maxLine - distance) / this.maxLine
             if(v !== this && Math.sqrt(((v.x - this.x)*(v.x - this.x) +(v.y - this.y)*(v.y - this.y)))<this.maxLine){
-                const distance = Math.sqrt(((v.x - this.x)*(v.x - this.x) +(v.y - this.y)*(v.y - this.y)))
-                const w = (this.maxLine - distance) / this.maxLine
+                
+                
                 this.ctx.beginPath()
                 this.ctx.lineWidth = w
                 this.ctx.moveTo(this.x + this.r/2,this.y + this.r/2)
@@ -73,8 +67,15 @@ class Dot {
                 ctx.strokeStyle = `rgba(110,110,110,${w })`;
                 this.ctx.stroke()
             }
+            if(v === mouseDot.value && distance<this.maxLine && distance>this.maxLine /2){
+                this.x -= (this.x - mouseDot.value.x) *0.05
+                this.y -= (this.y - mouseDot.value.y) *0.05
+            }
         })
-        
+        this.ctx.beginPath()
+        this.ctx.fillRect(this.x,this.y,this.r,this.r)
+        this.ctx.fillStyle = 'black'
+        this.ctx.fill()
     }
     update(){
         if(this.x + this.vx >= canvas.value.width || this.x<=0){
@@ -91,6 +92,7 @@ class Dot {
         this.y = y
     }
 }
+
 
 onMounted(() => {
     ctx = canvas.value.getContext('2d') as CanvasRenderingContext2D;
