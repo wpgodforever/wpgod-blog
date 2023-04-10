@@ -17,6 +17,7 @@ const canvasDot = () => import('../views/demo/components/demoCanvas/canvasDot.vu
 const canvasDotMove = () => import('../views/demo/components/demoCanvas/canvasDotMove.vue')
 const canvasDotStepThird = () => import('../views/demo/components/demoCanvas/canvasDotStepThird.vue')
 const canvasDotFinal = () => import('../views/demo/components/demoCanvas/canvasDotFinal.vue')
+const canvasParticle = () => import('../views/demo/components/demoCanvas/canvasParticle.vue')
 const test = () => import('../views/demo/components/demoCanvas/test.vue')
 const routes: Array<RouteRecordRaw> = [
     { 
@@ -127,6 +128,11 @@ const routes: Array<RouteRecordRaw> = [
                         path:'/demo/canvas/canvasDotFinal',
                         name:'canvasDotFinal',
                         component: canvasDotFinal
+                    },
+                    {
+                        path:'/demo/canvas/canvasParticle',
+                        name:'canvasParticle',
+                        component: canvasParticle
                     },
                     {
                         path:'/demo/canvas/test',

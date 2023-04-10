@@ -73,6 +73,11 @@ export default [
                 path:'/demo/canvas/canvasDotFinal',
                 index: '1-14'
             },
+            {
+                name:'vue-particle效果复现',
+                path:'/demo/canvas/canvasParticle',
+                index: '1-15'
+            },
         ]
     }
 ]
