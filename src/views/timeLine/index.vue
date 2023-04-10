@@ -1,8 +1,8 @@
 <template>
-    <div class="timeLine-container themeBg">
+    <div class="timeLine-container themeBg" id="big">
         <el-row :gutter="20">
             <el-col :span="16">
-                <div id="big">
+                <div>
                     <el-timeline>
                         <el-timeline-item hollow v-for="(item, index) in listInfo.list" :key="index" :id="item.id"
                             :class="[index % 2 !== 0 ? 'right' : '']" center>
@@ -55,7 +55,6 @@ const scrollTo = (item) => {
     const bigOffsetTop = bigScrollBoxItem.offsetTop
     const smallOffsetTop = smallScrollBoxItem.offsetTop
     const bigScrollBox = document.getElementById('big')
-    console.log(bigOffsetTop)
     bigScrollBox.scrollTo({
         behavior: 'smooth',
         top: bigOffsetTop - 62
@@ -69,10 +68,13 @@ const scrollTo = (item) => {
 </script>
 <style scoped lang='less'>
 .timeLine-container {
+    box-sizing: border-box;
     width: 80%;
-    min-height: calc(100vh - 59px);
-    margin: 0 auto;
+    margin: 0px auto;
     padding: 10px;
+    max-height: calc(100vh - 59px);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 :deep(.el-timeline-item__tail) {
@@ -95,11 +97,6 @@ const scrollTo = (item) => {
     }
 }
 
-#big{
-    max-height: 100vh;
-    overflow: scroll;
-}
-
 .linkBox {
     position: sticky;
     top: 69px;
@@ -107,11 +104,18 @@ const scrollTo = (item) => {
     padding: 10px;
     margin-left: 30px;
     max-height: 50vh;
-    overflow: scroll;
+    overflow-y: scroll;
 
     span {
         margin-bottom: 15px;
         text-decoration: underline;
     }
+}
+::-webkit-scrollbar {
+  width: 0px;
+
+}
+::-webkit-scrollbar-thumb {
+  width: 0px;
 }
 </style>

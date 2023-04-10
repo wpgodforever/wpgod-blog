@@ -28,7 +28,6 @@ import headNav from '@/components/headNav/headNav.vue';
   display: flex;
   max-height: 100vh;
   height: 100vh;
-  overflow: auto;
   z-index: 2;
   .main-content{
     flex: 1;
