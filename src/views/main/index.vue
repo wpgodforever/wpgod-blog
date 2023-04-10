@@ -126,7 +126,7 @@ const tagClick = (item) => {
 
     &-left {
       flex: 1;
-      overflow: hidden;
+      // overflow: hidden;
 
       .list {
         width: 100%;

@@ -63,6 +63,21 @@ export default [
                 path:'/demo/canvas/canvasDotMove',
                 index: '1-12'
             },
+            {
+                name:'粒子特效(3):点图切换',
+                path:'/demo/canvas/canvasDotStepThird',
+                index: '1-13'
+            },
+            {
+                name:'粒子特效(4):鼠标排斥吸附效果',
+                path:'/demo/canvas/canvasDotFinal',
+                index: '1-14'
+            },
+            {
+                name:'vue-particle效果复现',
+                path:'/demo/canvas/canvasParticle',
+                index: '1-15'
+            },
         ]
     }
 ]
