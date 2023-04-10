@@ -68,6 +68,11 @@ export default [
                 path:'/demo/canvas/canvasDotStepThird',
                 index: '1-13'
             },
+            {
+                name:'粒子特效(4):鼠标排斥吸附效果',
+                path:'/demo/canvas/canvasDotFinal',
+                index: '1-14'
+            },
         ]
     }
 ]
