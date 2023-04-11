@@ -1,11 +1,14 @@
 <template>
   <div class="main-container flex-col">
     <div class="banner flex-col">
+      <div class="banner-particle">
+        <particleText></particleText>
+      </div>
       <div class="banner-bg">
         <ProgressiveImage src="https://wpbucket124.oss-cn-guangzhou.aliyuncs.com/public/assets/banner-bg.png" />
       </div>
-      <h1>一砖一瓦，码出我的国度</h1>
-      <h3>No Pain No Gain.</h3>
+      <!-- <h1>一砖一瓦，码出我的国度</h1>
+      <h3>No Pain No Gain.</h3> -->
     </div>
     <div class="main">
       <!-- 左侧列表区域 -->
@@ -27,6 +30,7 @@ import { ref, reactive } from 'vue'
 import listItem from './components/listItem.vue'
 import personCard from './components/personCard.vue'
 import tagList from './components/tagList.vue'
+import particleText from '@/components/particleText/index.vue'
 import { ProgressiveImage } from "vue-progressive-image";
 import {
   articleListFn
@@ -111,6 +115,9 @@ const tagClick = (item) => {
       width: 100%;
       object-fit: cover;
       overflow: hidden;
+    }
+    &-particle{
+      z-index: 3;
     }
     h1, h3{
       z-index: 2;
