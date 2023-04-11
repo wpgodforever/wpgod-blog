@@ -25,7 +25,7 @@ import { ref, reactive, PropType } from 'vue'
 import { timeTransform } from '@/lib/utils.js'
 import { useRouter } from 'vue-router';
 import { articleDeleteFn, } from '@/api/article/index';
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
 // 获取pinia用户数据
@@ -62,10 +62,23 @@ const updateFn = (item) => {
 const emit = defineEmits(['deleteFn'])
 
 const deleteFn = (item) => {
+    ElMessageBox.confirm(
+    '是否要删除该文章?',
+    'Warning',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  ).then(() => {
     articleDeleteFn({id:item.id}).then(res => {
         ElMessage.success('删除成功');
         emit('deleteFn')
     })
+  }).catch(() => {
+    
+  })
+   
 }
 </script>
 <style scoped lang='less'>

@@ -40,7 +40,7 @@ interface childrenItem {
     min-width: 15%;
     max-height: calc(100vh - 59px);
     flex-shrink: 0;
-    // overflow: scroll;
+    overflow-y: scroll;
     border-right: 1px solid #fff;
 
     .el-menu {
@@ -57,6 +57,11 @@ interface childrenItem {
     overflow-x: hidden;
   }
 }
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
 .el-menu{
   border: 0;
 }
