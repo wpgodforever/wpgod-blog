@@ -221,7 +221,6 @@ onMounted(() => {
             index.value++
         }
         board.changeText(TEXTARR[index.value])
-        console.log(1)
     }, 10000)
     
 });
