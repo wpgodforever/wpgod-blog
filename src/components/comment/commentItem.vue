@@ -2,7 +2,7 @@
   <div class="item-container">
     <el-avatar :size="50" :src="circleUrl" />
     <div class="right flex-col">
-      <div class="right-name">{{ reply_user_id.username }}</div>
+      <div class="right-name">{{ (reply_user_id.username === 'wpgodforever'?reply_user_id.username + ' (Blogger)' : reply_user_id.username) }}</div>
       <div class="right-content">{{ content }}</div>
       <div class="right-reply flex-align">
         <span class="reply-span hand" @mousedown.capture.prevent.stop="switchReply"><el-icon>
