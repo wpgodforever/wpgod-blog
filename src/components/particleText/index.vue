@@ -214,20 +214,20 @@ class Dot {
 onMounted(() => {
     ctx = canvas.value.getContext('2d')
     board = new Board(canvas.value, TEXTARR[0]);
-    timer = setInterval(() => {
-        if (TEXTARR.length - 1 === index.value) {
-            index.value = 0
-        } else {
-            index.value++
-        }
-        board.changeText(TEXTARR[index.value])
-    }, 10000)
+    // timer = setInterval(() => {
+    //     if (TEXTARR.length - 1 === index.value) {
+    //         index.value = 0
+    //     } else {
+    //         index.value++
+    //     }
+    //     board.changeText(TEXTARR[index.value])
+    // }, 10000)
     
 });
 
-onUnmounted(() => {
-    clearInterval(timer)
-})
+// onUnmounted(() => {
+//     clearInterval(timer)
+// })
 
 </script>
 <style scoped lang='less'></style>
