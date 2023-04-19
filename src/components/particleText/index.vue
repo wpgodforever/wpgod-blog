@@ -41,7 +41,6 @@ class Board {
         this.animate()
     }
     init(text: string) {
-
         if (this.dotList.length === 0) {
             this.dotList = new textRransform(this.canvasDom, text).dotList
         } else {
@@ -110,13 +109,14 @@ class textRransform {
         this.ctx.font = "90px 微软雅黑";
         this.ctx.fillStyle = '#fff';
         this.ctx.textAlign = 'center';
+        const measureTextInfo = this.ctx.measureText(text)
         this.ctx.fillText(text, canvas.width / 2, canvas.height / 2)
         this.dotList = []
-        const imgData = this.ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const imgData = this.ctx.getImageData(canvas.width / 2 - measureTextInfo.width / 2 -8, 0 , measureTextInfo.width, canvas.height);
         for (let y = 0; y < canvas.height; y += 4) {
-            for (let x = 0; x < canvas.width; x += 4) {
+            for (let x = canvas.width / 2 - measureTextInfo.width / 2 -8; x < canvas.width / 2 + measureTextInfo.width / 2; x += 4) {
                 // 像素点的序号 一个像素点有4个值
-                const index = (x + y * canvas.width) * 4;
+                const index = (x + y * measureTextInfo.width) * 4;
                 // 在数组中对应的值
                 const r = imgData!.data[index];
                 const g = imgData!.data[index + 1];
@@ -214,20 +214,20 @@ class Dot {
 onMounted(() => {
     ctx = canvas.value.getContext('2d')
     board = new Board(canvas.value, TEXTARR[0]);
-    timer = setInterval(() => {
-        if (TEXTARR.length - 1 === index.value) {
-            index.value = 0
-        } else {
-            index.value++
-        }
-        board.changeText(TEXTARR[index.value])
-    }, 10000)
+    // timer = setInterval(() => {
+    //     if (TEXTARR.length - 1 === index.value) {
+    //         index.value = 0
+    //     } else {
+    //         index.value++
+    //     }
+    //     board.changeText(TEXTARR[index.value])
+    // }, 10000)
     
 });
 
-onUnmounted(() => {
-    clearInterval(timer)
-})
+// onUnmounted(() => {
+//     clearInterval(timer)
+// })
 
 </script>
 <style scoped lang='less'></style>
