@@ -50,7 +50,8 @@ const start = () => {
 <style scoped lang='less'>
 .star-container {
     flex: 1;
-    position: absolute;
+    position: fixed;
+    top: 0;
     width: calc(100%);
     height: 100%;
     // left: -10px;

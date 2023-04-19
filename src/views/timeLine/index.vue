@@ -2,7 +2,7 @@
     <div class="timeLine-container themeBg" id="big">
         <el-row :gutter="20">
             <el-col :span="16">
-                <div>
+                <div >
                     <el-timeline>
                         <el-timeline-item hollow v-for="(item, index) in listInfo.list" :key="index" :id="item.id"
                             :class="[index % 2 !== 0 ? 'right' : '']" center>
@@ -55,6 +55,7 @@ const scrollTo = (item) => {
     const bigOffsetTop = bigScrollBoxItem.offsetTop
     const smallOffsetTop = smallScrollBoxItem.offsetTop
     const bigScrollBox = document.getElementById('big')
+    console.log(bigOffsetTop,'bigOffsetTop')
     bigScrollBox.scrollTo({
         behavior: 'smooth',
         top: bigOffsetTop - 62
@@ -73,10 +74,8 @@ const scrollTo = (item) => {
     margin: 0px auto;
     padding: 10px;
     max-height: calc(100vh - 59px);
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow-y: scroll;
 }
-
 :deep(.el-timeline-item__tail) {
     left: 50%;
 }

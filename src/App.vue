@@ -11,10 +11,7 @@ import starBg from '@/components/starBg/index.vue'
  #app {
   font-family: Microsoft YaHei;
   width: 100%;
-  /* height: 100%; */
   color: #fff;
-  overflow-y: auto; 
-  overflow-x: hidden;
 }
 ::-webkit-scrollbar {
   width: 10px;
@@ -28,9 +25,5 @@ import starBg from '@/components/starBg/index.vue'
 
 .el-input{
   background: #1a1a1a;
-}
-
-html,body {
-  height: 100%;
 }
 </style>

@@ -26,13 +26,10 @@ import headNav from '@/components/headNav/headNav.vue';
 <style scoped lang="less">
 .main-container {
   display: flex;
-  max-height: 100vh;
-  height: 100vh;
   z-index: 2;
   .main-content{
     flex: 1;
     margin-top: 59px;
-    max-height: calc(100vh - 59px);
     z-index: 2;
   }
 }
