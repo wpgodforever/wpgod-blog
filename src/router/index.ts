@@ -20,133 +20,143 @@ const canvasDotFinal = () => import('../views/demo/components/demoCanvas/canvasD
 const canvasParticle = () => import('../views/demo/components/demoCanvas/canvasParticle.vue')
 const test = () => import('../views/demo/components/demoCanvas/test.vue')
 const routes: Array<RouteRecordRaw> = [
-    { 
-        path: '/', 
+    {
+        path: '/',
         component: Layout,
         redirect: '/index',
-        children:[
+        children: [
             {
-                path:'/index',
+                path: '/index',
                 component: Main,
+                meta: {
+                    keepAlive: true
+                }
             },
             {
-                path:'/article',
+                path: '/article',
                 redirect: '/article/detail',
-                children:[
+                children: [
                     {
-                        path:'/article/edit',
+                        path: '/article/edit',
                         component: ArticleEdit
                     },
                     {
-                        path:'/article/detail/:id',
+                        path: '/article/detail/:id',
                         component: ArticleDetail
                     },
                     {
-                        path:'/article/update/:id',
-                        name:'articleUpdate',
+                        path: '/article/update/:id',
+                        name: 'articleUpdate',
                         component: ArticleEdit
                     },
                 ]
             },
             {
-                path:'/timeLine',
+                path: '/timeLine',
                 component: TimeLine,
             },
             {
-                path:'/board',
+                path: '/board',
                 component: Board,
             },
             {
-                path:'/demo',
-                redirect:'/demo/canvas/canvasGrain',
+                path: '/demo',
+                redirect: '/demo/canvas/canvasGrain',
                 component: Demo,
-                children:[
+                children: [
                     {
-                        path:'/demo/canvas/canvasGrain',
+                        path: '/demo/canvas/canvasGrain',
                         component: demoGrain
                     },
                     {
-                        path:'/demo/canvas/baseApi',
-                        name:'baseApi',
+                        path: '/demo/canvas/baseApi',
+                        name: 'baseApi',
                         component: demoCanvasApi
-                    },{
-                        path:'/demo/canvas/baseStyle',
-                        name:'baseStyle',
-                        component: demoCanvasApi
-                    },
-                    {
-                        path:'/demo/canvas/baseText',
-                        name:'baseText',
+                    }, {
+                        path: '/demo/canvas/baseStyle',
+                        name: 'baseStyle',
                         component: demoCanvasApi
                     },
                     {
-                        path:'/demo/canvas/baseImg',
-                        name:'baseImg',
+                        path: '/demo/canvas/baseText',
+                        name: 'baseText',
                         component: demoCanvasApi
                     },
                     {
-                        path:'/demo/canvas/basePx',
-                        name:'basePx',
+                        path: '/demo/canvas/baseImg',
+                        name: 'baseImg',
+                        component: demoCanvasApi
+                    },
+                    {
+                        path: '/demo/canvas/basePx',
+                        name: 'basePx',
                         component: demoCanvasPx
                     },
                     {
-                        path:'/demo/canvas/canvasPhotoShot',
-                        name:'canvasPhotoShot',
+                        path: '/demo/canvas/canvasPhotoShot',
+                        name: 'canvasPhotoShot',
                         component: demoCanvaPhotoShot
                     },
                     {
-                        path:'/demo/canvas/canvasBallJump',
-                        name:'canvasBallJump',
+                        path: '/demo/canvas/canvasBallJump',
+                        name: 'canvasBallJump',
                         component: canvasBallJump
                     },
                     {
-                        path:'/demo/canvas/canvasBallJumpTwo',
-                        name:'canvasBallJumpTwo',
+                        path: '/demo/canvas/canvasBallJumpTwo',
+                        name: 'canvasBallJumpTwo',
                         component: canvasBallJumpTwo
                     },
                     {
-                        path:'/demo/canvas/canvasBoom',
-                        name:'canvasBoom',
+                        path: '/demo/canvas/canvasBoom',
+                        name: 'canvasBoom',
                         component: canvasBoom
                     },
                     {
-                        path:'/demo/canvas/canvasDot',
-                        name:'canvasDot',
+                        path: '/demo/canvas/canvasDot',
+                        name: 'canvasDot',
                         component: canvasDot
                     },
                     {
-                        path:'/demo/canvas/canvasDotMove',
-                        name:'canvasDotMove',
+                        path: '/demo/canvas/canvasDotMove',
+                        name: 'canvasDotMove',
                         component: canvasDotMove
                     },
                     {
-                        path:'/demo/canvas/canvasDotStepThird',
-                        name:'canvasDotStepThird',
+                        path: '/demo/canvas/canvasDotStepThird',
+                        name: 'canvasDotStepThird',
                         component: canvasDotStepThird
                     },
                     {
-                        path:'/demo/canvas/canvasDotFinal',
-                        name:'canvasDotFinal',
+                        path: '/demo/canvas/canvasDotFinal',
+                        name: 'canvasDotFinal',
                         component: canvasDotFinal
                     },
                     {
-                        path:'/demo/canvas/canvasParticle',
-                        name:'canvasParticle',
+                        path: '/demo/canvas/canvasParticle',
+                        name: 'canvasParticle',
                         component: canvasParticle
                     },
                     {
-                        path:'/demo/canvas/test',
-                        name:'test',
+                        path: '/demo/canvas/test',
+                        name: 'test',
                         component: test
                     },
                 ]
             },
-        ] 
+        ]
     },
 ]
 const router = createRouter({
     history: createWebHashHistory(),
-    routes
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { top: 0, }
+        }
+    }
 })
 
 export default router

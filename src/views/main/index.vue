@@ -26,7 +26,7 @@
   </div>
 </template>
 <script lang='ts' setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import listItem from './components/listItem.vue'
 import personCard from './components/personCard.vue'
 import tagList from './components/tagList.vue'
@@ -61,11 +61,15 @@ const articleList = () => {
     listInfo.tagList = ['全部', ...res.data.tags] || []
   })
 }
-articleList()
+
 // 删除文字触发--------------------
 const deleteFn = () => {
   articleList()
 }
+
+onMounted(() => {
+  articleList()
+})
 
 // 右侧标签筛选被点击
 const tagClick = (item) => {
