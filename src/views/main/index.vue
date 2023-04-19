@@ -26,7 +26,8 @@
   </div>
 </template>
 <script lang='ts' setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, onActivated } from 'vue'
+import { useRoute } from 'vue-router'
 import listItem from './components/listItem.vue'
 import personCard from './components/personCard.vue'
 import tagList from './components/tagList.vue'
@@ -35,6 +36,8 @@ import { ProgressiveImage } from "vue-progressive-image";
 import {
   articleListFn
 } from '@/api/article/index'
+
+const route = useRoute()
 
 // 获取文章列表----------------------------
 const articleInfo = reactive({
@@ -69,6 +72,12 @@ const deleteFn = () => {
 
 onMounted(() => {
   articleList()
+})
+
+onActivated(() => {
+  if(route.query.update === '1'){
+    articleList()
+  }
 })
 
 // 右侧标签筛选被点击

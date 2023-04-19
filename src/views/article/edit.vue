@@ -175,7 +175,12 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
         method(info).then((res) => {
           ElMessage.success(`${isUpdateMode.value?'更新成功':'发布成功'}`);
           setTimeout(() => {
-            router.push('/index');
+            router.push({
+              path:'/index',
+              query:{
+                update:'1'
+              }
+            });
           }, 1000);
         });
       }
