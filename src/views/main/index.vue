@@ -42,7 +42,7 @@ const route = useRoute()
 // 获取文章列表----------------------------
 let loading = ref(false)
 let total = ref(0)
-let hasMore = ref(true)
+let hasMore = ref(false)
 
 const articleInfo = reactive({
   pageSize: 10,
@@ -76,6 +76,8 @@ const articleList = (index: number) => {//0:刷新 1:加载更多
     loading.value = false
     if (data.total <= articleInfo.pageSize * articleInfo.pageNo) {
       hasMore.value = false
+    }else{
+      hasMore.value = true
     }
   })
 }
