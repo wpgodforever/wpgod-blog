@@ -7,19 +7,19 @@
       <div class="banner-bg">
         <ProgressiveImage src="https://wpbucket124.oss-cn-guangzhou.aliyuncs.com/public/assets/banner-bg.png" />
       </div>
-      <!-- <h1>一砖一瓦，码出我的国度</h1>
-      <h3>No Pain No Gain.</h3> -->
     </div>
     <div class="main">
       <!-- 左侧列表区域 -->
       <div class="main-left">
         <div class="list flex-col">
-          <listItem :list="listInfo.list" @deleteFn="deleteFn"></listItem>
+          <listItem v-loading="loading" element-loading-background="rgba(21, 24, 34,.7)" :list="listInfo.list"
+            @deleteFn="deleteFn"></listItem>
+          <el-divider class="hand" content-position="center" @click="loadMore">{{hasMore? '获取更多': '没有更多了'}}</el-divider>
         </div>
       </div>
       <!-- 右侧信息卡片区域 -->
       <div class="main-right flex-col">
-        <personCard :tagList="listInfo.tagList" :listNum="listInfo.list.length" :tagsNum="tagsNum"></personCard>
+        <personCard :tagList="listInfo.tagList" :listNum="total" :tagsNum="tagsNum"></personCard>
         <tagList :tagsClickList="articleInfo.tags" :tagList="listInfo.tagList" @tagClick="tagClick"></tagList>
       </div>
     </div>
@@ -40,6 +40,10 @@ import {
 const route = useRoute()
 
 // 获取文章列表----------------------------
+let loading = ref(false)
+let total = ref(0)
+let hasMore = ref(true)
+
 const articleInfo = reactive({
   pageSize: 10,
   pageNo: 1,
@@ -53,52 +57,72 @@ let listInfo = reactive({
   tagList: [],
 })
 let tagsNum = ref(0)
-// 获取文章列表----------------------------
-const articleList = () => {
+
+const articleList = (index: number) => {//0:刷新 1:加载更多
+  loading.value = true
   articleListFn(articleInfo).then(res => {
+    const { data } = res
+    if (index === 0) {
+      listInfo.list = []
+    }
+    const list = [...listInfo.list, ...data.list]
     // 将置顶文章筛选出来
-    const topList = res.data.list.filter(v => v.isTop === 1)
-    const bottomList = res.data.list.filter(v => v.isTop !== 1)
+    const topList = list.filter(v => v.isTop === 1)
+    const bottomList = list.filter(v => v.isTop !== 1)
     listInfo.list = [...topList, ...bottomList]
-    tagsNum.value = res.data.tagsNum
-    listInfo.tagList = ['全部', ...res.data.tags] || []
+    tagsNum.value = data.tagsNum
+    listInfo.tagList = ['全部', ...data.tags] || []
+    total.value = data.total
+    loading.value = false
+    if (data.total <= articleInfo.pageSize * articleInfo.pageNo) {
+      hasMore.value = false
+    }
   })
 }
 
 // 删除文字触发--------------------
 const deleteFn = () => {
-  articleList()
+  articleList(0)
 }
 
 onMounted(() => {
-  articleList()
+  articleList(0)
 })
 
 onActivated(() => {
-  if(route.query.update === '1'){
-    articleList()
+  if (route.query.update === '1') {
+    articleList(0)
   }
 })
 
 // 右侧标签筛选被点击
 const tagClick = (item) => {
+  // 点了标签就重置页码
+  articleInfo.pageNo = 1
   if (articleInfo.tags.indexOf(item) !== -1) {
     // 取消对应筛选
     articleInfo.tags.splice(articleInfo.tags.indexOf(item), 1)
   } else {
-    if(item === '全部'){
+    if (item === '全部') {
       // 用户点击了全部，就清空筛选数组
       articleInfo.tags = []
-    }else{
+    } else {
       // 用户点击的不是全部，之前已经选了全部，则取消全部被筛选状态
-      if(articleInfo.tags.indexOf('全部')!== -1){
+      if (articleInfo.tags.indexOf('全部') !== -1) {
         articleInfo.tags.splice(articleInfo.tags.indexOf('全部'), 1)
       }
       articleInfo.tags.push(item)
     }
-    
+
   }
-  articleList()
+  articleList(0)
+}
+
+// 获取更多
+const loadMore = () => {
+  if(!hasMore.value) return
+  articleInfo.pageNo++
+  articleList(1)
 }
 </script>
 <style scoped lang='less'>
@@ -122,17 +146,21 @@ const tagClick = (item) => {
     align-items: center;
     color: #fff;
     margin-top: -59px;
-    &-bg{
+
+    &-bg {
       position: absolute;
       height: 600px;
       width: 100%;
       object-fit: cover;
       overflow: hidden;
     }
-    &-particle{
+
+    &-particle {
       z-index: 3;
     }
-    h1, h3{
+
+    h1,
+    h3 {
       z-index: 2;
     }
   }
@@ -165,4 +193,9 @@ const tagClick = (item) => {
       align-items: center;
     }
   }
+}
+
+:deep(.el-divider__text) {
+  background-color: rgba(18, 22, 31, 1) !important;
+  color: #fff !important;
 }</style>

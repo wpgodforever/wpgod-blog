@@ -31,9 +31,13 @@ declare module '@vue/runtime-core' {
     ElUpload: typeof import('element-plus/es')['ElUpload']
     HeadNav: typeof import('./src/components/headNav/headNav.vue')['default']
     LoginPop: typeof import('./src/components/loginPop/loginPop.vue')['default']
+    ParticleText: typeof import('./src/components/particleText/index.vue')['default']
     ReplyItem: typeof import('./src/components/comment/replyItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     StarBg: typeof import('./src/components/starBg/index.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }
