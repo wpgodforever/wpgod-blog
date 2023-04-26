@@ -91,6 +91,7 @@ onMounted(() => {
 
 onActivated(() => {
   if (route.query.update === '1') {
+    articleInfo.pageNo = 1
     articleList(0)
   }
 })
