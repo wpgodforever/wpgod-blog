@@ -27,7 +27,7 @@
 </template>
 <script lang='ts' setup>
 import { ref, reactive, onMounted, onActivated } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router'
 import listItem from './components/listItem.vue'
 import personCard from './components/personCard.vue'
 import tagList from './components/tagList.vue'
@@ -38,6 +38,7 @@ import {
 } from '@/api/article/index'
 
 const route = useRoute()
+const router = useRouter()
 
 // 获取文章列表----------------------------
 let loading = ref(false)
@@ -90,7 +91,9 @@ onMounted(() => {
 })
 
 onActivated(() => {
-  if (route.query.update === '1') {
+  // router.options.history.state.forward用于判断是否是返回操作，null代表不是返回操作
+  //并且之前的页面要是从修改详情过来才会重置页面
+  if ((router.options.history.state.back as string).indexOf('update') !== -1 && !router.options.history.state.forward) {
     articleInfo.pageNo = 1
     articleList(0)
   }
