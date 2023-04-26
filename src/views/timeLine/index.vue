@@ -31,7 +31,7 @@ import {
 import { ref, reactive } from 'vue'
 // 获取文章列表----------------------------
 const articleInfo = reactive({
-    pageSize: 10,
+    pageSize: 99999,
     pageNo: 1,
     tags: [],
 })
