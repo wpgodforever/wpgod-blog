@@ -95,7 +95,7 @@ onMounted(() => {
 onActivated(() => {
   // router.options.history.state.forward用于判断是否是返回操作，null代表不是返回操作
   //并且之前的页面要是从修改详情过来才会重置页面
-  if (((router.options.history.state.back as string).indexOf('/article/update') !== -1 || (router.options.history.state.back as string).indexOf('/article/edit') !== -1) && !router.options.history.state.forward) {
+  if (router.options.history.state.back && ((router.options.history.state.back as string).indexOf('/article/update') !== -1 || (router.options.history.state.back as string).indexOf('/article/edit') !== -1) && !router.options.history.state.forward) {
     articleInfo.pageNo = 1
     articleList(0)
   }
