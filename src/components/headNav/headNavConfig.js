@@ -4,11 +4,11 @@ export default [
         name: '首页',
         isAdmin:0
     },
-    {
-        path:'/timeLine',
-        name: '时间线',
-        isAdmin:0
-    },
+    // {
+    //     path:'/timeLine',
+    //     name: '时间线',
+    //     isAdmin:0
+    // },
     {
         path:'/demo',
         name: '练手实例',
