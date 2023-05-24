@@ -2,7 +2,7 @@
     <div class="headNav flex-align">
         <div>{{ user.userInfo.username }}</div>
         <div class="nav-list flex-align">
-            <el-select v-if="tabNum === 0" v-model="selectValue" multiple filterable remote reserve-keyword
+            <el-select v-show="tabNum === 0" v-model="selectValue" multiple filterable remote reserve-keyword
                 placeholder="请输入你想查的文章标题" :remote-method="remoteMethod" :loading="loading">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
