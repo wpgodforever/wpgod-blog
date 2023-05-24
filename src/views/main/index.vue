@@ -12,15 +12,15 @@
       <!-- 左侧列表区域 -->
       <div class="main-left">
         <div class="list flex-col">
-          <listItem v-loading="loading" element-loading-background="rgba(21, 24, 34,.7)" :list="listInfo.list"
+          <listItem v-loading="articleLoading" element-loading-background="rgba(21, 24, 34,.7)" :list="list"
             @deleteFn="deleteFn"></listItem>
           <el-divider class="hand" content-position="center" @click="loadMore">{{hasMore? '获取更多': '没有更多了'}}</el-divider>
         </div>
       </div>
       <!-- 右侧信息卡片区域 -->
       <div class="main-right flex-col">
-        <personCard :tagList="listInfo.tagList" :listNum="total" :tagsNum="tagsNum"></personCard>
-        <tagList :tagsClickList="articleInfo.tags" :tagList="listInfo.tagList" @tagClick="tagClick"></tagList>
+        <personCard :tagList="tagList" :listNum="total" :tagsNum="tagsNum"></personCard>
+        <tagListVue :tagsClickList="articleInfo.tags" :tagList="tagList" @tagClick="tagClick"></tagListVue>
       </div>
     </div>
   </div>
@@ -30,105 +30,63 @@ import { ref, reactive, onMounted, onActivated } from 'vue'
 import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router'
 import listItem from './components/listItem.vue'
 import personCard from './components/personCard.vue'
-import tagList from './components/tagList.vue'
+import tagListVue from './components/tagList.vue'
 import particleText from '@/components/particleText/index.vue'
 import { ProgressiveImage } from "vue-progressive-image";
-import {
-  articleListFn
-} from '@/api/article/index'
+import { useListStore } from '@/store/articleList'
+import { storeToRefs } from 'pinia'
 
-const route = useRoute()
 const router = useRouter()
-
 // 获取文章列表----------------------------
-let loading = ref(false)
-let total = ref(0)
-let hasMore = ref(false)
-
-const articleInfo = reactive({
-  pageSize: 10,
-  pageNo: 1,
-  tags: [],
-})
-
-let listInfo = reactive({
-  // 左侧文章列表
-  list: [],
-  // 右侧标签列表
-  tagList: [],
-})
-let tagsNum = ref(0)
-
-const articleList = (index: number) => {//0:刷新 1:加载更多
-  loading.value = true
-  articleListFn(articleInfo).then(res => {
-    const { data } = res
-    if (index === 0) {
-      listInfo.list = []
-    }
-    const list = [...listInfo.list, ...data.list]
-    // 将置顶文章筛选出来
-    const topList = list.filter(v => v.isTop === 1)
-    const bottomList = list.filter(v => v.isTop !== 1)
-    listInfo.list = [...topList, ...bottomList]
-    tagsNum.value = data.tagsNum
-    listInfo.tagList = ['全部', ...data.tags] || []
-    total.value = data.total
-    loading.value = false
-    if (data.total <= articleInfo.pageSize * articleInfo.pageNo) {
-      hasMore.value = false
-    }else{
-      hasMore.value = true
-    }
-  })
-}
+const store = useListStore()
+const { articleLoading, total, hasMore, list, tagList, tagsNum,articleInfo } = storeToRefs(store)
 
 // 删除文字触发--------------------
 const deleteFn = () => {
-  articleList(0)
+  store.getArticleList(0)
 }
 
 onMounted(() => {
-  articleList(0)
+  store.getArticleList(0)
 })
 
 onActivated(() => {
   // router.options.history.state.forward用于判断是否是返回操作，null代表不是返回操作
   //并且之前的页面要是从修改详情过来才会重置页面
   if (router.options.history.state.back && ((router.options.history.state.back as string).indexOf('/article/update') !== -1 || (router.options.history.state.back as string).indexOf('/article/edit') !== -1) && !router.options.history.state.forward) {
-    articleInfo.pageNo = 1
-    articleList(0)
+    articleInfo.value.pageNo = 1
+    store.getArticleList(0)
   }
 })
 
 // 右侧标签筛选被点击
 const tagClick = (item) => {
   // 点了标签就重置页码
-  articleInfo.pageNo = 1
-  if (articleInfo.tags.indexOf(item) !== -1) {
+  articleInfo.value.pageNo = 1
+  if (articleInfo.value.tags.indexOf(item) !== -1) {
     // 取消对应筛选
-    articleInfo.tags.splice(articleInfo.tags.indexOf(item), 1)
+    articleInfo.value.tags.splice(articleInfo.value.tags.indexOf(item), 1)
   } else {
     if (item === '全部') {
       // 用户点击了全部，就清空筛选数组
-      articleInfo.tags = []
+      articleInfo.value.tags = []
     } else {
       // 用户点击的不是全部，之前已经选了全部，则取消全部被筛选状态
-      if (articleInfo.tags.indexOf('全部') !== -1) {
-        articleInfo.tags.splice(articleInfo.tags.indexOf('全部'), 1)
+      if (articleInfo.value.tags.indexOf('全部') !== -1) {
+        articleInfo.value.tags.splice(articleInfo.value.tags.indexOf('全部'), 1)
       }
-      articleInfo.tags.push(item)
+      articleInfo.value.tags.push(item)
     }
 
   }
-  articleList(0)
+  store.getArticleList(0)
 }
 
 // 获取更多
 const loadMore = () => {
-  if(!hasMore.value) return
-  articleInfo.pageNo++
-  articleList(1)
+  if(!hasMore) return
+  articleInfo.value.pageNo++
+  store.getArticleList(1)
 }
 </script>
 <style scoped lang='less'>

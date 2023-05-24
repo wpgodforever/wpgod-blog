@@ -57,3 +57,12 @@ export function articleListFn(data) {
     params: data,
   })
 }
+
+// 根据文字标题查文章列表
+export function articleListTitleFn(data) {
+  return request({
+    url: '/article/listTitle',
+    method: 'get',
+    params: data,
+  })
+}
