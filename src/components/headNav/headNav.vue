@@ -2,9 +2,13 @@
     <div class="headNav flex-align">
         <div>{{ user.userInfo.username }}</div>
         <div class="nav-list flex-align">
+            <el-select v-if="tabNum === 0" v-model="selectValue" multiple filterable remote reserve-keyword
+                placeholder="请输入你想查的文章标题" :remote-method="remoteMethod" :loading="loading">
+                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+            </el-select>
             <div v-for="(item, index) in config" :key="index">
                 <div class="nav-list_item" v-if="item.isAdmin === 0 || (item.isAdmin === 1 && isAdmin)"
-                    @click="jump(item.path)">
+                    @click="jump(item.path, index)">
                     <div class="hand" @mouseleave="hoverAnimationLeave" @mouseenter="hoverAnimation($event)">{{ item.name }}
                     </div>
                 </div>
@@ -22,21 +26,21 @@
     <loginPop v-model="dialogVisible" :tips="tips"></loginPop>
 </template>
 <script lang='ts' setup>
-import { ref, reactive, computed, onMounted, getCurrentInstance } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import loginPop from '../loginPop/loginPop.vue'
 import { useUserStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
 import { useLogin } from '@/hooks/useLogin'
 import config from './headNavConfig.js'
-import { includes } from 'lodash'
 onMounted(() => {
     // 导航栏颜色修改
     if (router.currentRoute.value.path !== '/index') {
         window.removeEventListener("scroll", scrollTopListener)
     } else {
-        window.addEventListener("scroll", scrollTopListener, true);
+        window.addEventListener("scroll", scrollTopListener, true)
     }
+
 });
 
 const router = useRouter()
@@ -67,16 +71,50 @@ const scrollTopListener = () => {
 }
 
 // 跳转方法
-const jump = (url, params = {}) => {
+const tabNum = ref(0)
+const jump = (url, index) => {
+    tabNum.value = index
     router.push({
-        path: url,
-        params
+        path: url
     })
+}
+
+// 搜索框----------------------------------------------
+const selectValue = ref('')
+const options = ref([])
+const loading = ref(false)
+
+const remoteMethod = (query: string) => {
+    if (query) {
+        loading.value = true
+        setTimeout(() => {
+            loading.value = false
+            //   options.value 
+            options.value = [{
+                value: '选项1',
+                label: '黄金糕'
+            }, {
+                value: '选项2',
+                label: '双皮奶'
+            }, {
+                value: '选项3',
+                label: '蚵仔煎'
+            }, {
+                value: '选项4',
+                label: '龙须面'
+            }, {
+                value: '选项5',
+                label: '北京烤鸭'
+            }
+            ]
+        }, 200)
+    } else {
+        options.value = []
+    }
 }
 
 </script>
 <style scoped lang='less'>
-
 .headNav {
     position: fixed;
     top: 0;
@@ -95,6 +133,7 @@ const jump = (url, params = {}) => {
 
     .nav-list {
         margin-left: auto;
+
         &_item {
             margin: 0 15px;
             padding: 10px 0;
