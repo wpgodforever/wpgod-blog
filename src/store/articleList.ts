@@ -44,8 +44,9 @@ export const useListStore = defineStore({
                 this.tagsNum = data.tagsNum
                 this.tagList = ['全部', ...data.tags] || []
                 this.total = data.total
+                const listTotalCount = data.listTotalCount
                 this.articleLoading = false
-                if (data.total <= this.articleInfo.pageSize * this.articleInfo.pageNo) {
+                if (listTotalCount <= this.articleInfo.pageSize * this.articleInfo.pageNo) {
                     this.hasMore = false
                 } else {
                     this.hasMore = true

@@ -101,6 +101,8 @@ watch(
 
 const selectRef = ref()
 const search = (e) => {
+    articleInfo.value.pageNo = 1
+    articleInfo.value.tags = []
     articleInfo.value.title = e.target.value
     selectRef.value.blur()
 }
