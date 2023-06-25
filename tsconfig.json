@@ -1,21 +1,21 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "strict": false,
-    "jsx": "preserve",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true,
-    "noEmit": true,
-    "suppressImplicitAnyIndexErrors":true,
-    "baseUrl": ".",
+    "target": "ESNext",//编译后的es版本
+    "useDefineForClassFields": true,//使用ts的类属性定义
+    "module": "ESNext",//使用的模块规范
+    "moduleResolution": "Node",//模块解析规范
+    "strict": false,//严格模式
+    "jsx": "preserve",//jsx的解析规范
+    "resolveJsonModule": true,//解析json模块
+    "isolatedModules": true,//隔离模块
+    "esModuleInterop": true,//允许es模块导入commonjs模块
+    "lib": ["ESNext", "DOM"],//编译时需要引入的库
+    "skipLibCheck": true,//跳过lib检查
+    "noEmit": true,//不生成编译后的文件
+    "suppressImplicitAnyIndexErrors":true,//忽略隐式any类型的索引错误
+    "baseUrl": ".",//基础路径
     "paths": {
-      "@/*":["src/*"]
+      "@/*":["src/*"]//路径别名
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/api/http/login/login.js"],
