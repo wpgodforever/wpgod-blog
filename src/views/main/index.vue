@@ -42,7 +42,7 @@ const store = useListStore()
 const { articleLoading, total, hasMore, list, tagList, tagsNum,articleInfo } = storeToRefs(store)
 
 // 删除文字触发--------------------
-const deleteFn = () => {
+const deleteFn = (): void => {
   store.getArticleList(0)
 }
 
@@ -60,7 +60,7 @@ onActivated(() => {
 })
 
 // 右侧标签筛选被点击
-const tagClick = (item) => {
+const tagClick = (item:string): void => {
   // 点了标签就重置页码
   articleInfo.value.pageNo = 1
   if (articleInfo.value.tags.indexOf(item) !== -1) {
@@ -83,7 +83,7 @@ const tagClick = (item) => {
 }
 
 // 获取更多
-const loadMore = () => {
+const loadMore = (): void => {
   if(!hasMore) return
   articleInfo.value.pageNo++
   store.getArticleList(1)
