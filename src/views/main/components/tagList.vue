@@ -19,10 +19,10 @@ const props = defineProps({
     },
 })
 const emit = defineEmits(['tagClick'])
-const tagClick = (item:String) => {
+const tagClick = (item:String):void => {
     emit('tagClick',item)
 }
-const randomColor = (obj:Object) => {
+const randomColor = (obj:Object): string => {
   const randomIndex = Math.floor(Math.random() * Object.getOwnPropertyNames(obj).length +1);
   return colorInfo[randomIndex];
 }
