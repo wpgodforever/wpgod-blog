@@ -47,13 +47,13 @@ interface listItem {
     isTop: Number;
 }
 
-const jump = (item) => {
+const jump = (item: listItem): void => {
     router.push({
         path: '/article/detail/' + item.id
     })
 }
 
-const updateFn = (item) => {
+const updateFn = (item: listItem): void => {
     router.push({
         path: '/article/update/' + item.id
     })
@@ -61,7 +61,7 @@ const updateFn = (item) => {
 
 const emit = defineEmits(['deleteFn'])
 
-const deleteFn = (item) => {
+const deleteFn = (item: listItem): void => {
     ElMessageBox.confirm(
     '是否要删除该文章?',
     'Warning',
@@ -75,8 +75,6 @@ const deleteFn = (item) => {
         ElMessage.success('删除成功');
         emit('deleteFn')
     })
-  }).catch(() => {
-    
   })
    
 }
