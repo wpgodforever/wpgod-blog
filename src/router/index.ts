@@ -18,6 +18,7 @@ const canvasDotMove = () => import('../views/demo/components/demoCanvas/canvasDo
 const canvasDotStepThird = () => import('../views/demo/components/demoCanvas/canvasDotStepThird.vue')
 const canvasDotFinal = () => import('../views/demo/components/demoCanvas/canvasDotFinal.vue')
 const canvasParticle = () => import('../views/demo/components/demoCanvas/canvasParticle.vue')
+const keywordReplace = () => import('../views/demo/components/vue/keywordReplace.vue')
 const test = () => import('../views/demo/components/demoCanvas/test.vue')
 const routes: Array<RouteRecordRaw> = [
     {
@@ -141,6 +142,11 @@ const routes: Array<RouteRecordRaw> = [
                         path: '/demo/canvas/test',
                         name: 'test',
                         component: test
+                    },
+                    {
+                        path: '/demo/vue/keywordReplace',
+                        name: 'keywordReplace',
+                        component: keywordReplace
                     },
                 ]
             },

@@ -79,5 +79,16 @@ export default [
                 index: '1-15'
             },
         ]
+    },
+    {
+        title: 'vue相关',
+        index:'2',
+        children:[
+            {
+                name:'vite插件全局关键字替换',
+                path:'/demo/vue/keywordReplace',
+                index: '2-1'
+            },
+        ]
     }
 ]
