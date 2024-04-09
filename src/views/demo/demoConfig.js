@@ -89,6 +89,12 @@ export default [
                 path:'/demo/vue/keywordReplace',
                 index: '2-1'
             },
+            {
+                name:'vue3拖拽案例',
+                path:'/demo/vue/drag',
+                index: '2-2'
+            },
+
         ]
     }
 ]

@@ -20,6 +20,7 @@ const canvasDotFinal = () => import('../views/demo/components/demoCanvas/canvasD
 const canvasParticle = () => import('../views/demo/components/demoCanvas/canvasParticle.vue')
 const keywordReplace = () => import('../views/demo/components/vue/keywordReplace.vue')
 const test = () => import('../views/demo/components/demoCanvas/test.vue')
+const drag = () => import('../views/demo/components/vue/drag.vue')
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -147,6 +148,11 @@ const routes: Array<RouteRecordRaw> = [
                         path: '/demo/vue/keywordReplace',
                         name: 'keywordReplace',
                         component: keywordReplace
+                    },
+                    {
+                        path: '/demo/vue/drag',
+                        name: 'drag',
+                        component: drag
                     },
                 ]
             },
