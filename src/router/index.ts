@@ -21,6 +21,7 @@ const canvasParticle = () => import('../views/demo/components/demoCanvas/canvasP
 const keywordReplace = () => import('../views/demo/components/vue/keywordReplace.vue')
 const test = () => import('../views/demo/components/demoCanvas/test.vue')
 const drag = () => import('../views/demo/components/vue/drag.vue')
+const shallow = () => import('../views/demo/components/vue/shallow.vue')
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -154,6 +155,11 @@ const routes: Array<RouteRecordRaw> = [
                         name: 'drag',
                         component: drag
                     },
+                    {
+                        path: '/demo/vue/shallow',
+                        name: 'shallow',
+                        component: shallow
+                    }
                 ]
             },
         ]

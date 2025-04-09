@@ -94,6 +94,11 @@ export default [
                 path:'/demo/vue/drag',
                 index: '2-2'
             },
+            {
+                name:'vue3 shallow',
+                path:'/demo/vue/shallow',
+                index: '2-3'
+            },
 
         ]
     }
